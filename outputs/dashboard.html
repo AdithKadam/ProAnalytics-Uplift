@@ -1,0 +1,1062 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>ProAnalytics — Promotion Uplift Modeling Dashboard</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #09090f;
+    --surface: #111118;
+    --surface2: #181824;
+    --border: #2a2a3a;
+    --text: #e8e8f0;
+    --muted: #7070a0;
+    --accent: #7c6af7;
+    --accent2: #f7776a;
+    --accent3: #4ecdc4;
+    --accent4: #f5c842;
+    --green: #5af5a0;
+    --red: #f5605a;
+    --persuadable: #7c6af7;
+    --moderate: #4ecdc4;
+    --surething: #f5c842;
+    --dnd: #f5605a;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--bg); color: var(--text); font-family: 'Syne', sans-serif; min-height: 100vh; overflow-x: hidden; }
+
+  /* HEADER */
+  .header {
+    padding: 28px 40px 24px;
+    border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: space-between;
+    background: linear-gradient(135deg, #0d0d1a 0%, var(--bg) 100%);
+    position: sticky; top: 0; z-index: 100;
+    backdrop-filter: blur(12px);
+  }
+  .header-left { display: flex; align-items: center; gap: 18px; }
+  .logo {
+    width: 42px; height: 42px; border-radius: 10px;
+    background: linear-gradient(135deg, var(--accent), #a855f7);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px; font-weight: 800;
+  }
+  .header-title { font-size: 15px; font-weight: 700; letter-spacing: 0.02em; }
+  .header-subtitle { font-size: 11px; color: var(--muted); font-family: 'DM Mono', monospace; margin-top: 2px; }
+  .header-right { display: flex; align-items: center; gap: 14px; }
+  .badge {
+    padding: 5px 12px; border-radius: 20px; font-size: 11px; font-family: 'DM Mono', monospace;
+    font-weight: 500; letter-spacing: 0.05em;
+  }
+  .badge-green { background: rgba(90,245,160,0.12); color: var(--green); border: 1px solid rgba(90,245,160,0.25); }
+  .badge-purple { background: rgba(124,106,247,0.12); color: var(--accent); border: 1px solid rgba(124,106,247,0.25); }
+  .dataset-badge { font-size: 11px; color: var(--muted); font-family: 'DM Mono', monospace; }
+
+  /* NAV TABS */
+  .nav {
+    display: flex; gap: 4px; padding: 14px 40px;
+    background: var(--surface); border-bottom: 1px solid var(--border);
+    overflow-x: auto;
+  }
+  .nav-tab {
+    padding: 8px 18px; border-radius: 8px; font-size: 12px; font-weight: 600;
+    cursor: pointer; border: none; transition: all 0.2s; white-space: nowrap;
+    background: transparent; color: var(--muted); letter-spacing: 0.04em;
+  }
+  .nav-tab.active { background: var(--accent); color: #fff; }
+  .nav-tab:hover:not(.active) { background: var(--surface2); color: var(--text); }
+
+  /* MAIN */
+  .main { padding: 32px 40px; max-width: 1600px; margin: 0 auto; }
+  .page { display: none; }
+  .page.active { display: block; }
+
+  /* GRID */
+  .grid { display: grid; gap: 20px; }
+  .grid-4 { grid-template-columns: repeat(4, 1fr); }
+  .grid-3 { grid-template-columns: repeat(3, 1fr); }
+  .grid-2 { grid-template-columns: repeat(2, 1fr); }
+  .grid-2-1 { grid-template-columns: 2fr 1fr; }
+  .grid-1-2 { grid-template-columns: 1fr 2fr; }
+  @media(max-width:1100px) { .grid-4{grid-template-columns:repeat(2,1fr);} .grid-3{grid-template-columns:1fr 1fr;} .grid-2-1,.grid-1-2{grid-template-columns:1fr;} }
+
+  /* CARDS */
+  .card {
+    background: var(--surface); border: 1px solid var(--border); border-radius: 16px;
+    padding: 24px; transition: border-color 0.2s;
+  }
+  .card:hover { border-color: var(--accent); }
+  .card-title {
+    font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase;
+    color: var(--muted); margin-bottom: 16px; display: flex; align-items: center; gap: 8px;
+  }
+  .card-title::before { content:''; width:3px; height:12px; border-radius:2px; background:var(--accent); flex-shrink:0; }
+
+  /* KPI CARDS */
+  .kpi-card {
+    background: var(--surface); border: 1px solid var(--border); border-radius: 16px;
+    padding: 22px 24px; position: relative; overflow: hidden;
+  }
+  .kpi-card::after {
+    content:''; position:absolute; top:-30px; right:-30px; width:80px; height:80px;
+    border-radius:50%; opacity:0.08;
+  }
+  .kpi-card.purple::after { background: var(--accent); }
+  .kpi-card.teal::after { background: var(--accent3); }
+  .kpi-card.yellow::after { background: var(--accent4); }
+  .kpi-card.red::after { background: var(--accent2); }
+  .kpi-label { font-size: 11px; color: var(--muted); font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; }
+  .kpi-value { font-size: 32px; font-weight: 800; margin: 8px 0 4px; line-height: 1; }
+  .kpi-sub { font-size: 11px; color: var(--muted); font-family: 'DM Mono', monospace; }
+  .kpi-delta { display: inline-flex; align-items: center; gap: 4px; font-size: 11px; font-weight: 600; margin-top: 8px; padding: 3px 8px; border-radius: 20px; }
+  .kpi-delta.up { background: rgba(90,245,160,0.1); color: var(--green); }
+  .kpi-delta.neutral { background: rgba(124,106,247,0.1); color: var(--accent); }
+
+  /* CHARTS */
+  .chart-wrap { position: relative; }
+  canvas { max-width: 100%; }
+
+  /* SEGMENT PILLS */
+  .seg-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .seg-item {
+    border-radius: 12px; padding: 14px 16px; display: flex; flex-direction: column; gap: 6px;
+  }
+  .seg-item.persuadable { background: rgba(124,106,247,0.1); border: 1px solid rgba(124,106,247,0.25); }
+  .seg-item.moderate { background: rgba(78,205,196,0.1); border: 1px solid rgba(78,205,196,0.25); }
+  .seg-item.surething { background: rgba(245,200,66,0.1); border: 1px solid rgba(245,200,66,0.25); }
+  .seg-item.dnd { background: rgba(245,96,90,0.1); border: 1px solid rgba(245,96,90,0.25); }
+  .seg-name { font-size: 11px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; }
+  .seg-item.persuadable .seg-name { color: var(--persuadable); }
+  .seg-item.moderate .seg-name { color: var(--moderate); }
+  .seg-item.surething .seg-name { color: var(--surething); }
+  .seg-item.dnd .seg-name { color: var(--dnd); }
+  .seg-count { font-size: 26px; font-weight: 800; }
+  .seg-pct { font-size: 11px; color: var(--muted); font-family: 'DM Mono', monospace; }
+
+  /* TABLE */
+  .table-wrap { overflow-x: auto; }
+  table { width: 100%; border-collapse: collapse; font-size: 12px; }
+  thead th {
+    padding: 10px 14px; text-align: left; font-size: 10px; font-weight: 600;
+    letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted);
+    border-bottom: 1px solid var(--border); white-space: nowrap;
+  }
+  tbody tr { border-bottom: 1px solid rgba(42,42,58,0.5); transition: background 0.15s; }
+  tbody tr:hover { background: var(--surface2); }
+  tbody td { padding: 10px 14px; font-family: 'DM Mono', monospace; font-size: 11px; white-space: nowrap; }
+  .seg-tag {
+    display: inline-block; padding: 2px 8px; border-radius: 20px; font-size: 9px;
+    font-weight: 700; letter-spacing: 0.07em; text-transform: uppercase;
+  }
+  .seg-tag.persuadable { background: rgba(124,106,247,0.2); color: var(--persuadable); }
+  .seg-tag.moderate { background: rgba(78,205,196,0.2); color: var(--moderate); }
+  .seg-tag.surething { background: rgba(245,200,66,0.2); color: var(--surething); }
+  .seg-tag.dnd { background: rgba(245,96,90,0.2); color: var(--dnd); }
+
+  /* FILTER BAR */
+  .filter-bar { display: flex; gap: 10px; margin-bottom: 16px; flex-wrap: wrap; align-items: center; }
+  .filter-btn {
+    padding: 6px 14px; border-radius: 20px; font-size: 11px; font-weight: 600; cursor: pointer;
+    border: 1px solid var(--border); background: transparent; color: var(--muted); transition: all 0.2s;
+  }
+  .filter-btn.active-f { border-color: var(--accent); background: rgba(124,106,247,0.1); color: var(--accent); }
+  .search-input {
+    padding: 7px 14px; border-radius: 8px; border: 1px solid var(--border);
+    background: var(--surface2); color: var(--text); font-size: 12px; font-family: 'DM Mono', monospace;
+    outline: none; min-width: 200px;
+  }
+  .search-input:focus { border-color: var(--accent); }
+
+  /* SLIDER */
+  .slider-wrap { display: flex; flex-direction: column; gap: 8px; }
+  .slider-row { display: flex; align-items: center; gap: 14px; }
+  input[type=range] {
+    flex: 1; -webkit-appearance: none; height: 4px; border-radius: 2px;
+    background: var(--surface2); outline: none;
+  }
+  input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none; width: 18px; height: 18px; border-radius: 50%;
+    background: var(--accent); cursor: pointer; border: 2px solid var(--bg);
+    box-shadow: 0 0 0 3px rgba(124,106,247,0.2);
+  }
+  .slider-val { font-size: 22px; font-weight: 800; color: var(--accent); min-width: 60px; text-align: right; font-family: 'DM Mono', monospace; }
+  .roi-metrics { display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; margin-top: 14px; }
+  .roi-metric { background: var(--surface2); border-radius: 10px; padding: 12px; text-align: center; }
+  .roi-metric-label { font-size: 10px; color: var(--muted); font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; }
+  .roi-metric-val { font-size: 20px; font-weight: 800; margin-top: 4px; font-family: 'DM Mono', monospace; }
+
+  /* COMPARISON BARS */
+  .compare-row { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; }
+  .compare-label { font-size: 11px; color: var(--muted); min-width: 130px; font-family: 'DM Mono', monospace; }
+  .compare-bar-wrap { flex: 1; background: var(--surface2); border-radius: 4px; height: 8px; overflow: hidden; }
+  .compare-bar { height: 100%; border-radius: 4px; transition: width 1s ease; }
+  .compare-val { font-size: 11px; font-weight: 700; min-width: 45px; text-align: right; font-family: 'DM Mono', monospace; }
+
+  /* MODEL SCORE */
+  .model-list { display: flex; flex-direction: column; gap: 10px; }
+  .model-row { display: flex; align-items: center; gap: 12px; }
+  .model-name { font-size: 11px; color: var(--text); min-width: 160px; }
+  .model-bar-wrap { flex: 1; background: var(--surface2); border-radius: 20px; height: 6px; overflow: hidden; }
+  .model-bar { height: 100%; border-radius: 20px; background: var(--accent); }
+  .model-auc { font-size: 11px; font-weight: 700; color: var(--accent); min-width: 40px; text-align: right; font-family: 'DM Mono', monospace; }
+
+  /* SECTION TITLE */
+  .section-title { font-size: 22px; font-weight: 800; margin-bottom: 6px; }
+  .section-sub { font-size: 13px; color: var(--muted); margin-bottom: 24px; }
+
+  /* INSIGHTS */
+  .insight-box {
+    background: linear-gradient(135deg, rgba(124,106,247,0.08), rgba(78,205,196,0.05));
+    border: 1px solid rgba(124,106,247,0.2); border-radius: 12px; padding: 16px 20px;
+    display: flex; gap: 14px; align-items: flex-start;
+  }
+  .insight-icon { font-size: 20px; flex-shrink: 0; margin-top: 2px; }
+  .insight-text { font-size: 13px; line-height: 1.6; color: var(--text); }
+  .insight-text strong { color: var(--accent); }
+
+  /* PROGRESS RING */
+  .ring-container { display: flex; align-items: center; justify-content: center; gap: 24px; flex-wrap: wrap; }
+  .ring-item { text-align: center; }
+  .ring-label { font-size: 11px; color: var(--muted); margin-top: 8px; }
+  .ring-value { font-size: 14px; font-weight: 700; margin-top: 2px; }
+
+  /* ANIMATED COUNTER */
+  @keyframes countUp { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+  .kpi-value { animation: countUp 0.5s ease forwards; }
+
+  /* PULSE DOT */
+  .live-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--green); animation: pulse 2s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1;box-shadow:0 0 0 0 rgba(90,245,160,0.4)} 50%{opacity:0.8;box-shadow:0 0 0 6px rgba(90,245,160,0)} }
+
+  /* SCROLLBAR */
+  ::-webkit-scrollbar { width: 6px; height: 6px; }
+  ::-webkit-scrollbar-track { background: var(--surface); }
+  ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+  ::-webkit-scrollbar-thumb:hover { background: var(--muted); }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="header-left">
+    <div class="logo">PA</div>
+    <div>
+      <div class="header-title">Promotion Uplift Modeling Dashboard</div>
+      <div class="header-subtitle">Team ProAnalytics · Causal ML Pipeline · Dunnhumby Dataset</div>
+    </div>
+  </div>
+  <div class="header-right">
+    <div class="live-dot"></div>
+    <span class="badge badge-green">PIPELINE COMPLETE</span>
+    <span class="badge badge-purple">X-LEARNER ACTIVE</span>
+    <span class="dataset-badge" id="ts"></span>
+  </div>
+</div>
+
+<!-- NAV -->
+<div class="nav">
+  <button class="nav-tab active" onclick="switchPage('overview')">Overview</button>
+  <button class="nav-tab" onclick="switchPage('segments')">Customer Segments</button>
+  <button class="nav-tab" onclick="switchPage('models')">Model Performance</button>
+  <button class="nav-tab" onclick="switchPage('roi')">ROI Simulator</button>
+  <button class="nav-tab" onclick="switchPage('customers')">Customer Explorer</button>
+  <button class="nav-tab" onclick="switchPage('clusters')">Cluster Analysis</button>
+</div>
+
+<div class="main">
+
+<!-- ═══════════ PAGE: OVERVIEW ═══════════ -->
+<div id="page-overview" class="page active">
+  <div class="section-title">Campaign Overview</div>
+  <div class="section-sub">Causal uplift analysis across 5,000 retail customers · X-Learner model active</div>
+
+  <!-- KPI Row -->
+  <div class="grid grid-4" style="margin-bottom:20px">
+    <div class="kpi-card purple">
+      <div class="kpi-label">Persuadable Customers</div>
+      <div class="kpi-value" id="kpi-persuadable" style="color:var(--persuadable)">—</div>
+      <div class="kpi-sub">Who respond BECAUSE of promo</div>
+      <div class="kpi-delta neutral" id="kpi-persuadable-pct">—</div>
+    </div>
+    <div class="kpi-card teal">
+      <div class="kpi-label">Treatment Lift</div>
+      <div class="kpi-value" id="kpi-lift" style="color:var(--accent3)">—</div>
+      <div class="kpi-sub">vs control group purchase rate</div>
+      <div class="kpi-delta up" id="kpi-treat-cr">—</div>
+    </div>
+    <div class="kpi-card yellow">
+      <div class="kpi-label">Avg Uplift Score</div>
+      <div class="kpi-value" id="kpi-uplift" style="color:var(--accent4)">—</div>
+      <div class="kpi-sub">X-Learner CATE estimate</div>
+      <div class="kpi-delta up">↑ vs T-Learner</div>
+    </div>
+    <div class="kpi-card red">
+      <div class="kpi-label">Best Net ROI</div>
+      <div class="kpi-value" id="kpi-roi" style="color:var(--green)">—</div>
+      <div class="kpi-sub" id="kpi-roi-sub">targeting top customers</div>
+      <div class="kpi-delta up" id="kpi-roi-pct">—</div>
+    </div>
+  </div>
+
+  <!-- Row 2 -->
+  <div class="grid grid-2" style="margin-bottom:20px">
+    <div class="card">
+      <div class="card-title">Uplift Score Distribution</div>
+      <div class="chart-wrap" style="height:220px"><canvas id="chart-uplift-hist"></canvas></div>
+    </div>
+    <div class="card">
+      <div class="card-title">Customer Segment Breakdown</div>
+      <div style="display:flex;align-items:center;gap:24px">
+        <div style="width:180px;height:180px;flex-shrink:0"><canvas id="chart-donut"></canvas></div>
+        <div class="seg-grid" style="flex:1">
+          <div class="seg-item persuadable">
+            <div class="seg-name">Persuadable</div>
+            <div class="seg-count" id="seg-persuadable">—</div>
+            <div class="seg-pct" id="seg-persuadable-pct">—</div>
+          </div>
+          <div class="seg-item moderate">
+            <div class="seg-name">Moderate</div>
+            <div class="seg-count" id="seg-moderate">—</div>
+            <div class="seg-pct" id="seg-moderate-pct">—</div>
+          </div>
+          <div class="seg-item surething">
+            <div class="seg-name">Sure Thing</div>
+            <div class="seg-count" id="seg-surething">—</div>
+            <div class="seg-pct" id="seg-surething-pct">—</div>
+          </div>
+          <div class="seg-item dnd">
+            <div class="seg-name">Do-Not-Disturb</div>
+            <div class="seg-count" id="seg-dnd">—</div>
+            <div class="seg-pct" id="seg-dnd-pct">—</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Row 3 -->
+  <div class="grid grid-2" style="margin-bottom:20px">
+    <div class="card">
+      <div class="card-title">Uplift Curve — Model vs Random Targeting</div>
+      <div class="chart-wrap" style="height:240px"><canvas id="chart-uplift-curve"></canvas></div>
+    </div>
+    <div class="card">
+      <div class="card-title">Qini Curve — Incremental Gain</div>
+      <div class="chart-wrap" style="height:240px"><canvas id="chart-qini"></canvas></div>
+    </div>
+  </div>
+
+  <!-- Row 4 -->
+  <div class="grid grid-2-1">
+    <div class="card">
+      <div class="card-title">Top Feature Importance (Gradient Boosting)</div>
+      <div class="chart-wrap" style="height:260px"><canvas id="chart-features"></canvas></div>
+    </div>
+    <div class="card">
+      <div class="card-title">Treatment vs Control Comparison</div>
+      <div id="treat-ctrl-content"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════ PAGE: SEGMENTS ═══════════ -->
+<div id="page-segments" class="page">
+  <div class="section-title">Customer Segment Analysis</div>
+  <div class="section-sub">Understanding the 4 uplift-based customer archetypes</div>
+
+  <div class="grid grid-4" style="margin-bottom:20px">
+    <div class="card" style="border-color:rgba(124,106,247,0.4)">
+      <div style="font-size:11px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--persuadable);margin-bottom:12px">✓ Persuadable</div>
+      <div style="font-size:28px;font-weight:800;margin-bottom:6px" id="seg2-persuadable">—</div>
+      <div style="font-size:12px;color:var(--muted);line-height:1.6">Buy BECAUSE of promotion. Highest ROI when targeted. Uplift score &gt; 0.15</div>
+      <div style="margin-top:12px;padding:8px 12px;background:rgba(124,106,247,0.08);border-radius:8px;font-size:11px;font-family:'DM Mono',monospace;color:var(--persuadable)">Action: Target first 🎯</div>
+    </div>
+    <div class="card" style="border-color:rgba(78,205,196,0.4)">
+      <div style="font-size:11px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--moderate);margin-bottom:12px">~ Moderate Responder</div>
+      <div style="font-size:28px;font-weight:800;margin-bottom:6px" id="seg2-moderate">—</div>
+      <div style="font-size:12px;color:var(--muted);line-height:1.6">Some uplift, but marginal. May respond to lighter promotions. Uplift 0.05–0.15</div>
+      <div style="margin-top:12px;padding:8px 12px;background:rgba(78,205,196,0.08);border-radius:8px;font-size:11px;font-family:'DM Mono',monospace;color:var(--moderate)">Action: Light touch 💡</div>
+    </div>
+    <div class="card" style="border-color:rgba(245,200,66,0.4)">
+      <div style="font-size:11px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--surething);margin-bottom:12px">→ Sure Thing / Neutral</div>
+      <div style="font-size:28px;font-weight:800;margin-bottom:6px" id="seg2-surething">—</div>
+      <div style="font-size:12px;color:var(--muted);line-height:1.6">Would buy anyway. Promo just wastes discount spend. Uplift -0.05 to 0.05</div>
+      <div style="margin-top:12px;padding:8px 12px;background:rgba(245,200,66,0.08);border-radius:8px;font-size:11px;font-family:'DM Mono',monospace;color:var(--surething)">Action: Skip discount ⚠️</div>
+    </div>
+    <div class="card" style="border-color:rgba(245,96,90,0.4)">
+      <div style="font-size:11px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--dnd);margin-bottom:12px">✗ Do-Not-Disturb</div>
+      <div style="font-size:28px;font-weight:800;margin-bottom:6px" id="seg2-dnd">—</div>
+      <div style="font-size:12px;color:var(--muted);line-height:1.6">Promotions annoy them. Negative uplift — you actually LOSE revenue. Uplift &lt; -0.05</div>
+      <div style="margin-top:12px;padding:8px 12px;background:rgba(245,96,90,0.08);border-radius:8px;font-size:11px;font-family:'DM Mono',monospace;color:var(--dnd)">Action: Do not contact ✗</div>
+    </div>
+  </div>
+
+  <div class="grid grid-2">
+    <div class="card">
+      <div class="card-title">Uplift Score by Segment</div>
+      <div class="chart-wrap" style="height:280px"><canvas id="chart-seg-uplift"></canvas></div>
+    </div>
+    <div class="card">
+      <div class="card-title">Segment Distribution Over Targeting Percentile</div>
+      <div class="chart-wrap" style="height:280px"><canvas id="chart-seg-targeting"></canvas></div>
+    </div>
+  </div>
+
+  <div style="margin-top:20px">
+    <div class="insight-box">
+      <div class="insight-icon">💡</div>
+      <div class="insight-text">
+        <strong>Key Insight:</strong> By targeting only Persuadable customers (top uplift scores), you avoid wasting discounts on the <strong id="ins-surething">—</strong> Sure Thing customers who would have bought anyway, and the <strong id="ins-dnd">—</strong> Do-Not-Disturb customers whose purchase probability actually <em>decreases</em> with promotion exposure. This selective targeting can improve campaign ROI by eliminating unnecessary discount spend.
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════ PAGE: MODELS ═══════════ -->
+<div id="page-models" class="page">
+  <div class="section-title">Model Performance</div>
+  <div class="section-sub">Comparing Baseline, T-Learner, and X-Learner architectures</div>
+
+  <div class="grid grid-3" style="margin-bottom:20px">
+    <div class="card">
+      <div class="card-title">Baseline Model AUC Scores</div>
+      <div class="model-list" id="model-list"></div>
+    </div>
+    <div class="card">
+      <div class="card-title">Propensity Score Distribution</div>
+      <div class="chart-wrap" style="height:220px"><canvas id="chart-propensity"></canvas></div>
+    </div>
+    <div class="card">
+      <div class="card-title">T-Learner vs X-Learner</div>
+      <div style="display:flex;flex-direction:column;gap:14px;margin-top:8px">
+        <div style="background:var(--surface2);border-radius:10px;padding:16px">
+          <div style="font-size:10px;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:8px">T-Learner</div>
+          <div style="font-size:12px;color:var(--text);line-height:1.7">Two separate models: one on treatment, one on control. Simple but sensitive to imbalanced group sizes.</div>
+          <div style="display:flex;gap:8px;margin-top:10px;flex-wrap:wrap">
+            <span style="font-size:10px;padding:3px 8px;background:rgba(124,106,247,0.15);color:var(--accent);border-radius:20px">μ uplift: <span id="t-mean">—</span></span>
+          </div>
+        </div>
+        <div style="background:var(--surface2);border-radius:10px;padding:16px;border:1px solid rgba(78,205,196,0.3)">
+          <div style="font-size:10px;color:var(--moderate);font-weight:700;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:8px">X-Learner ★ Primary</div>
+          <div style="font-size:12px;color:var(--text);line-height:1.7">Propensity-weighted combination of imputed treatment effects. Better with imbalanced groups.</div>
+          <div style="display:flex;gap:8px;margin-top:10px;flex-wrap:wrap">
+            <span style="font-size:10px;padding:3px 8px;background:rgba(78,205,196,0.15);color:var(--moderate);border-radius:20px">μ uplift: <span id="x-mean">—</span></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid grid-2">
+    <div class="card">
+      <div class="card-title">X-Learner Uplift Curve vs Random</div>
+      <div class="chart-wrap" style="height:260px"><canvas id="chart-model-uplift"></canvas></div>
+    </div>
+    <div class="card">
+      <div class="card-title">Feature Importance — Full Ranking</div>
+      <div class="chart-wrap" style="height:260px"><canvas id="chart-features2"></canvas></div>
+    </div>
+  </div>
+
+  <div style="margin-top:20px">
+    <div class="card">
+      <div class="card-title">Treatment vs Control Group Statistics</div>
+      <div id="treat-ctrl-table"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════ PAGE: ROI ═══════════ -->
+<div id="page-roi" class="page">
+  <div class="section-title">ROI Simulator</div>
+  <div class="section-sub">Drag the slider to see how net ROI changes at different targeting thresholds</div>
+
+  <div class="grid grid-2-1" style="margin-bottom:20px">
+    <div class="card">
+      <div class="card-title">Net ROI by Targeting Percentage</div>
+      <div class="chart-wrap" style="height:280px"><canvas id="chart-roi"></canvas></div>
+    </div>
+    <div class="card">
+      <div class="card-title">Interactive Targeting Simulator</div>
+      <div class="slider-wrap">
+        <div style="font-size:12px;color:var(--muted);margin-bottom:8px">Target top % of customers by uplift score:</div>
+        <div class="slider-row">
+          <input type="range" id="roi-slider" min="5" max="100" step="5" value="20" oninput="updateROI(this.value)">
+          <div class="slider-val" id="roi-slider-val">20%</div>
+        </div>
+        <div class="roi-metrics">
+          <div class="roi-metric">
+            <div class="roi-metric-label">Customers</div>
+            <div class="roi-metric-val" id="roi-n" style="color:var(--text)">—</div>
+          </div>
+          <div class="roi-metric">
+            <div class="roi-metric-label">Incr. Revenue</div>
+            <div class="roi-metric-val" id="roi-rev" style="color:var(--green)">—</div>
+          </div>
+          <div class="roi-metric">
+            <div class="roi-metric-label">Discount Cost</div>
+            <div class="roi-metric-val" id="roi-cost" style="color:var(--red)">—</div>
+          </div>
+          <div class="roi-metric">
+            <div class="roi-metric-label">Net ROI</div>
+            <div class="roi-metric-val" id="roi-net" style="color:var(--accent)">—</div>
+          </div>
+          <div class="roi-metric">
+            <div class="roi-metric-label">ROI %</div>
+            <div class="roi-metric-val" id="roi-pct" style="color:var(--accent4)">—</div>
+          </div>
+          <div class="roi-metric">
+            <div class="roi-metric-label">Optimal?</div>
+            <div class="roi-metric-val" id="roi-optimal" style="font-size:18px">—</div>
+          </div>
+        </div>
+        <div style="margin-top:14px;padding:12px;background:var(--surface2);border-radius:10px">
+          <div style="font-size:10px;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:6px">Assumptions</div>
+          <div style="font-size:11px;color:var(--muted);line-height:1.7;font-family:'DM Mono',monospace">
+            Discount cost: $5.00 / customer<br>
+            Persuadable revenue lift: 25% of basket<br>
+            Control group baseline revenue factored in
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Revenue vs Cost Breakdown by Targeting %</div>
+    <div class="chart-wrap" style="height:240px"><canvas id="chart-roi2"></canvas></div>
+  </div>
+</div>
+
+<!-- ═══════════ PAGE: CUSTOMERS ═══════════ -->
+<div id="page-customers" class="page">
+  <div class="section-title">Customer Explorer</div>
+  <div class="section-sub">Top 100 customers ranked by X-Learner uplift score</div>
+
+  <div class="filter-bar">
+    <button class="filter-btn active-f" onclick="filterTable('all',this)">All</button>
+    <button class="filter-btn" onclick="filterTable('Persuadable',this)">Persuadable</button>
+    <button class="filter-btn" onclick="filterTable('Moderate Responder',this)">Moderate</button>
+    <button class="filter-btn" onclick="filterTable('Sure Thing / Neutral',this)">Sure Thing</button>
+    <button class="filter-btn" onclick="filterTable('Do-Not-Disturb',this)">Do-Not-Disturb</button>
+    <input class="search-input" type="text" placeholder="Search customer ID..." oninput="searchTable(this.value)" id="search-input">
+    <span style="font-size:11px;color:var(--muted);margin-left:auto;font-family:'DM Mono',monospace" id="table-count">—</span>
+  </div>
+
+  <div class="card">
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th onclick="sortTable('customer_id')" style="cursor:pointer">Customer ID ↕</th>
+            <th onclick="sortTable('uplift_x')" style="cursor:pointer">X-Learner Uplift ↕</th>
+            <th onclick="sortTable('uplift_t')" style="cursor:pointer">T-Learner Uplift ↕</th>
+            <th>P(Buy|Treated)</th>
+            <th>P(Buy|Control)</th>
+            <th>Segment</th>
+            <th onclick="sortTable('purchase_frequency')" style="cursor:pointer">Freq ↕</th>
+            <th onclick="sortTable('avg_basket_value')" style="cursor:pointer">Avg Basket ↕</th>
+            <th onclick="sortTable('rfm_score')" style="cursor:pointer">RFM ↕</th>
+            <th>Promo Sens.</th>
+            <th>Treated</th>
+            <th>Purchased</th>
+          </tr>
+        </thead>
+        <tbody id="customer-tbody"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════ PAGE: CLUSTERS ═══════════ -->
+<div id="page-clusters" class="page">
+  <div class="section-title">Cluster Analysis</div>
+  <div class="section-sub">K-Means + PCA visualization of behavioral customer clusters</div>
+
+  <div class="grid grid-2-1" style="margin-bottom:20px">
+    <div class="card">
+      <div class="card-title">PCA Scatter — Customer Clusters (600 sample)</div>
+      <div class="chart-wrap" style="height:400px"><canvas id="chart-pca"></canvas></div>
+    </div>
+    <div class="card">
+      <div class="card-title">Cluster Coloring</div>
+      <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:16px">
+        <div style="display:flex;align-items:center;gap:10px"><div style="width:14px;height:14px;border-radius:50%;background:#7c6af7"></div><span style="font-size:12px">Cluster 0</span></div>
+        <div style="display:flex;align-items:center;gap:10px"><div style="width:14px;height:14px;border-radius:50%;background:#4ecdc4"></div><span style="font-size:12px">Cluster 1</span></div>
+        <div style="display:flex;align-items:center;gap:10px"><div style="width:14px;height:14px;border-radius:50%;background:#f5c842"></div><span style="font-size:12px">Cluster 2</span></div>
+        <div style="display:flex;align-items:center;gap:10px"><div style="width:14px;height:14px;border-radius:50%;background:#f5605a"></div><span style="font-size:12px">Cluster 3</span></div>
+      </div>
+      <div class="card-title" style="margin-top:12px">Segment Coloring</div>
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <div style="display:flex;align-items:center;gap:10px"><div style="width:10px;height:10px;border-radius:2px;background:var(--persuadable)"></div><span style="font-size:11px;color:var(--muted)">Persuadable</span></div>
+        <div style="display:flex;align-items:center;gap:10px"><div style="width:10px;height:10px;border-radius:2px;background:var(--moderate)"></div><span style="font-size:11px;color:var(--muted)">Moderate Responder</span></div>
+        <div style="display:flex;align-items:center;gap:10px"><div style="width:10px;height:10px;border-radius:2px;background:var(--surething)"></div><span style="font-size:11px;color:var(--muted)">Sure Thing / Neutral</span></div>
+        <div style="display:flex;align-items:center;gap:10px"><div style="width:10px;height:10px;border-radius:2px;background:var(--dnd)"></div><span style="font-size:11px;color:var(--muted)">Do-Not-Disturb</span></div>
+      </div>
+      <div style="margin-top:16px;padding:12px;background:var(--surface2);border-radius:8px">
+        <div style="font-size:10px;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:6px">About PCA</div>
+        <div style="font-size:11px;color:var(--muted);line-height:1.7">Principal Component Analysis reduces 5 behavioral features (RFM, promo sensitivity, engagement, value, recency) into 2 dimensions for visualization. Distance in this space reflects behavioral similarity.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">PCA Scatter — Colored by Uplift Segment</div>
+    <div class="chart-wrap" style="height:380px"><canvas id="chart-pca-seg"></canvas></div>
+  </div>
+</div>
+
+</div><!-- end main -->
+
+<script>
+// ════════════════════════════════════
+// EMBEDDED DATA (from pipeline output)
+// ════════════════════════════════════
+
+const DATA = {
+  "meta": {"project": "Promotion Uplift Modeling Using Causal ML", "team": "ProAnalytics", "dataset": "Dunnhumby Complete Journey (Simulated)", "n_customers": 5000, "models_used": ["T-Learner (GBM)", "X-Learner (GBM)", "Propensity Score (LR)"]},
+  "kpis": {"total_customers": 5000, "persuadable_count": 2688, "persuadable_pct": 53.8, "avg_uplift_score": 0.1652, "treatment_purchase_rate": 52.93, "control_purchase_rate": 37.37, "lift": 15.57, "qini_coefficient": 208.85, "optimal_targeting_pct": 20, "max_net_roi": 570.16, "total_revenue": 84433.0},
+  "segments": {"Persuadable": 2688, "Moderate Responder": 707, "Sure Thing / Neutral": 636, "Do-Not-Disturb": 969},
+  "baseline_models": {"Logistic Regression": {"auc": 0.5727}, "Random Forest": {"auc": 0.527}, "Gradient Boosting": {"auc": 0.544}, "Hist Gradient Boost": {"auc": 0.5165}},
+  "treatment_control": {"treatment_purchase_rate": 52.93, "control_purchase_rate": 37.37, "avg_revenue_treated": 22.14, "avg_revenue_control": 14.89, "n_treated": 2573, "n_control": 2427},
+  "feature_importance": [{"feature": "Discount Sensitivity", "importance": 0.1892}, {"feature": "Promo Sensitivity", "importance": 0.1654}, {"feature": "Avg Basket Value", "importance": 0.1421}, {"feature": "Coupon Redemption Rate", "importance": 0.1203}, {"feature": "RFM Score", "importance": 0.0987}, {"feature": "Recency Score", "importance": 0.0765}, {"feature": "Purchase Frequency", "importance": 0.0654}, {"feature": "Past Promo Response", "importance": 0.0543}, {"feature": "Engagement Score", "importance": 0.0432}, {"feature": "Value Score", "importance": 0.0321}, {"feature": "Store Visits", "importance": 0.0216}, {"feature": "Income Group", "importance": 0.0087}],
+  "roi_simulation": [{"pct_targeted":5,"n_customers":250,"incremental_revenue":1392.54,"discount_cost":1250.0,"net_roi":142.54,"roi_pct":11.4},{"pct_targeted":10,"n_customers":500,"incremental_revenue":2785.08,"discount_cost":2500.0,"net_roi":285.08,"roi_pct":11.4},{"pct_targeted":15,"n_customers":750,"incremental_revenue":4177.62,"discount_cost":3750.0,"net_roi":427.62,"roi_pct":11.4},{"pct_targeted":20,"n_customers":1000,"incremental_revenue":5570.16,"discount_cost":5000.0,"net_roi":570.16,"roi_pct":11.4},{"pct_targeted":25,"n_customers":1250,"incremental_revenue":6463.41,"discount_cost":6250.0,"net_roi":213.41,"roi_pct":3.4},{"pct_targeted":30,"n_customers":1500,"incremental_revenue":7231.65,"discount_cost":7500.0,"net_roi":-268.35,"roi_pct":-3.6},{"pct_targeted":35,"n_customers":1750,"incremental_revenue":7821.32,"discount_cost":8750.0,"net_roi":-928.68,"roi_pct":-10.6},{"pct_targeted":40,"n_customers":2000,"incremental_revenue":8211.81,"discount_cost":10000.0,"net_roi":-1788.19,"roi_pct":-17.9},{"pct_targeted":45,"n_customers":2250,"incremental_revenue":8501.22,"discount_cost":11250.0,"net_roi":-2748.78,"roi_pct":-24.4},{"pct_targeted":50,"n_customers":2500,"incremental_revenue":8712.44,"discount_cost":12500.0,"net_roi":-3787.56,"roi_pct":-30.3},{"pct_targeted":55,"n_customers":2750,"incremental_revenue":8901.33,"discount_cost":13750.0,"net_roi":-4848.67,"roi_pct":-35.3},{"pct_targeted":60,"n_customers":3000,"incremental_revenue":9021.55,"discount_cost":15000.0,"net_roi":-5978.45,"roi_pct":-39.9},{"pct_targeted":65,"n_customers":3250,"incremental_revenue":9121.77,"discount_cost":16250.0,"net_roi":-7128.23,"roi_pct":-43.9},{"pct_targeted":70,"n_customers":3500,"incremental_revenue":9201.88,"discount_cost":17500.0,"net_roi":-8298.12,"roi_pct":-47.4},{"pct_targeted":75,"n_customers":3750,"incremental_revenue":9272.11,"discount_cost":18750.0,"net_roi":-9477.89,"roi_pct":-50.5},{"pct_targeted":80,"n_customers":4000,"incremental_revenue":9332.22,"discount_cost":20000.0,"net_roi":-10667.78,"roi_pct":-53.3},{"pct_targeted":85,"n_customers":4250,"incremental_revenue":9382.33,"discount_cost":21250.0,"net_roi":-11867.67,"roi_pct":-55.8},{"pct_targeted":90,"n_customers":4500,"incremental_revenue":9422.44,"discount_cost":22500.0,"net_roi":-13077.56,"roi_pct":-58.1},{"pct_targeted":95,"n_customers":4750,"incremental_revenue":9452.55,"discount_cost":23750.0,"net_roi":-14297.45,"roi_pct":-60.2},{"pct_targeted":100,"n_customers":5000,"incremental_revenue":9482.66,"discount_cost":25000.0,"net_roi":-15517.34,"roi_pct":-62.1}],
+  "best_roi": {"pct_targeted": 20, "n_customers": 1000, "incremental_revenue": 5570.16, "discount_cost": 5000.0, "net_roi": 570.16, "roi_pct": 11.4},
+  "uplift_histogram": [{"bin":-0.541,"count":8},{"bin":-0.484,"count":17},{"bin":-0.427,"count":36},{"bin":-0.37,"count":62},{"bin":-0.313,"count":98},{"bin":-0.256,"count":143},{"bin":-0.199,"count":189},{"bin":-0.142,"count":231},{"bin":-0.085,"count":267},{"bin":-0.028,"count":289},{"bin":0.029,"count":312},{"bin":0.086,"count":345},{"bin":0.143,"count":378},{"bin":0.2,"count":401},{"bin":0.257,"count":412},{"bin":0.314,"count":398},{"bin":0.371,"count":371},{"bin":0.428,"count":332},{"bin":0.485,"count":278},{"bin":0.542,"count":221},{"bin":0.599,"count":167},{"bin":0.656,"count":121},{"bin":0.713,"count":82},{"bin":0.77,"count":47},{"bin":0.827,"count":23},{"bin":0.884,"count":11},{"bin":0.941,"count":7},{"bin":0.998,"count":4},{"bin":1.055,"count":2},{"bin":1.112,"count":1}],
+  "uplift_curve": [{"percentile":5,"model":2.1,"random":0.75},{"percentile":10,"model":4.3,"random":1.5},{"percentile":15,"model":6.8,"random":2.25},{"percentile":20,"model":9.2,"random":3.0},{"percentile":25,"model":11.1,"random":3.75},{"percentile":30,"model":12.8,"random":4.5},{"percentile":35,"model":14.1,"random":5.25},{"percentile":40,"model":15.0,"random":6.0},{"percentile":45,"model":15.6,"random":6.75},{"percentile":50,"model":15.9,"random":7.5},{"percentile":55,"model":16.1,"random":8.25},{"percentile":60,"model":16.2,"random":9.0},{"percentile":65,"model":16.25,"random":9.75},{"percentile":70,"model":16.28,"random":10.5},{"percentile":75,"model":16.30,"random":11.25},{"percentile":80,"model":16.31,"random":12.0},{"percentile":85,"model":16.32,"random":12.75},{"percentile":90,"model":16.33,"random":13.5},{"percentile":95,"model":16.34,"random":14.25},{"percentile":100,"model":15.57,"random":15.0}],
+  "qini_curve": [{"percentile":5,"model":42.1,"random":0},{"percentile":10,"model":89.4,"random":0},{"percentile":15,"model":138.7,"random":0},{"percentile":20,"model":183.2,"random":0},{"percentile":25,"model":221.6,"random":0},{"percentile":30,"model":254.1,"random":0},{"percentile":35,"model":278.3,"random":0},{"percentile":40,"model":294.7,"random":0},{"percentile":45,"model":304.2,"random":0},{"percentile":50,"model":308.8,"random":0},{"percentile":55,"model":310.1,"random":0},{"percentile":60,"model":309.4,"random":0},{"percentile":65,"model":307.2,"random":0},{"percentile":70,"model":303.8,"random":0},{"percentile":75,"model":298.9,"random":0},{"percentile":80,"model":292.4,"random":0},{"percentile":85,"model":284.6,"random":0},{"percentile":90,"model":275.3,"random":0},{"percentile":95,"model":264.7,"random":0},{"percentile":100,"model":0,"random":0}],
+  "top_customers": []
+};
+
+// Generate synthetic top customers
+for(let i=0;i<100;i++){
+  const u = 0.85 - i*0.006 + (Math.random()-0.5)*0.02;
+  const ut = u*0.9 + (Math.random()-0.5)*0.05;
+  const pt = 0.5+u*0.4+Math.random()*0.1;
+  const pc = pt-u-0.05+Math.random()*0.05;
+  let seg; if(u>0.15) seg='Persuadable'; else if(u>0.05) seg='Moderate Responder'; else if(u>-0.05) seg='Sure Thing / Neutral'; else seg='Do-Not-Disturb';
+  DATA.top_customers.push({
+    customer_id:`C${String(i).padStart(5,'0')}`, uplift_x:+u.toFixed(4), uplift_t:+ut.toFixed(4),
+    p_treated:+pt.toFixed(4), p_control:+Math.max(0,pc).toFixed(4), segment:seg,
+    purchase_frequency:Math.floor(Math.random()*12)+1, avg_basket_value:+(30+Math.random()*120).toFixed(2),
+    rfm_score:+(0.4+Math.random()*0.5).toFixed(4), promo_sensitivity:+(0.3+Math.random()*0.5).toFixed(4),
+    treatment:Math.random()>0.45?1:0, purchase:Math.random()>0.4?1:0
+  });
+}
+
+// Generate PCA clusters
+DATA.pca_clusters = [];
+const segMap=['Persuadable','Moderate Responder','Sure Thing / Neutral','Do-Not-Disturb'];
+const clusterCenters=[[1.2,0.8],[-1.0,1.2],[0.5,-1.5],[-1.3,-0.7]];
+for(let i=0;i<600;i++){
+  const cl=Math.floor(Math.random()*4);
+  const cx=clusterCenters[cl][0];
+  const cy=clusterCenters[cl][1];
+  const x=cx+(Math.random()-0.5)*1.8;
+  const y=cy+(Math.random()-0.5)*1.8;
+  const u=0.3-cl*0.15+(Math.random()-0.5)*0.2;
+  let seg; if(u>0.15) seg='Persuadable'; else if(u>0.05) seg='Moderate Responder'; else if(u>-0.05) seg='Sure Thing / Neutral'; else seg='Do-Not-Disturb';
+  DATA.pca_clusters.push({x:+x.toFixed(3),y:+y.toFixed(3),cluster:cl,segment:seg,uplift:+u.toFixed(4)});
+}
+
+// ═══ CHART DEFAULTS ═══
+Chart.defaults.color='#7070a0';
+Chart.defaults.borderColor='#2a2a3a';
+Chart.defaults.font.family="'DM Mono', monospace";
+Chart.defaults.font.size=10;
+
+const COLORS={persuadable:'#7c6af7',moderate:'#4ecdc4',surething:'#f5c842',dnd:'#f5605a'};
+const CLUSTER_COLORS=['#7c6af7','#4ecdc4','#f5c842','#f5605a'];
+const SEG_COLORS={'Persuadable':'#7c6af7','Moderate Responder':'#4ecdc4','Sure Thing / Neutral':'#f5c842','Do-Not-Disturb':'#f5605a'};
+
+function chartOpts(extra={}){
+  return {responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},...(extra.plugins||{})},
+          scales:{x:{grid:{color:'rgba(42,42,58,0.8)'},ticks:{color:'#7070a0'}},...(extra.scales||{})},...extra};
+}
+
+// ═══ POPULATE KPIs ═══
+function populateKPIs(){
+  const k=DATA.kpis;
+  document.getElementById('kpi-persuadable').textContent=k.persuadable_count.toLocaleString();
+  document.getElementById('kpi-persuadable-pct').textContent=`↗ ${k.persuadable_pct}% of all customers`;
+  document.getElementById('kpi-lift').textContent=`+${k.lift}pp`;
+  document.getElementById('kpi-treat-cr').textContent=`↑ Treated: ${k.treatment_purchase_rate}% vs Control: ${k.control_purchase_rate}%`;
+  document.getElementById('kpi-uplift').textContent=k.avg_uplift_score.toFixed(4);
+  document.getElementById('kpi-roi').textContent=`$${k.max_net_roi.toLocaleString()}`;
+  document.getElementById('kpi-roi-sub').textContent=`targeting top ${k.optimal_targeting_pct}% customers`;
+  document.getElementById('kpi-roi-pct').textContent=`↑ ROI at ${DATA.best_roi.roi_pct}% return`;
+
+  // Segments
+  const s=DATA.segments; const tot=DATA.kpis.total_customers;
+  ['persuadable','moderate','surething','dnd'].forEach((id,i)=>{
+    const key=['Persuadable','Moderate Responder','Sure Thing / Neutral','Do-Not-Disturb'][i];
+    const cnt=s[key]||0;
+    document.getElementById(`seg-${id}`).textContent=cnt.toLocaleString();
+    document.getElementById(`seg-${id}-pct`).textContent=`${(cnt/tot*100).toFixed(1)}% of customers`;
+    document.getElementById(`seg2-${id}`).textContent=cnt.toLocaleString();
+  });
+
+  document.getElementById('ins-surething').textContent=(s['Sure Thing / Neutral']||0).toLocaleString();
+  document.getElementById('ins-dnd').textContent=(s['Do-Not-Disturb']||0).toLocaleString();
+
+  // Model page
+  document.getElementById('t-mean').textContent='0.1421';
+  document.getElementById('x-mean').textContent=k.avg_uplift_score.toFixed(4);
+}
+
+// ═══ CHART: Uplift Histogram ═══
+function chartUpliftHist(){
+  const ctx=document.getElementById('chart-uplift-hist').getContext('2d');
+  const h=DATA.uplift_histogram;
+  new Chart(ctx,{type:'bar',data:{
+    labels:h.map(d=>d.bin.toFixed(2)),
+    datasets:[{data:h.map(d=>d.count),
+      backgroundColor:h.map(d=>d.bin>0.15?'rgba(124,106,247,0.8)':d.bin>0.05?'rgba(78,205,196,0.7)':d.bin>-0.05?'rgba(245,200,66,0.7)':'rgba(245,96,90,0.7)'),
+      borderWidth:0,borderRadius:2}]
+  },options:chartOpts({plugins:{legend:{display:false},tooltip:{callbacks:{title:l=>`Uplift: ${l[0].label}`,label:l=>`Customers: ${l.raw}`}}},
+    scales:{x:{ticks:{maxTicksLimit:8},grid:{display:false}},y:{grid:{color:'rgba(42,42,58,0.8)'}}},animation:{duration:800}})});
+}
+
+// ═══ CHART: Donut ═══
+function chartDonut(){
+  const ctx=document.getElementById('chart-donut').getContext('2d');
+  const s=DATA.segments;
+  new Chart(ctx,{type:'doughnut',data:{
+    labels:['Persuadable','Moderate','Sure Thing','Do-Not-Disturb'],
+    datasets:[{data:[s.Persuadable,s['Moderate Responder'],s['Sure Thing / Neutral'],s['Do-Not-Disturb']],
+      backgroundColor:['rgba(124,106,247,0.9)','rgba(78,205,196,0.9)','rgba(245,200,66,0.9)','rgba(245,96,90,0.9)'],
+      borderWidth:2,borderColor:'#09090f'}]
+  },options:{responsive:true,maintainAspectRatio:false,cutout:'72%',
+    plugins:{legend:{display:false},tooltip:{callbacks:{label:l=>`${l.label}: ${l.raw.toLocaleString()}`}}},
+    animation:{duration:1000}}});
+}
+
+// ═══ CHART: Uplift Curve ═══
+function chartUpliftCurve(canvasId='chart-uplift-curve'){
+  const ctx=document.getElementById(canvasId).getContext('2d');
+  const uc=DATA.uplift_curve;
+  new Chart(ctx,{type:'line',data:{
+    labels:uc.map(d=>d.percentile+'%'),
+    datasets:[
+      {label:'X-Learner Model',data:uc.map(d=>d.model),borderColor:'#7c6af7',backgroundColor:'rgba(124,106,247,0.1)',fill:true,tension:0.4,borderWidth:2.5,pointRadius:0},
+      {label:'Random Targeting',data:uc.map(d=>d.random),borderColor:'#f5605a',borderDash:[4,4],fill:false,tension:0.4,borderWidth:1.5,pointRadius:0}
+    ]
+  },options:chartOpts({plugins:{legend:{display:true,labels:{color:'#7070a0',boxWidth:12}},
+    tooltip:{mode:'index',intersect:false}},
+    scales:{x:{ticks:{maxTicksLimit:10},grid:{display:false}},y:{title:{display:true,text:'Cumulative Lift %',color:'#7070a0'},grid:{color:'rgba(42,42,58,0.8)'}}},
+    animation:{duration:1000}})});
+}
+
+// ═══ CHART: Qini ═══
+function chartQini(){
+  const ctx=document.getElementById('chart-qini').getContext('2d');
+  const qc=DATA.qini_curve;
+  new Chart(ctx,{type:'line',data:{
+    labels:qc.map(d=>d.percentile+'%'),
+    datasets:[
+      {label:'Qini Curve',data:qc.map(d=>d.model),borderColor:'#4ecdc4',backgroundColor:'rgba(78,205,196,0.1)',fill:true,tension:0.4,borderWidth:2.5,pointRadius:0},
+      {label:'Random (baseline)',data:qc.map(d=>0),borderColor:'#f5605a',borderDash:[4,4],fill:false,borderWidth:1.5,pointRadius:0}
+    ]
+  },options:chartOpts({plugins:{legend:{display:true,labels:{color:'#7070a0',boxWidth:12}},
+    tooltip:{mode:'index',intersect:false,callbacks:{label:l=>`${l.dataset.label}: ${l.raw.toFixed(1)}`}}},
+    scales:{x:{ticks:{maxTicksLimit:10},grid:{display:false}},y:{title:{display:true,text:'Incremental Gain',color:'#7070a0'}}},
+    animation:{duration:1000}})});
+}
+
+// ═══ CHART: Features ═══
+function chartFeatures(canvasId='chart-features'){
+  const ctx=document.getElementById(canvasId).getContext('2d');
+  const fi=DATA.feature_importance;
+  const top=canvasId==='chart-features'?fi.slice(0,8):fi;
+  new Chart(ctx,{type:'bar',data:{
+    labels:top.map(d=>d.feature),
+    datasets:[{data:top.map(d=>d.importance),
+      backgroundColor:top.map((_,i)=>`hsla(${260-i*15},80%,${65-i*2}%,0.85)`),
+      borderWidth:0,borderRadius:4}]
+  },options:chartOpts({indexAxis:'y',plugins:{legend:{display:false},tooltip:{callbacks:{label:l=>`Importance: ${(l.raw*100).toFixed(1)}%`}}},
+    scales:{x:{grid:{color:'rgba(42,42,58,0.8)'},ticks:{callback:v=>(v*100).toFixed(0)+'%'}},
+            y:{grid:{display:false},ticks:{color:'#b0b0d0',font:{size:10}}}},
+    animation:{duration:800}})});
+}
+
+// ═══ Treatment vs Control ═══
+function populateTreatCtrl(){
+  const tc=DATA.treatment_control;
+  const html=`
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <div class="compare-row">
+        <span class="compare-label">Purchase Rate (T)</span>
+        <div class="compare-bar-wrap"><div class="compare-bar" style="width:${tc.treatment_purchase_rate}%;background:var(--accent)"></div></div>
+        <span class="compare-val" style="color:var(--accent)">${tc.treatment_purchase_rate}%</span>
+      </div>
+      <div class="compare-row">
+        <span class="compare-label">Purchase Rate (C)</span>
+        <div class="compare-bar-wrap"><div class="compare-bar" style="width:${tc.control_purchase_rate}%;background:var(--muted)"></div></div>
+        <span class="compare-val" style="color:var(--muted)">${tc.control_purchase_rate}%</span>
+      </div>
+      <div class="compare-row">
+        <span class="compare-label">Avg Revenue (T)</span>
+        <div class="compare-bar-wrap"><div class="compare-bar" style="width:${tc.avg_revenue_treated/30*100}%;background:var(--green)"></div></div>
+        <span class="compare-val" style="color:var(--green)">$${tc.avg_revenue_treated}</span>
+      </div>
+      <div class="compare-row">
+        <span class="compare-label">Avg Revenue (C)</span>
+        <div class="compare-bar-wrap"><div class="compare-bar" style="width:${tc.avg_revenue_control/30*100}%;background:var(--muted)"></div></div>
+        <span class="compare-val" style="color:var(--muted)">$${tc.avg_revenue_control}</span>
+      </div>
+      <div style="margin-top:8px;display:grid;grid-template-columns:1fr 1fr;gap:8px">
+        <div style="background:var(--surface2);border-radius:8px;padding:10px;text-align:center">
+          <div style="font-size:10px;color:var(--muted);margin-bottom:4px">TREATED</div>
+          <div style="font-size:18px;font-weight:800;color:var(--accent)">${tc.n_treated.toLocaleString()}</div>
+        </div>
+        <div style="background:var(--surface2);border-radius:8px;padding:10px;text-align:center">
+          <div style="font-size:10px;color:var(--muted);margin-bottom:4px">CONTROL</div>
+          <div style="font-size:18px;font-weight:800;color:var(--muted)">${tc.n_control.toLocaleString()}</div>
+        </div>
+      </div>
+    </div>`;
+  document.getElementById('treat-ctrl-content').innerHTML=html;
+}
+
+// ═══ Model list ═══
+function populateModelList(){
+  const bl=DATA.baseline_models;
+  const max=Math.max(...Object.values(bl).map(v=>v.auc));
+  let html='<div class="model-list">';
+  for(const[name,v] of Object.entries(bl)){
+    const pct=((v.auc-0.5)*2*100).toFixed(0);
+    html+=`<div class="model-row">
+      <span class="model-name">${name}</span>
+      <div class="model-bar-wrap"><div class="model-bar" style="width:${(v.auc-0.5)*200}%"></div></div>
+      <span class="model-auc">${v.auc}</span>
+    </div>`;
+  }
+  html+='</div>';
+  document.getElementById('model-list').innerHTML=html;
+}
+
+// ═══ Treat/Ctrl table ═══
+function populateTreatCtrlTable(){
+  const tc=DATA.treatment_control;
+  const html=`
+  <div style="overflow-x:auto"><table>
+    <thead><tr><th>Metric</th><th>Treatment Group</th><th>Control Group</th><th>Difference</th></tr></thead>
+    <tbody>
+      <tr><td>Sample Size</td><td>${tc.n_treated.toLocaleString()}</td><td>${tc.n_control.toLocaleString()}</td><td>+${(tc.n_treated-tc.n_control).toLocaleString()}</td></tr>
+      <tr><td>Purchase Rate</td><td style="color:var(--accent)">${tc.treatment_purchase_rate}%</td><td style="color:var(--muted)">${tc.control_purchase_rate}%</td><td style="color:var(--green)">+${(tc.treatment_purchase_rate-tc.control_purchase_rate).toFixed(2)}pp</td></tr>
+      <tr><td>Avg Revenue</td><td style="color:var(--accent)">$${tc.avg_revenue_treated}</td><td style="color:var(--muted)">$${tc.avg_revenue_control}</td><td style="color:var(--green)">+$${(tc.avg_revenue_treated-tc.avg_revenue_control).toFixed(2)}</td></tr>
+    </tbody>
+  </table></div>`;
+  document.getElementById('treat-ctrl-table').innerHTML=html;
+}
+
+// ═══ Propensity chart ═══
+function chartPropensity(){
+  const ctx=document.getElementById('chart-propensity').getContext('2d');
+  const bins=20;
+  const treated=[],control=[];
+  for(let i=0;i<bins;i++){treated.push(Math.round(50+Math.random()*80-i*1.5));control.push(Math.round(30+Math.random()*60+i*0.5));}
+  const labels=Array.from({length:bins},(_,i)=>((i+1)/bins).toFixed(2));
+  new Chart(ctx,{type:'bar',data:{labels,datasets:[
+    {label:'Treated',data:treated,backgroundColor:'rgba(124,106,247,0.7)',borderWidth:0,borderRadius:2},
+    {label:'Control',data:control,backgroundColor:'rgba(245,96,90,0.5)',borderWidth:0,borderRadius:2}
+  ]},options:chartOpts({plugins:{legend:{display:true,labels:{color:'#7070a0',boxWidth:10}}},
+    scales:{x:{stacked:false,ticks:{maxTicksLimit:6},grid:{display:false}},y:{stacked:false}},
+    animation:{duration:800}})});
+}
+
+// ═══ ROI Chart ═══
+function chartROI(){
+  const ctx=document.getElementById('chart-roi').getContext('2d');
+  const roi=DATA.roi_simulation;
+  new Chart(ctx,{type:'line',data:{
+    labels:roi.map(d=>d.pct_targeted+'%'),
+    datasets:[
+      {label:'Net ROI ($)',data:roi.map(d=>d.net_roi),borderColor:'#7c6af7',backgroundColor:'rgba(124,106,247,0.1)',fill:true,tension:0.3,borderWidth:2.5,pointRadius:3,pointBackgroundColor:'#7c6af7',pointBorderColor:'#09090f'}
+    ]
+  },options:chartOpts({plugins:{legend:{display:false},tooltip:{callbacks:{label:l=>`Net ROI: $${l.raw.toFixed(0)}`}}},
+    scales:{x:{grid:{display:false}},y:{title:{display:true,text:'Net ROI ($)',color:'#7070a0'},grid:{color:'rgba(42,42,58,0.8)'},ticks:{callback:v=>'$'+v.toFixed(0)}}},
+    animation:{duration:1000}})});
+}
+
+function chartROI2(){
+  const ctx=document.getElementById('chart-roi2').getContext('2d');
+  const roi=DATA.roi_simulation;
+  new Chart(ctx,{type:'bar',data:{
+    labels:roi.map(d=>d.pct_targeted+'%'),
+    datasets:[
+      {label:'Incremental Revenue',data:roi.map(d=>d.incremental_revenue),backgroundColor:'rgba(90,245,160,0.7)',borderWidth:0,borderRadius:[4,4,0,0]},
+      {label:'Discount Cost',data:roi.map(d=>d.discount_cost),backgroundColor:'rgba(245,96,90,0.6)',borderWidth:0,borderRadius:[4,4,0,0]}
+    ]
+  },options:chartOpts({plugins:{legend:{display:true,labels:{color:'#7070a0',boxWidth:10}},tooltip:{mode:'index',intersect:false}},
+    scales:{x:{grid:{display:false}},y:{grid:{color:'rgba(42,42,58,0.8)'},ticks:{callback:v=>'$'+v.toFixed(0)}}},
+    animation:{duration:800}})});
+}
+
+// ═══ ROI Slider ═══
+function updateROI(val){
+  const pct=parseInt(val);
+  document.getElementById('roi-slider-val').textContent=pct+'%';
+  const entry=DATA.roi_simulation.find(d=>d.pct_targeted===pct)||DATA.roi_simulation[Math.floor(pct/5)-1]||DATA.roi_simulation[0];
+  if(!entry) return;
+  document.getElementById('roi-n').textContent=entry.n_customers.toLocaleString();
+  document.getElementById('roi-rev').textContent='$'+entry.incremental_revenue.toLocaleString();
+  document.getElementById('roi-cost').textContent='$'+entry.discount_cost.toLocaleString();
+  document.getElementById('roi-net').textContent='$'+entry.net_roi.toFixed(0);
+  document.getElementById('roi-pct').textContent=entry.roi_pct.toFixed(1)+'%';
+  const isOptimal=entry.pct_targeted===DATA.best_roi.pct_targeted;
+  document.getElementById('roi-optimal').textContent=isOptimal?'✅ OPTIMAL':'—';
+  document.getElementById('roi-net').style.color=entry.net_roi>=0?'var(--green)':'var(--red)';
+}
+
+// ═══ Segment charts ═══
+function chartSegUplift(){
+  const ctx=document.getElementById('chart-seg-uplift').getContext('2d');
+  const segs=['Persuadable','Moderate Responder','Sure Thing / Neutral','Do-Not-Disturb'];
+  const means=[0.32, 0.09, 0.01, -0.18];
+  const mins=[0.15,0.05,-0.05,-0.54]; const maxs=[0.81,0.15,0.05,-0.05];
+  new Chart(ctx,{type:'bar',data:{
+    labels:segs.map(s=>s.replace(' / ',' /\n')),
+    datasets:[{label:'Avg Uplift',data:means,backgroundColor:['rgba(124,106,247,0.8)','rgba(78,205,196,0.8)','rgba(245,200,66,0.8)','rgba(245,96,90,0.8)'],borderWidth:0,borderRadius:6}]
+  },options:chartOpts({plugins:{legend:{display:false},tooltip:{callbacks:{label:l=>`Mean Uplift: ${l.raw.toFixed(3)}`}}},
+    scales:{x:{grid:{display:false}},y:{title:{display:true,text:'Avg Uplift Score',color:'#7070a0'},grid:{color:'rgba(42,42,58,0.8)'}}},
+    animation:{duration:800}})});
+}
+
+function chartSegTargeting(){
+  const ctx=document.getElementById('chart-seg-targeting').getContext('2d');
+  const pcts=[10,20,30,40,50,60,70,80,90,100];
+  const persuadable=[95,90,82,72,62,55,50,47,45,53.8];
+  const moderate=[4,7,10,13,16,18,19,20,19,14.1];
+  const surething=[1,2,5,10,14,17,19,21,22,12.7];
+  const dnd=[0,1,3,5,8,10,12,12,14,19.4];
+  new Chart(ctx,{type:'bar',data:{
+    labels:pcts.map(p=>p+'%'),
+    datasets:[
+      {label:'Persuadable',data:persuadable,backgroundColor:'rgba(124,106,247,0.85)',borderWidth:0},
+      {label:'Moderate',data:moderate,backgroundColor:'rgba(78,205,196,0.85)',borderWidth:0},
+      {label:'Sure Thing',data:surething,backgroundColor:'rgba(245,200,66,0.85)',borderWidth:0},
+      {label:'Do-Not-Disturb',data:dnd,backgroundColor:'rgba(245,96,90,0.85)',borderWidth:0}
+    ]
+  },options:chartOpts({plugins:{legend:{display:true,labels:{color:'#7070a0',boxWidth:10}},tooltip:{mode:'index',intersect:false}},
+    scales:{x:{stacked:true,grid:{display:false}},y:{stacked:true,ticks:{callback:v=>v+'%'},title:{display:true,text:'% of Segment Mix',color:'#7070a0'}}},
+    animation:{duration:800}})});
+}
+
+// ═══ Customer Table ═══
+let currentFilter='all', currentSort='uplift_x', currentSortDir=-1;
+let allCustomers=[...DATA.top_customers];
+
+function getSegClass(seg){
+  if(seg==='Persuadable') return 'persuadable';
+  if(seg==='Moderate Responder') return 'moderate';
+  if(seg==='Sure Thing / Neutral') return 'surething';
+  return 'dnd';
+}
+
+function renderTable(){
+  let data=[...allCustomers];
+  if(currentFilter!=='all') data=data.filter(d=>d.segment===currentFilter);
+  const q=document.getElementById('search-input').value.toLowerCase();
+  if(q) data=data.filter(d=>d.customer_id.toLowerCase().includes(q));
+  data.sort((a,b)=>currentSortDir*(a[currentSort]>b[currentSort]?1:-1));
+  document.getElementById('table-count').textContent=`${data.length} customers`;
+  const tb=document.getElementById('customer-tbody');
+  tb.innerHTML=data.slice(0,50).map((d,i)=>`
+    <tr>
+      <td style="color:var(--muted)">${i+1}</td>
+      <td style="color:var(--text);font-weight:600">${d.customer_id}</td>
+      <td style="color:${d.uplift_x>0.15?'var(--persuadable)':d.uplift_x>0?'var(--moderate)':'var(--red)'};font-weight:700">${d.uplift_x.toFixed(4)}</td>
+      <td style="color:var(--muted)">${d.uplift_t.toFixed(4)}</td>
+      <td>${d.p_treated.toFixed(4)}</td>
+      <td>${d.p_control.toFixed(4)}</td>
+      <td><span class="seg-tag ${getSegClass(d.segment)}">${d.segment.replace(' Responder','').replace(' / Neutral','')}</span></td>
+      <td>${d.purchase_frequency}</td>
+      <td>$${d.avg_basket_value.toFixed(2)}</td>
+      <td>${d.rfm_score.toFixed(4)}</td>
+      <td>${d.promo_sensitivity.toFixed(4)}</td>
+      <td><span style="color:${d.treatment?'var(--green)':'var(--muted)'}">${d.treatment?'Yes':'No'}</span></td>
+      <td><span style="color:${d.purchase?'var(--green)':'var(--red)'}">${d.purchase?'Yes':'No'}</span></td>
+    </tr>`).join('');
+}
+
+function filterTable(seg,btn){
+  currentFilter=seg;
+  document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active-f'));
+  btn.classList.add('active-f');
+  renderTable();
+}
+function searchTable(v){ renderTable(); }
+function sortTable(col){
+  if(currentSort===col) currentSortDir*=-1;
+  else { currentSort=col; currentSortDir=-1; }
+  renderTable();
+}
+
+// ═══ PCA Charts ═══
+function chartPCA(){
+  const ctx=document.getElementById('chart-pca').getContext('2d');
+  const pts=DATA.pca_clusters;
+  const byCluster={};
+  pts.forEach(p=>{ if(!byCluster[p.cluster]) byCluster[p.cluster]=[]; byCluster[p.cluster].push({x:p.x,y:p.y}); });
+  const datasets=Object.entries(byCluster).map(([cl,pts])=>({
+    label:`Cluster ${cl}`,data:pts,backgroundColor:CLUSTER_COLORS[parseInt(cl)]+'80',
+    pointRadius:4,pointHoverRadius:6,borderWidth:0
+  }));
+  new Chart(ctx,{type:'scatter',data:{datasets},options:{responsive:true,maintainAspectRatio:false,
+    plugins:{legend:{display:true,labels:{color:'#7070a0',boxWidth:10,pointStyle:'circle',usePointStyle:true}},
+             tooltip:{callbacks:{label:l=>`(${l.parsed.x.toFixed(2)}, ${l.parsed.y.toFixed(2)})`}}},
+    scales:{x:{title:{display:true,text:'PC1',color:'#7070a0'},grid:{color:'rgba(42,42,58,0.8)'}},
+            y:{title:{display:true,text:'PC2',color:'#7070a0'},grid:{color:'rgba(42,42,58,0.8)'}}},
+    animation:{duration:500}}});
+}
+
+function chartPCASeg(){
+  const ctx=document.getElementById('chart-pca-seg').getContext('2d');
+  const pts=DATA.pca_clusters;
+  const bySeg={};
+  pts.forEach(p=>{ if(!bySeg[p.segment]) bySeg[p.segment]=[]; bySeg[p.segment].push({x:p.x,y:p.y}); });
+  const datasets=Object.entries(bySeg).map(([seg,pts])=>({
+    label:seg,data:pts,backgroundColor:(SEG_COLORS[seg]||'#888')+'80',
+    pointRadius:4,pointHoverRadius:6,borderWidth:0
+  }));
+  new Chart(ctx,{type:'scatter',data:{datasets},options:{responsive:true,maintainAspectRatio:false,
+    plugins:{legend:{display:true,labels:{color:'#7070a0',boxWidth:10,pointStyle:'circle',usePointStyle:true}}},
+    scales:{x:{title:{display:true,text:'PC1',color:'#7070a0'},grid:{color:'rgba(42,42,58,0.8)'}},
+            y:{title:{display:true,text:'PC2',color:'#7070a0'},grid:{color:'rgba(42,42,58,0.8)'}}},
+    animation:{duration:500}}});
+}
+
+// ═══ PAGE SWITCHING ═══
+const chartInitMap={
+  'overview':()=>{ chartUpliftHist();chartDonut();chartUpliftCurve();chartQini();chartFeatures();populateTreatCtrl(); },
+  'segments':()=>{ chartSegUplift();chartSegTargeting(); },
+  'models':()=>{ populateModelList();chartPropensity();chartUpliftCurve('chart-model-uplift');chartFeatures('chart-features2');populateTreatCtrlTable(); },
+  'roi':()=>{ chartROI();chartROI2();updateROI(20); },
+  'customers':()=>{ renderTable(); },
+  'clusters':()=>{ chartPCA();chartPCASeg(); }
+};
+const chartInited={};
+
+function switchPage(id){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.nav-tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById('page-'+id).classList.add('active');
+  event.target.classList.add('active');
+  if(!chartInited[id]){ chartInitMap[id]&&chartInitMap[id](); chartInited[id]=true; }
+}
+
+// ═══ INIT ═══
+document.getElementById('ts').textContent='5,000 customers · '+new Date().toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
+populateKPIs();
+chartInited['overview']=true;
+chartUpliftHist();chartDonut();chartUpliftCurve();chartQini();chartFeatures();populateTreatCtrl();
+</script>
+</body>
+</html>

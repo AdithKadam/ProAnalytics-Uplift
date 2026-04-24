@@ -1,0 +1,5498 @@
+{
+  "meta": {
+    "project": "Promotion Uplift Modeling Using Causal ML",
+    "team": "ProAnalytics",
+    "dataset": "Dunnhumby Complete Journey (Simulated)",
+    "n_customers": 2500,
+    "models_used": [
+      "T-Learner (XGBoost)",
+      "X-Learner (XGBoost)",
+      "Propensity Score (LR)"
+    ]
+  },
+  "kpis": {
+    "total_customers": 2500,
+    "persuadable_count": 0,
+    "persuadable_pct": 0.0,
+    "avg_uplift_score": -0.0001,
+    "treatment_purchase_rate": 91.41,
+    "control_purchase_rate": 67.17,
+    "lift": 24.23,
+    "qini_coefficient": -42.3157,
+    "optimal_targeting_pct": 5,
+    "max_net_roi": -625.0,
+    "total_revenue": 415504.0
+  },
+  "segments": {
+    "Persuadable": 0,
+    "Moderate Responder": 0,
+    "Sure Thing / Neutral": 2500,
+    "Do-Not-Disturb": 0
+  },
+  "uplift_histogram": [
+    {
+      "bin": -0.003,
+      "count": 43
+    },
+    {
+      "bin": -0.002,
+      "count": 94
+    },
+    {
+      "bin": -0.002,
+      "count": 58
+    },
+    {
+      "bin": -0.002,
+      "count": 34
+    },
+    {
+      "bin": -0.001,
+      "count": 33
+    },
+    {
+      "bin": -0.001,
+      "count": 591
+    },
+    {
+      "bin": -0.001,
+      "count": 434
+    },
+    {
+      "bin": -0.0,
+      "count": 198
+    },
+    {
+      "bin": -0.0,
+      "count": 167
+    },
+    {
+      "bin": 0.0,
+      "count": 171
+    },
+    {
+      "bin": 0.001,
+      "count": 216
+    },
+    {
+      "bin": 0.001,
+      "count": 258
+    },
+    {
+      "bin": 0.001,
+      "count": 111
+    },
+    {
+      "bin": 0.002,
+      "count": 6
+    },
+    {
+      "bin": 0.002,
+      "count": 6
+    },
+    {
+      "bin": 0.002,
+      "count": 3
+    },
+    {
+      "bin": 0.003,
+      "count": 4
+    },
+    {
+      "bin": 0.003,
+      "count": 0
+    },
+    {
+      "bin": 0.003,
+      "count": 3
+    },
+    {
+      "bin": 0.003,
+      "count": 1
+    },
+    {
+      "bin": 0.004,
+      "count": 9
+    },
+    {
+      "bin": 0.004,
+      "count": 1
+    },
+    {
+      "bin": 0.004,
+      "count": 5
+    },
+    {
+      "bin": 0.005,
+      "count": 5
+    },
+    {
+      "bin": 0.005,
+      "count": 7
+    },
+    {
+      "bin": 0.005,
+      "count": 4
+    },
+    {
+      "bin": 0.006,
+      "count": 7
+    },
+    {
+      "bin": 0.006,
+      "count": 4
+    },
+    {
+      "bin": 0.006,
+      "count": 9
+    },
+    {
+      "bin": 0.007,
+      "count": 18
+    }
+  ],
+  "uplift_curve": [
+    {
+      "percentile": 5.0,
+      "model": -3.452
+    },
+    {
+      "percentile": 10.0,
+      "model": -8.857
+    },
+    {
+      "percentile": 15.0,
+      "model": -12.582
+    },
+    {
+      "percentile": 20.0,
+      "model": -14.405
+    },
+    {
+      "percentile": 25.0,
+      "model": -13.522
+    },
+    {
+      "percentile": 30.0,
+      "model": -12.028
+    },
+    {
+      "percentile": 35.0,
+      "model": -10.03
+    },
+    {
+      "percentile": 40.0,
+      "model": -8.476
+    },
+    {
+      "percentile": 45.0,
+      "model": -7.098
+    },
+    {
+      "percentile": 50.0,
+      "model": -6.06
+    },
+    {
+      "percentile": 55.0,
+      "model": -5.295
+    },
+    {
+      "percentile": 60.0,
+      "model": -4.082
+    },
+    {
+      "percentile": 65.0,
+      "model": -3.137
+    },
+    {
+      "percentile": 70.0,
+      "model": -2.394
+    },
+    {
+      "percentile": 75.0,
+      "model": -1.643
+    },
+    {
+      "percentile": 80.0,
+      "model": -1.025
+    },
+    {
+      "percentile": 85.0,
+      "model": -0.454
+    },
+    {
+      "percentile": 90.0,
+      "model": 2.773
+    },
+    {
+      "percentile": 95.0,
+      "model": 13.769
+    },
+    {
+      "percentile": 100.0,
+      "model": 24.235
+    }
+  ],
+  "qini_curve": [
+    {
+      "percentile": 5.0,
+      "model": -75.87,
+      "random": 0
+    },
+    {
+      "percentile": 10.0,
+      "model": -77.44,
+      "random": 0
+    },
+    {
+      "percentile": 15.0,
+      "model": -76.75,
+      "random": 0
+    },
+    {
+      "percentile": 20.0,
+      "model": -75.38,
+      "random": 0
+    },
+    {
+      "percentile": 25.0,
+      "model": -74.94,
+      "random": 0
+    },
+    {
+      "percentile": 30.0,
+      "model": -73.21,
+      "random": 0
+    },
+    {
+      "percentile": 35.0,
+      "model": -70.03,
+      "random": 0
+    },
+    {
+      "percentile": 40.0,
+      "model": -66.81,
+      "random": 0
+    },
+    {
+      "percentile": 45.0,
+      "model": -63.7,
+      "random": 0
+    },
+    {
+      "percentile": 50.0,
+      "model": -59.25,
+      "random": 0
+    },
+    {
+      "percentile": 55.0,
+      "model": -54.63,
+      "random": 0
+    },
+    {
+      "percentile": 60.0,
+      "model": -45.83,
+      "random": 0
+    },
+    {
+      "percentile": 65.0,
+      "model": -36.52,
+      "random": 0
+    },
+    {
+      "percentile": 70.0,
+      "model": -26.13,
+      "random": 0
+    },
+    {
+      "percentile": 75.0,
+      "model": -15.81,
+      "random": 0
+    },
+    {
+      "percentile": 80.0,
+      "model": -5.33,
+      "random": 0
+    },
+    {
+      "percentile": 85.0,
+      "model": 5.15,
+      "random": 0
+    },
+    {
+      "percentile": 90.0,
+      "model": 8.23,
+      "random": 0
+    },
+    {
+      "percentile": 95.0,
+      "model": 0.0,
+      "random": 0
+    },
+    {
+      "percentile": 100.0,
+      "model": 0.0,
+      "random": 0
+    }
+  ],
+  "feature_importance": [
+    {
+      "feature": "Recency Days",
+      "importance": 1.0
+    },
+    {
+      "feature": "Age Encoded",
+      "importance": 0.0
+    },
+    {
+      "feature": "Income Encoded",
+      "importance": 0.0
+    },
+    {
+      "feature": "Household Size",
+      "importance": 0.0
+    },
+    {
+      "feature": "Married",
+      "importance": 0.0
+    },
+    {
+      "feature": "Purchase Frequency",
+      "importance": 0.0
+    },
+    {
+      "feature": "Avg Basket Value",
+      "importance": 0.0
+    },
+    {
+      "feature": "Num Categories",
+      "importance": 0.0
+    },
+    {
+      "feature": "Coupon Redemption Rate",
+      "importance": 0.0
+    },
+    {
+      "feature": "Weekend Shopper",
+      "importance": 0.0
+    },
+    {
+      "feature": "Store Visits",
+      "importance": 0.0
+    },
+    {
+      "feature": "Past Promo Response",
+      "importance": 0.0
+    }
+  ],
+  "baseline_models": {
+    "Logistic Regression": {
+      "auc": 0.9999
+    },
+    "Random Forest": {
+      "auc": 1.0
+    },
+    "XGBoost": {
+      "auc": 1.0
+    },
+    "Gradient Boosting": {
+      "auc": 1.0
+    }
+  },
+  "treatment_control": {
+    "treatment_purchase_rate": 91.41,
+    "control_purchase_rate": 67.17,
+    "avg_revenue_treated": 225.01,
+    "avg_revenue_control": 76.05,
+    "n_treated": 1513,
+    "n_control": 987
+  },
+  "roi_simulation": [
+    {
+      "pct_targeted": 5,
+      "n_customers": 125,
+      "incremental_revenue": 0.0,
+      "discount_cost": 625.0,
+      "net_roi": -625.0,
+      "roi_pct": -100.0
+    },
+    {
+      "pct_targeted": 10,
+      "n_customers": 250,
+      "incremental_revenue": 0.0,
+      "discount_cost": 1250.0,
+      "net_roi": -1250.0,
+      "roi_pct": -100.0
+    },
+    {
+      "pct_targeted": 15,
+      "n_customers": 375,
+      "incremental_revenue": 0.0,
+      "discount_cost": 1875.0,
+      "net_roi": -1875.0,
+      "roi_pct": -100.0
+    },
+    {
+      "pct_targeted": 20,
+      "n_customers": 500,
+      "incremental_revenue": 0.0,
+      "discount_cost": 2500.0,
+      "net_roi": -2500.0,
+      "roi_pct": -100.0
+    },
+    {
+      "pct_targeted": 25,
+      "n_customers": 625,
+      "incremental_revenue": 0.0,
+      "discount_cost": 3125.0,
+      "net_roi": -3125.0,
+      "roi_pct": -100.0
+    },
+    {
+      "pct_targeted": 30,
+      "n_customers": 750,
+      "incremental_revenue": 0.0,
+      "discount_cost": 3750.0,
+      "net_roi": -3750.0,
+      "roi_pct": -100.0
+    },
+    {
+      "pct_targeted": 35,
+      "n_customers": 875,
+      "incremental_revenue": 0.0,
+      "discount_cost": 4375.0,
+      "net_roi": -4375.0,
+      "roi_pct": -100.0
+    },
+    {
+      "pct_targeted": 40,
+      "n_customers": 1000,
+      "incremental_revenue": 0.0,
+      "discount_cost": 5000.0,
+      "net_roi": -5000.0,
+      "roi_pct": -100.0
+    },
+    {
+      "pct_targeted": 45,
+      "n_customers": 1125,
+      "incremental_revenue": 0.0,
+      "discount_cost": 5625.0,
+      "net_roi": -5625.0,
+      "roi_pct": -100.0
+    },
+    {
+      "pct_targeted": 50,
+      "n_customers": 1250,
+      "incremental_revenue": 0.0,
+      "discount_cost": 6250.0,
+      "net_roi": -6250.0,
+      "roi_pct": -100.0
+    },
+    {
+      "pct_targeted": 55,
+      "n_customers": 1375,
+      "incremental_revenue": 0.0,
+      "discount_cost": 6875.0,
+      "net_roi": -6875.0,
+      "roi_pct": -100.0
+    },
+    {
+      "pct_targeted": 60,
+      "n_customers": 1500,
+      "incremental_revenue": 0.0,
+      "discount_cost": 7500.0,
+      "net_roi": -7500.0,
+      "roi_pct": -100.0
+    },
+    {
+      "pct_targeted": 65,
+      "n_customers": 1625,
+      "incremental_revenue": 0.0,
+      "discount_cost": 8125.0,
+      "net_roi": -8125.0,
+      "roi_pct": -100.0
+    },
+    {
+      "pct_targeted": 70,
+      "n_customers": 1750,
+      "incremental_revenue": 0.0,
+      "discount_cost": 8750.0,
+      "net_roi": -8750.0,
+      "roi_pct": -100.0
+    },
+    {
+      "pct_targeted": 75,
+      "n_customers": 1875,
+      "incremental_revenue": 0.0,
+      "discount_cost": 9375.0,
+      "net_roi": -9375.0,
+      "roi_pct": -100.0
+    },
+    {
+      "pct_targeted": 80,
+      "n_customers": 2000,
+      "incremental_revenue": 0.0,
+      "discount_cost": 10000.0,
+      "net_roi": -10000.0,
+      "roi_pct": -100.0
+    },
+    {
+      "pct_targeted": 85,
+      "n_customers": 2125,
+      "incremental_revenue": 0.0,
+      "discount_cost": 10625.0,
+      "net_roi": -10625.0,
+      "roi_pct": -100.0
+    },
+    {
+      "pct_targeted": 90,
+      "n_customers": 2250,
+      "incremental_revenue": 0.0,
+      "discount_cost": 11250.0,
+      "net_roi": -11250.0,
+      "roi_pct": -100.0
+    },
+    {
+      "pct_targeted": 95,
+      "n_customers": 2375,
+      "incremental_revenue": 0.0,
+      "discount_cost": 11875.0,
+      "net_roi": -11875.0,
+      "roi_pct": -100.0
+    },
+    {
+      "pct_targeted": 100,
+      "n_customers": 2500,
+      "incremental_revenue": 0.0,
+      "discount_cost": 12500.0,
+      "net_roi": -12500.0,
+      "roi_pct": -100.0
+    }
+  ],
+  "best_roi": {
+    "pct_targeted": 5,
+    "n_customers": 125,
+    "incremental_revenue": 0.0,
+    "discount_cost": 625.0,
+    "net_roi": -625.0,
+    "roi_pct": -100.0
+  },
+  "pca_clusters": [
+    {
+      "x": -0.91,
+      "y": 1.195,
+      "cluster": 1,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0005
+    },
+    {
+      "x": -1.054,
+      "y": 0.369,
+      "cluster": 1,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0007
+    },
+    {
+      "x": 0.604,
+      "y": 1.027,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": 0.004
+    },
+    {
+      "x": -0.84,
+      "y": 0.121,
+      "cluster": 1,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0007
+    },
+    {
+      "x": -0.16,
+      "y": 0.519,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": 0.0002
+    },
+    {
+      "x": 0.021,
+      "y": 0.683,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": 0.0003
+    },
+    {
+      "x": 2.328,
+      "y": 2.105,
+      "cluster": 3,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0021
+    },
+    {
+      "x": -0.791,
+      "y": -0.238,
+      "cluster": 1,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0007
+    },
+    {
+      "x": 0.263,
+      "y": -0.244,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": 0.0009
+    },
+    {
+      "x": -0.221,
+      "y": -0.626,
+      "cluster": 3,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0004
+    },
+    {
+      "x": -0.825,
+      "y": 0.736,
+      "cluster": 1,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0007
+    },
+    {
+      "x": 0.892,
+      "y": 1.994,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0022
+    },
+    {
+      "x": -0.456,
+      "y": 1.622,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0006
+    },
+    {
+      "x": -0.084,
+      "y": 0.865,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": 0.0012
+    },
+    {
+      "x": -0.715,
+      "y": 0.139,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0007
+    },
+    {
+      "x": 0.837,
+      "y": -0.382,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0021
+    },
+    {
+      "x": 0.58,
+      "y": -0.175,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0001
+    },
+    {
+      "x": -0.585,
+      "y": -0.162,
+      "cluster": 3,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0007
+    },
+    {
+      "x": -0.439,
+      "y": -1.079,
+      "cluster": 3,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0002
+    },
+    {
+      "x": 0.749,
+      "y": -0.909,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0009
+    },
+    {
+      "x": -0.421,
+      "y": 1.062,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0007
+    },
+    {
+      "x": 6.185,
+      "y": -2.672,
+      "cluster": 2,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0025
+    },
+    {
+      "x": -1.124,
+      "y": -0.0,
+      "cluster": 1,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0007
+    },
+    {
+      "x": 1.526,
+      "y": 1.339,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.002
+    },
+    {
+      "x": -0.71,
+      "y": 0.3,
+      "cluster": 1,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0007
+    },
+    {
+      "x": -0.697,
+      "y": 0.736,
+      "cluster": 1,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0005
+    },
+    {
+      "x": -0.166,
+      "y": 1.58,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": 0.001
+    },
+    {
+      "x": -0.178,
+      "y": 0.692,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0004
+    },
+    {
+      "x": -0.736,
+      "y": -0.052,
+      "cluster": 1,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0007
+    },
+    {
+      "x": -0.87,
+      "y": 0.337,
+      "cluster": 1,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0006
+    },
+    {
+      "x": -0.031,
+      "y": -0.692,
+      "cluster": 3,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0007
+    },
+    {
+      "x": 0.483,
+      "y": 0.504,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": 0.0008
+    },
+    {
+      "x": 0.428,
+      "y": -0.338,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": 0.0012
+    },
+    {
+      "x": 0.007,
+      "y": -0.16,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0007
+    },
+    {
+      "x": -1.0,
+      "y": -0.047,
+      "cluster": 1,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0007
+    },
+    {
+      "x": 1.534,
+      "y": 2.001,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.002
+    },
+    {
+      "x": -0.931,
+      "y": -1.009,
+      "cluster": 3,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0007
+    },
+    {
+      "x": -0.235,
+      "y": 2.754,
+      "cluster": 3,
+      "segment": "Sure Thing / Neutral",
+      "uplift": 0.0012
+    },
+    {
+      "x": -0.214,
+      "y": -1.658,
+      "cluster": 3,
+      "segment": "Sure Thing / Neutral",
+      "uplift": 0.0003
+    },
+    {
+      "x": -1.347,
+      "y": -0.176,
+      "cluster": 1,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0007
+    },
+    {
+      "x": -0.293,
+      "y": 0.381,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": 0.0009
+    },
+    {
+      "x": 1.2,
+      "y": 1.442,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.002
+    },
+    {
+      "x": 0.007,
+      "y": 1.002,
+      "cluster": 3,
+      "segment": "Sure Thing / Neutral",
+      "uplift": 0.0009
+    },
+    {
+      "x": 0.75,
+      "y": -1.277,
+      "cluster": 3,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0013
+    },
+    {
+      "x": -1.404,
+      "y": -0.992,
+      "cluster": 1,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0007
+    },
+    {
+      "x": -0.146,
+      "y": -0.971,
+      "cluster": 3,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0009
+    },
+    {
+      "x": -0.136,
+      "y": 0.398,
+      "cluster": 3,
+      "segment": "Sure Thing / Neutral",
+      "uplift": 0.001
+    },
+    {
+      "x": -0.216,
+      "y": 0.149,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0002
+    },
+    {
+      "x": -0.026,
+      "y": 0.858,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": 0.0011
+    },
+    {
+      "x": -0.378,
+      "y": 1.059,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0004
+    },
+    {
+      "x": -2.103,
+      "y": -0.892,
+      "cluster": 1,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0007
+    },
+    {
+      "x": -0.757,
+      "y": -0.248,
+      "cluster": 1,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0009
+    },
+    {
+      "x": 0.101,
+      "y": 0.588,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": 0.0003
+    },
+    {
+      "x": 0.303,
+      "y": 0.612,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": 0.0065
+    },
+    {
+      "x": -0.65,
+      "y": 0.492,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0003
+    },
+    {
+      "x": -0.812,
+      "y": -0.214,
+      "cluster": 1,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0007
+    },
+    {
+      "x": 1.033,
+      "y": 1.697,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.002
+    },
+    {
+      "x": -0.019,
+      "y": -1.844,
+      "cluster": 3,
+      "segment": "Sure Thing / Neutral",
+      "uplift": 0.001
+    },
+    {
+      "x": -0.606,
+      "y": 0.314,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0007
+    },
+    {
+      "x": -0.717,
+      "y": 0.945,
+      "cluster": 1,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0007
+    },
+    {
+      "x": -0.045,
+      "y": 1.974,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": 0.0004
+    },
+    {
+      "x": 0.094,
+      "y": 1.581,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": 0.0013
+    },
+    {
+      "x": -0.311,
+      "y": 0.025,
+      "cluster": 3,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0007
+    },
+    {
+      "x": -0.414,
+      "y": 1.244,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0006
+    },
+    {
+      "x": -0.177,
+      "y": -0.205,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": 0.0003
+    },
+    {
+      "x": -0.64,
+      "y": -1.772,
+      "cluster": 3,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0007
+    },
+    {
+      "x": -0.083,
+      "y": 0.473,
+      "cluster": 3,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0006
+    },
+    {
+      "x": -0.193,
+      "y": 0.935,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": 0.0006
+    },
+    {
+      "x": 0.618,
+      "y": -0.34,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0012
+    },
+    {
+      "x": -0.355,
+      "y": -1.214,
+      "cluster": 3,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0009
+    },
+    {
+      "x": -1.011,
+      "y": 0.295,
+      "cluster": 1,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0007
+    },
+    {
+      "x": -1.265,
+      "y": -1.34,
+      "cluster": 1,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0007
+    },
+    {
+      "x": -0.635,
+      "y": 0.691,
+      "cluster": 1,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0006
+    },
+    {
+      "x": -0.846,
+      "y": 0.818,
+      "cluster": 1,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0007
+    },
+    {
+      "x": -0.193,
+      "y": -0.587,
+      "cluster": 3,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0005
+    },
+    {
+      "x": 1.302,
+      "y": -1.64,
+      "cluster": 3,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0015
+    },
+    {
+      "x": 0.157,
+      "y": 0.447,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": 0.0001
+    },
+    {
+      "x": -1.615,
+      "y": 1.045,
+      "cluster": 1,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0007
+    },
+    {
+      "x": 0.365,
+      "y": 0.799,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": 0.0013
+    },
+    {
+      "x": -0.056,
+      "y": 0.984,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": 0.0009
+    },
+    {
+      "x": -0.182,
+      "y": 1.406,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": 0.0003
+    },
+    {
+      "x": -0.666,
+      "y": -0.026,
+      "cluster": 1,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0004
+    },
+    {
+      "x": -0.611,
+      "y": 0.391,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0007
+    },
+    {
+      "x": -0.526,
+      "y": 0.708,
+      "cluster": 1,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0007
+    },
+    {
+      "x": -0.481,
+      "y": 1.039,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0006
+    },
+    {
+      "x": -0.233,
+      "y": 0.975,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": 0.0001
+    },
+    {
+      "x": -0.893,
+      "y": 0.106,
+      "cluster": 1,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0007
+    },
+    {
+      "x": -0.466,
+      "y": 0.271,
+      "cluster": 3,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0004
+    },
+    {
+      "x": -0.272,
+      "y": -0.78,
+      "cluster": 3,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0002
+    },
+    {
+      "x": 1.845,
+      "y": 0.047,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": 0.0007
+    },
+    {
+      "x": -0.536,
+      "y": 1.026,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0006
+    },
+    {
+      "x": -0.067,
+      "y": -0.519,
+      "cluster": 3,
+      "segment": "Sure Thing / Neutral",
+      "uplift": 0.0013
+    },
+    {
+      "x": 0.116,
+      "y": 1.145,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": 0.0005
+    },
+    {
+      "x": -0.226,
+      "y": 1.664,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0001
+    },
+    {
+      "x": -1.76,
+      "y": -1.455,
+      "cluster": 1,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0007
+    },
+    {
+      "x": -0.43,
+      "y": -0.63,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": 0.0007
+    },
+    {
+      "x": 13.092,
+      "y": 0.861,
+      "cluster": 2,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0025
+    },
+    {
+      "x": -0.379,
+      "y": 0.443,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": 0.0007
+    },
+    {
+      "x": -1.317,
+      "y": 0.152,
+      "cluster": 1,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0007
+    },
+    {
+      "x": 0.155,
+      "y": -0.28,
+      "cluster": 3,
+      "segment": "Sure Thing / Neutral",
+      "uplift": 0.0012
+    },
+    {
+      "x": -0.801,
+      "y": 0.747,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0007
+    },
+    {
+      "x": 0.037,
+      "y": 1.452,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": 0.0011
+    },
+    {
+      "x": -0.311,
+      "y": -0.756,
+      "cluster": 3,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0007
+    },
+    {
+      "x": 0.933,
+      "y": 0.583,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0019
+    },
+    {
+      "x": 1.478,
+      "y": -0.556,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": 0.0039
+    },
+    {
+      "x": -0.279,
+      "y": -0.138,
+      "cluster": 3,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0001
+    },
+    {
+      "x": 1.293,
+      "y": -0.254,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0021
+    },
+    {
+      "x": 0.931,
+      "y": -0.446,
+      "cluster": 3,
+      "segment": "Sure Thing / Neutral",
+      "uplift": 0.004
+    },
+    {
+      "x": -0.389,
+      "y": -1.054,
+      "cluster": 3,
+      "segment": "Sure Thing / Neutral",
+      "uplift": 0.0005
+    },
+    {
+      "x": -0.178,
+      "y": -0.575,
+      "cluster": 3,
+      "segment": "Sure Thing / Neutral",
+      "uplift": 0.0003
+    },
+    {
+      "x": -0.036,
+      "y": 0.298,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0
+    },
+    {
+      "x": 0.6,
+      "y": -0.086,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0006
+    },
+    {
+      "x": 0.295,
+      "y": 1.208,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": 0.0011
+    },
+    {
+      "x": -0.131,
+      "y": -0.703,
+      "cluster": 3,
+      "segment": "Sure Thing / Neutral",
+      "uplift": 0.0005
+    },
+    {
+      "x": 3.09,
+      "y": -0.628,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": 0.0002
+    },
+    {
+      "x": -0.562,
+      "y": -0.563,
+      "cluster": 3,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0007
+    },
+    {
+      "x": 1.167,
+      "y": 0.834,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0022
+    },
+    {
+      "x": -0.089,
+      "y": -0.493,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": 0.0002
+    },
+    {
+      "x": -0.338,
+      "y": -0.66,
+      "cluster": 3,
+      "segment": "Sure Thing / Neutral",
+      "uplift": 0.0006
+    },
+    {
+      "x": -0.678,
+      "y": -0.092,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0003
+    },
+    {
+      "x": -0.193,
+      "y": 0.463,
+      "cluster": 3,
+      "segment": "Sure Thing / Neutral",
+      "uplift": 0.0003
+    },
+    {
+      "x": -1.81,
+      "y": -0.609,
+      "cluster": 1,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0007
+    },
+    {
+      "x": 0.726,
+      "y": -1.743,
+      "cluster": 3,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0022
+    },
+    {
+      "x": -0.42,
+      "y": -0.941,
+      "cluster": 3,
+      "segment": "Sure Thing / Neutral",
+      "uplift": 0.0003
+    },
+    {
+      "x": 0.508,
+      "y": 1.507,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": 0.0012
+    },
+    {
+      "x": -0.46,
+      "y": -1.076,
+      "cluster": 3,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0002
+    },
+    {
+      "x": 0.288,
+      "y": -0.78,
+      "cluster": 3,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0003
+    },
+    {
+      "x": -1.431,
+      "y": -1.327,
+      "cluster": 1,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0007
+    },
+    {
+      "x": -0.93,
+      "y": 0.32,
+      "cluster": 1,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0007
+    },
+    {
+      "x": 1.825,
+      "y": -0.799,
+      "cluster": 3,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0019
+    },
+    {
+      "x": -0.186,
+      "y": -0.022,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": 0.0005
+    },
+    {
+      "x": -0.197,
+      "y": 0.684,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0003
+    },
+    {
+      "x": -0.05,
+      "y": -0.09,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": 0.0007
+    },
+    {
+      "x": -0.696,
+      "y": -0.213,
+      "cluster": 3,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0007
+    },
+    {
+      "x": 2.372,
+      "y": -0.435,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0022
+    },
+    {
+      "x": 0.844,
+      "y": 1.574,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": 0.0041
+    },
+    {
+      "x": -1.152,
+      "y": -1.128,
+      "cluster": 1,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0007
+    },
+    {
+      "x": -0.12,
+      "y": -1.464,
+      "cluster": 3,
+      "segment": "Sure Thing / Neutral",
+      "uplift": 0.0009
+    },
+    {
+      "x": -0.987,
+      "y": -1.011,
+      "cluster": 1,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0007
+    },
+    {
+      "x": 0.255,
+      "y": -0.495,
+      "cluster": 3,
+      "segment": "Sure Thing / Neutral",
+      "uplift": 0.0008
+    },
+    {
+      "x": -0.593,
+      "y": 0.555,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0004
+    },
+    {
+      "x": 0.081,
+      "y": 0.1,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": 0.0009
+    },
+    {
+      "x": -0.379,
+      "y": -1.049,
+      "cluster": 3,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0006
+    },
+    {
+      "x": -1.926,
+      "y": 0.775,
+      "cluster": 1,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0007
+    },
+    {
+      "x": -0.171,
+      "y": -0.18,
+      "cluster": 3,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0007
+    },
+    {
+      "x": 1.116,
+      "y": 1.053,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0021
+    },
+    {
+      "x": -0.565,
+      "y": 0.933,
+      "cluster": 1,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0008
+    },
+    {
+      "x": 0.12,
+      "y": 0.481,
+      "cluster": 3,
+      "segment": "Sure Thing / Neutral",
+      "uplift": 0.001
+    },
+    {
+      "x": -0.042,
+      "y": 0.849,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": 0.0008
+    },
+    {
+      "x": 0.139,
+      "y": 0.031,
+      "cluster": 3,
+      "segment": "Sure Thing / Neutral",
+      "uplift": 0.0001
+    },
+    {
+      "x": 1.52,
+      "y": 0.347,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0021
+    },
+    {
+      "x": -0.844,
+      "y": -0.308,
+      "cluster": 1,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0007
+    },
+    {
+      "x": 0.046,
+      "y": -1.083,
+      "cluster": 3,
+      "segment": "Sure Thing / Neutral",
+      "uplift": 0.001
+    },
+    {
+      "x": -1.087,
+      "y": -0.236,
+      "cluster": 1,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0007
+    },
+    {
+      "x": 2.185,
+      "y": 0.687,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0023
+    },
+    {
+      "x": -0.064,
+      "y": 0.652,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": 0.0007
+    },
+    {
+      "x": -0.472,
+      "y": 1.238,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0006
+    },
+    {
+      "x": 0.324,
+      "y": -0.483,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": 0.0013
+    },
+    {
+      "x": 1.096,
+      "y": -0.19,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0008
+    },
+    {
+      "x": -0.994,
+      "y": -0.963,
+      "cluster": 1,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0007
+    },
+    {
+      "x": -0.481,
+      "y": 0.22,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0007
+    },
+    {
+      "x": 1.386,
+      "y": 1.183,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0014
+    },
+    {
+      "x": 0.014,
+      "y": 0.812,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0007
+    },
+    {
+      "x": -2.061,
+      "y": -1.155,
+      "cluster": 1,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0007
+    },
+    {
+      "x": -2.566,
+      "y": -1.928,
+      "cluster": 1,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0007
+    },
+    {
+      "x": -0.535,
+      "y": -1.973,
+      "cluster": 3,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0006
+    },
+    {
+      "x": -0.639,
+      "y": 0.544,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0007
+    },
+    {
+      "x": 0.311,
+      "y": 1.583,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": 0.0009
+    },
+    {
+      "x": -2.273,
+      "y": -1.877,
+      "cluster": 1,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0007
+    },
+    {
+      "x": 0.356,
+      "y": -0.097,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": 0.001
+    },
+    {
+      "x": 1.95,
+      "y": -0.623,
+      "cluster": 3,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0019
+    },
+    {
+      "x": 0.75,
+      "y": 0.158,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0017
+    },
+    {
+      "x": -0.481,
+      "y": -1.25,
+      "cluster": 3,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0002
+    },
+    {
+      "x": 0.413,
+      "y": 0.173,
+      "cluster": 3,
+      "segment": "Sure Thing / Neutral",
+      "uplift": 0.0011
+    },
+    {
+      "x": 0.292,
+      "y": 1.716,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": 0.0012
+    },
+    {
+      "x": -1.548,
+      "y": 0.324,
+      "cluster": 1,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0007
+    },
+    {
+      "x": -0.078,
+      "y": -0.718,
+      "cluster": 3,
+      "segment": "Sure Thing / Neutral",
+      "uplift": 0.001
+    },
+    {
+      "x": -0.77,
+      "y": -0.363,
+      "cluster": 1,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0003
+    },
+    {
+      "x": 1.507,
+      "y": 1.028,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.001
+    },
+    {
+      "x": 0.688,
+      "y": 0.238,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": 0.0068
+    },
+    {
+      "x": 2.389,
+      "y": -1.041,
+      "cluster": 3,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.001
+    },
+    {
+      "x": -1.337,
+      "y": -0.399,
+      "cluster": 1,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0007
+    },
+    {
+      "x": 0.997,
+      "y": -0.064,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0016
+    },
+    {
+      "x": 0.174,
+      "y": -0.633,
+      "cluster": 3,
+      "segment": "Sure Thing / Neutral",
+      "uplift": 0.0007
+    },
+    {
+      "x": -0.434,
+      "y": 0.787,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0001
+    },
+    {
+      "x": -0.638,
+      "y": -0.065,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0007
+    },
+    {
+      "x": -0.611,
+      "y": -1.841,
+      "cluster": 3,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0005
+    },
+    {
+      "x": 0.062,
+      "y": -0.857,
+      "cluster": 3,
+      "segment": "Sure Thing / Neutral",
+      "uplift": 0.0009
+    },
+    {
+      "x": -0.11,
+      "y": -0.807,
+      "cluster": 3,
+      "segment": "Sure Thing / Neutral",
+      "uplift": 0.0012
+    },
+    {
+      "x": 0.225,
+      "y": 0.731,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": 0.001
+    },
+    {
+      "x": -0.483,
+      "y": 0.391,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0005
+    },
+    {
+      "x": -0.423,
+      "y": 2.489,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0005
+    },
+    {
+      "x": -1.068,
+      "y": 0.517,
+      "cluster": 1,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0007
+    },
+    {
+      "x": -0.617,
+      "y": 0.217,
+      "cluster": 3,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0006
+    },
+    {
+      "x": 8.244,
+      "y": -0.758,
+      "cluster": 2,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0025
+    },
+    {
+      "x": -0.111,
+      "y": 0.225,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": 0.0008
+    },
+    {
+      "x": 9.152,
+      "y": -0.067,
+      "cluster": 2,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0019
+    },
+    {
+      "x": -0.772,
+      "y": 1.64,
+      "cluster": 3,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0007
+    },
+    {
+      "x": 0.472,
+      "y": 0.224,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": 0.0013
+    },
+    {
+      "x": 0.135,
+      "y": -0.074,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": 0.001
+    },
+    {
+      "x": -0.15,
+      "y": 0.165,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0003
+    },
+    {
+      "x": 0.29,
+      "y": -0.863,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": 0.0008
+    },
+    {
+      "x": -0.687,
+      "y": -1.424,
+      "cluster": 3,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0005
+    },
+    {
+      "x": 0.212,
+      "y": 1.581,
+      "cluster": 1,
+      "segment": "Sure Thing / Neutral",
+      "uplift": 0.0068
+    },
+    {
+      "x": -1.539,
+      "y": -0.022,
+      "cluster": 1,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0007
+    },
+    {
+      "x": -0.272,
+      "y": -0.99,
+      "cluster": 3,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0001
+    },
+    {
+      "x": -0.738,
+      "y": 1.002,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0007
+    },
+    {
+      "x": 0.08,
+      "y": 1.143,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": 0.0008
+    },
+    {
+      "x": -0.985,
+      "y": -0.358,
+      "cluster": 1,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0007
+    },
+    {
+      "x": 0.058,
+      "y": 0.15,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": 0.0002
+    },
+    {
+      "x": -1.62,
+      "y": 0.892,
+      "cluster": 1,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0007
+    },
+    {
+      "x": -0.077,
+      "y": -1.073,
+      "cluster": 3,
+      "segment": "Sure Thing / Neutral",
+      "uplift": 0.0007
+    },
+    {
+      "x": -0.612,
+      "y": -0.879,
+      "cluster": 1,
+      "segment": "Sure Thing / Neutral",
+      "uplift": 0.0011
+    },
+    {
+      "x": -0.556,
+      "y": -0.087,
+      "cluster": 3,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0007
+    },
+    {
+      "x": -0.074,
+      "y": -0.31,
+      "cluster": 3,
+      "segment": "Sure Thing / Neutral",
+      "uplift": 0.0011
+    },
+    {
+      "x": 0.312,
+      "y": 0.242,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": 0.0007
+    },
+    {
+      "x": -0.925,
+      "y": 0.613,
+      "cluster": 1,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0007
+    },
+    {
+      "x": 0.714,
+      "y": -0.114,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0017
+    },
+    {
+      "x": -0.017,
+      "y": -0.21,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": 0.0009
+    },
+    {
+      "x": 0.171,
+      "y": 0.671,
+      "cluster": 3,
+      "segment": "Sure Thing / Neutral",
+      "uplift": 0.0007
+    },
+    {
+      "x": -1.076,
+      "y": -0.161,
+      "cluster": 1,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0007
+    },
+    {
+      "x": -0.61,
+      "y": 0.833,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0007
+    },
+    {
+      "x": 5.457,
+      "y": 0.133,
+      "cluster": 2,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0024
+    },
+    {
+      "x": 1.123,
+      "y": -0.457,
+      "cluster": 3,
+      "segment": "Sure Thing / Neutral",
+      "uplift": 0.0065
+    },
+    {
+      "x": -0.578,
+      "y": 0.179,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": 0.0
+    },
+    {
+      "x": 1.546,
+      "y": -0.641,
+      "cluster": 3,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0022
+    },
+    {
+      "x": -0.739,
+      "y": -0.488,
+      "cluster": 3,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0006
+    },
+    {
+      "x": -1.048,
+      "y": -1.732,
+      "cluster": 1,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0007
+    },
+    {
+      "x": -0.735,
+      "y": 0.814,
+      "cluster": 3,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0007
+    },
+    {
+      "x": 0.335,
+      "y": 0.108,
+      "cluster": 3,
+      "segment": "Sure Thing / Neutral",
+      "uplift": 0.0013
+    },
+    {
+      "x": 0.191,
+      "y": 0.186,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": 0.0009
+    },
+    {
+      "x": -1.837,
+      "y": -0.14,
+      "cluster": 1,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0007
+    },
+    {
+      "x": -0.071,
+      "y": -1.058,
+      "cluster": 3,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0005
+    },
+    {
+      "x": -0.492,
+      "y": -0.665,
+      "cluster": 3,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0006
+    },
+    {
+      "x": -0.9,
+      "y": 0.588,
+      "cluster": 1,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0007
+    },
+    {
+      "x": -0.466,
+      "y": -0.531,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0004
+    },
+    {
+      "x": -0.067,
+      "y": -0.754,
+      "cluster": 3,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0007
+    },
+    {
+      "x": 0.934,
+      "y": 0.944,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0023
+    },
+    {
+      "x": -0.128,
+      "y": -0.361,
+      "cluster": 3,
+      "segment": "Sure Thing / Neutral",
+      "uplift": 0.001
+    },
+    {
+      "x": 13.111,
+      "y": -0.601,
+      "cluster": 2,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0026
+    },
+    {
+      "x": 1.003,
+      "y": -1.545,
+      "cluster": 3,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0017
+    },
+    {
+      "x": -0.856,
+      "y": 1.028,
+      "cluster": 1,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0007
+    },
+    {
+      "x": 4.598,
+      "y": -0.623,
+      "cluster": 2,
+      "segment": "Sure Thing / Neutral",
+      "uplift": 0.0066
+    },
+    {
+      "x": 0.255,
+      "y": 1.1,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": 0.0012
+    },
+    {
+      "x": 0.289,
+      "y": 0.053,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": 0.0022
+    },
+    {
+      "x": -1.393,
+      "y": 1.048,
+      "cluster": 1,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0007
+    },
+    {
+      "x": 0.883,
+      "y": -0.173,
+      "cluster": 3,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0024
+    },
+    {
+      "x": 0.071,
+      "y": 0.51,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0001
+    },
+    {
+      "x": -1.132,
+      "y": 0.625,
+      "cluster": 1,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0007
+    },
+    {
+      "x": -0.234,
+      "y": 0.093,
+      "cluster": 3,
+      "segment": "Sure Thing / Neutral",
+      "uplift": 0.0011
+    },
+    {
+      "x": -0.485,
+      "y": -0.352,
+      "cluster": 3,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0003
+    },
+    {
+      "x": -0.449,
+      "y": 1.137,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": 0.0007
+    },
+    {
+      "x": -0.307,
+      "y": -0.171,
+      "cluster": 3,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0005
+    },
+    {
+      "x": 1.071,
+      "y": 1.275,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0022
+    },
+    {
+      "x": -0.346,
+      "y": -0.152,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": 0.0001
+    },
+    {
+      "x": -0.42,
+      "y": 1.342,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0004
+    },
+    {
+      "x": 0.038,
+      "y": -0.035,
+      "cluster": 1,
+      "segment": "Sure Thing / Neutral",
+      "uplift": 0.0053
+    },
+    {
+      "x": -0.02,
+      "y": 0.209,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": 0.001
+    },
+    {
+      "x": -1.293,
+      "y": -1.113,
+      "cluster": 1,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0007
+    },
+    {
+      "x": -1.154,
+      "y": -1.483,
+      "cluster": 1,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0006
+    },
+    {
+      "x": 0.149,
+      "y": 1.011,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": 0.0006
+    },
+    {
+      "x": 0.165,
+      "y": 0.011,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": 0.0051
+    },
+    {
+      "x": 2.511,
+      "y": -0.209,
+      "cluster": 3,
+      "segment": "Sure Thing / Neutral",
+      "uplift": 0.006
+    },
+    {
+      "x": -1.71,
+      "y": -1.045,
+      "cluster": 1,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0007
+    },
+    {
+      "x": 0.685,
+      "y": 0.108,
+      "cluster": 3,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0019
+    },
+    {
+      "x": -0.889,
+      "y": -0.676,
+      "cluster": 1,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0007
+    },
+    {
+      "x": 0.249,
+      "y": 0.54,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0002
+    },
+    {
+      "x": -1.624,
+      "y": 0.019,
+      "cluster": 1,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0007
+    },
+    {
+      "x": 0.07,
+      "y": -0.376,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": 0.0009
+    },
+    {
+      "x": 1.178,
+      "y": 0.649,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": 0.0001
+    },
+    {
+      "x": 0.16,
+      "y": -0.085,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": 0.0008
+    },
+    {
+      "x": -0.808,
+      "y": -0.056,
+      "cluster": 1,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0005
+    },
+    {
+      "x": -0.122,
+      "y": 0.325,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0001
+    },
+    {
+      "x": -0.292,
+      "y": -0.435,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": 0.0011
+    },
+    {
+      "x": -0.329,
+      "y": -0.091,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0007
+    },
+    {
+      "x": -0.19,
+      "y": -0.122,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0002
+    },
+    {
+      "x": -0.663,
+      "y": -0.341,
+      "cluster": 1,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0006
+    },
+    {
+      "x": -0.686,
+      "y": 0.357,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0007
+    },
+    {
+      "x": -0.257,
+      "y": -1.553,
+      "cluster": 3,
+      "segment": "Sure Thing / Neutral",
+      "uplift": 0.0007
+    },
+    {
+      "x": 0.209,
+      "y": -0.504,
+      "cluster": 3,
+      "segment": "Sure Thing / Neutral",
+      "uplift": 0.0011
+    },
+    {
+      "x": 0.025,
+      "y": 0.775,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": 0.0013
+    },
+    {
+      "x": -0.86,
+      "y": 0.494,
+      "cluster": 1,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0006
+    },
+    {
+      "x": -0.251,
+      "y": -0.252,
+      "cluster": 3,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0001
+    },
+    {
+      "x": -0.61,
+      "y": 0.103,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0007
+    },
+    {
+      "x": -0.588,
+      "y": -0.548,
+      "cluster": 3,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0006
+    },
+    {
+      "x": 0.317,
+      "y": 0.675,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": 0.0009
+    },
+    {
+      "x": -0.102,
+      "y": 0.378,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": 0.0004
+    },
+    {
+      "x": -0.191,
+      "y": -0.531,
+      "cluster": 3,
+      "segment": "Sure Thing / Neutral",
+      "uplift": 0.001
+    },
+    {
+      "x": -0.173,
+      "y": 0.837,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": 0.0006
+    },
+    {
+      "x": -1.242,
+      "y": -0.315,
+      "cluster": 1,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0007
+    },
+    {
+      "x": 3.187,
+      "y": -0.488,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0018
+    },
+    {
+      "x": -0.118,
+      "y": 0.127,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": 0.0011
+    },
+    {
+      "x": 0.356,
+      "y": -0.595,
+      "cluster": 3,
+      "segment": "Sure Thing / Neutral",
+      "uplift": 0.0012
+    },
+    {
+      "x": -0.009,
+      "y": 0.449,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": 0.001
+    },
+    {
+      "x": 1.351,
+      "y": 0.765,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0024
+    },
+    {
+      "x": 0.182,
+      "y": -0.681,
+      "cluster": 3,
+      "segment": "Sure Thing / Neutral",
+      "uplift": 0.007
+    },
+    {
+      "x": 3.329,
+      "y": 0.191,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0001
+    },
+    {
+      "x": -1.245,
+      "y": 0.214,
+      "cluster": 1,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0007
+    },
+    {
+      "x": 0.382,
+      "y": 1.299,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": 0.0013
+    },
+    {
+      "x": 0.097,
+      "y": 1.085,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": 0.0012
+    },
+    {
+      "x": -0.295,
+      "y": -0.697,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0004
+    },
+    {
+      "x": -0.329,
+      "y": 0.821,
+      "cluster": 3,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0005
+    },
+    {
+      "x": -1.591,
+      "y": 1.122,
+      "cluster": 1,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0007
+    },
+    {
+      "x": 0.902,
+      "y": -0.08,
+      "cluster": 3,
+      "segment": "Sure Thing / Neutral",
+      "uplift": 0.0054
+    },
+    {
+      "x": 9.805,
+      "y": -2.164,
+      "cluster": 2,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0024
+    },
+    {
+      "x": -0.406,
+      "y": -0.08,
+      "cluster": 3,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0003
+    },
+    {
+      "x": -0.741,
+      "y": -0.707,
+      "cluster": 1,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0007
+    },
+    {
+      "x": 2.744,
+      "y": 0.219,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0024
+    },
+    {
+      "x": -1.458,
+      "y": -0.714,
+      "cluster": 1,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0007
+    },
+    {
+      "x": 0.281,
+      "y": -0.193,
+      "cluster": 3,
+      "segment": "Sure Thing / Neutral",
+      "uplift": 0.0013
+    },
+    {
+      "x": -0.671,
+      "y": -0.013,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0007
+    },
+    {
+      "x": -0.274,
+      "y": 0.581,
+      "cluster": 1,
+      "segment": "Sure Thing / Neutral",
+      "uplift": 0.007
+    },
+    {
+      "x": 2.295,
+      "y": -0.024,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0022
+    },
+    {
+      "x": -0.966,
+      "y": 0.014,
+      "cluster": 1,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0007
+    },
+    {
+      "x": -0.173,
+      "y": 1.173,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": 0.0008
+    },
+    {
+      "x": -1.684,
+      "y": 0.111,
+      "cluster": 1,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0007
+    },
+    {
+      "x": -1.072,
+      "y": -1.087,
+      "cluster": 1,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0007
+    },
+    {
+      "x": -0.054,
+      "y": 0.149,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": 0.0
+    },
+    {
+      "x": -0.179,
+      "y": -0.255,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0
+    },
+    {
+      "x": -0.017,
+      "y": -0.254,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0006
+    },
+    {
+      "x": -0.403,
+      "y": 0.674,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": 0.0001
+    },
+    {
+      "x": -0.329,
+      "y": 2.248,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": 0.0004
+    },
+    {
+      "x": -0.96,
+      "y": 0.612,
+      "cluster": 1,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0007
+    },
+    {
+      "x": 0.235,
+      "y": -1.104,
+      "cluster": 3,
+      "segment": "Sure Thing / Neutral",
+      "uplift": 0.0005
+    },
+    {
+      "x": -0.313,
+      "y": 0.134,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0001
+    },
+    {
+      "x": -1.735,
+      "y": -0.293,
+      "cluster": 1,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0007
+    },
+    {
+      "x": -0.976,
+      "y": 1.04,
+      "cluster": 1,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0007
+    },
+    {
+      "x": 1.088,
+      "y": -0.24,
+      "cluster": 3,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0015
+    },
+    {
+      "x": -1.247,
+      "y": -0.621,
+      "cluster": 1,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0007
+    },
+    {
+      "x": 0.564,
+      "y": 0.606,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": 0.001
+    },
+    {
+      "x": -0.747,
+      "y": -0.548,
+      "cluster": 1,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0003
+    },
+    {
+      "x": 0.177,
+      "y": -0.59,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": 0.0001
+    },
+    {
+      "x": -0.952,
+      "y": -0.691,
+      "cluster": 1,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0007
+    },
+    {
+      "x": -0.311,
+      "y": -0.88,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0005
+    },
+    {
+      "x": 0.529,
+      "y": 0.181,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": 0.006
+    },
+    {
+      "x": 0.008,
+      "y": 1.043,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": 0.0005
+    },
+    {
+      "x": -0.297,
+      "y": 0.934,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0001
+    },
+    {
+      "x": 0.043,
+      "y": 0.989,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": 0.0007
+    },
+    {
+      "x": -0.605,
+      "y": -0.047,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0007
+    },
+    {
+      "x": -0.284,
+      "y": 0.283,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0
+    },
+    {
+      "x": -0.23,
+      "y": 0.438,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": 0.0008
+    },
+    {
+      "x": 1.957,
+      "y": 0.115,
+      "cluster": 3,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0018
+    },
+    {
+      "x": -0.476,
+      "y": -0.503,
+      "cluster": 3,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0004
+    },
+    {
+      "x": 0.19,
+      "y": 0.95,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": 0.0009
+    },
+    {
+      "x": 2.554,
+      "y": 0.198,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": 0.006
+    },
+    {
+      "x": -0.824,
+      "y": -1.625,
+      "cluster": 3,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0007
+    },
+    {
+      "x": -0.389,
+      "y": 0.559,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0004
+    },
+    {
+      "x": 0.908,
+      "y": -0.088,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": 0.0014
+    },
+    {
+      "x": -1.075,
+      "y": -0.311,
+      "cluster": 1,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0007
+    },
+    {
+      "x": -0.362,
+      "y": 0.811,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0
+    },
+    {
+      "x": 1.087,
+      "y": -0.876,
+      "cluster": 3,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.002
+    },
+    {
+      "x": -1.054,
+      "y": -0.361,
+      "cluster": 1,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0007
+    },
+    {
+      "x": 0.784,
+      "y": -0.642,
+      "cluster": 3,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0017
+    },
+    {
+      "x": -0.286,
+      "y": 0.571,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": 0.0001
+    },
+    {
+      "x": 1.419,
+      "y": 0.46,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0004
+    },
+    {
+      "x": -1.054,
+      "y": -1.795,
+      "cluster": 1,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0006
+    },
+    {
+      "x": -0.332,
+      "y": 0.633,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0006
+    },
+    {
+      "x": -0.317,
+      "y": 0.232,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0004
+    },
+    {
+      "x": -0.106,
+      "y": 0.276,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": 0.0007
+    },
+    {
+      "x": 0.65,
+      "y": -1.207,
+      "cluster": 3,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0022
+    },
+    {
+      "x": -0.433,
+      "y": -0.225,
+      "cluster": 3,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0006
+    },
+    {
+      "x": -0.53,
+      "y": -0.813,
+      "cluster": 3,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0004
+    },
+    {
+      "x": -0.667,
+      "y": -0.879,
+      "cluster": 3,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0007
+    },
+    {
+      "x": 3.146,
+      "y": -0.654,
+      "cluster": 2,
+      "segment": "Sure Thing / Neutral",
+      "uplift": 0.0067
+    },
+    {
+      "x": 4.037,
+      "y": 0.667,
+      "cluster": 2,
+      "segment": "Sure Thing / Neutral",
+      "uplift": 0.0016
+    },
+    {
+      "x": -0.218,
+      "y": 0.199,
+      "cluster": 3,
+      "segment": "Sure Thing / Neutral",
+      "uplift": 0.0009
+    },
+    {
+      "x": 0.169,
+      "y": -1.186,
+      "cluster": 3,
+      "segment": "Sure Thing / Neutral",
+      "uplift": 0.0009
+    },
+    {
+      "x": 0.331,
+      "y": 0.633,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": 0.0047
+    },
+    {
+      "x": -0.331,
+      "y": 0.809,
+      "cluster": 3,
+      "segment": "Sure Thing / Neutral",
+      "uplift": 0.0001
+    },
+    {
+      "x": 0.265,
+      "y": -0.32,
+      "cluster": 3,
+      "segment": "Sure Thing / Neutral",
+      "uplift": 0.001
+    },
+    {
+      "x": -0.409,
+      "y": 1.024,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0002
+    },
+    {
+      "x": 1.832,
+      "y": -0.263,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0012
+    },
+    {
+      "x": 3.176,
+      "y": -1.477,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0023
+    },
+    {
+      "x": -0.333,
+      "y": -0.069,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0007
+    },
+    {
+      "x": 0.636,
+      "y": 1.613,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": 0.0025
+    },
+    {
+      "x": 0.053,
+      "y": -0.94,
+      "cluster": 3,
+      "segment": "Sure Thing / Neutral",
+      "uplift": 0.0002
+    },
+    {
+      "x": -0.032,
+      "y": 0.579,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": 0.0011
+    },
+    {
+      "x": -3.882,
+      "y": -2.585,
+      "cluster": 1,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0007
+    },
+    {
+      "x": -0.522,
+      "y": -0.599,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0005
+    },
+    {
+      "x": 0.295,
+      "y": -0.76,
+      "cluster": 3,
+      "segment": "Sure Thing / Neutral",
+      "uplift": 0.0007
+    },
+    {
+      "x": -0.683,
+      "y": 0.595,
+      "cluster": 1,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0005
+    },
+    {
+      "x": 1.489,
+      "y": -0.23,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0024
+    },
+    {
+      "x": 1.838,
+      "y": 0.945,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0015
+    },
+    {
+      "x": -0.225,
+      "y": -0.724,
+      "cluster": 3,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0004
+    },
+    {
+      "x": -0.32,
+      "y": -0.346,
+      "cluster": 3,
+      "segment": "Sure Thing / Neutral",
+      "uplift": 0.001
+    },
+    {
+      "x": 0.364,
+      "y": -0.623,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": 0.001
+    },
+    {
+      "x": -0.504,
+      "y": -1.553,
+      "cluster": 3,
+      "segment": "Sure Thing / Neutral",
+      "uplift": 0.0002
+    },
+    {
+      "x": -0.355,
+      "y": -0.219,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0005
+    },
+    {
+      "x": 8.525,
+      "y": -1.233,
+      "cluster": 2,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0024
+    },
+    {
+      "x": 0.242,
+      "y": 0.993,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": 0.0012
+    },
+    {
+      "x": -0.441,
+      "y": -0.805,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": 0.0003
+    },
+    {
+      "x": -2.144,
+      "y": -0.396,
+      "cluster": 1,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0007
+    },
+    {
+      "x": 0.708,
+      "y": -0.679,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.002
+    },
+    {
+      "x": -0.476,
+      "y": 0.035,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0007
+    },
+    {
+      "x": 13.409,
+      "y": -0.974,
+      "cluster": 2,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0024
+    },
+    {
+      "x": -0.292,
+      "y": 0.024,
+      "cluster": 3,
+      "segment": "Sure Thing / Neutral",
+      "uplift": 0.0007
+    },
+    {
+      "x": -0.207,
+      "y": -0.807,
+      "cluster": 3,
+      "segment": "Sure Thing / Neutral",
+      "uplift": 0.0003
+    },
+    {
+      "x": -1.058,
+      "y": 0.259,
+      "cluster": 1,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0007
+    },
+    {
+      "x": -0.41,
+      "y": -0.169,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0006
+    },
+    {
+      "x": -1.748,
+      "y": 0.107,
+      "cluster": 1,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0007
+    },
+    {
+      "x": 0.165,
+      "y": 1.157,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": 0.0008
+    },
+    {
+      "x": 0.441,
+      "y": 0.023,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": 0.0011
+    },
+    {
+      "x": 5.349,
+      "y": -1.6,
+      "cluster": 2,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0024
+    },
+    {
+      "x": -0.957,
+      "y": -1.282,
+      "cluster": 1,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0005
+    },
+    {
+      "x": 3.303,
+      "y": -0.501,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0023
+    },
+    {
+      "x": -0.116,
+      "y": 1.889,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": 0.0007
+    },
+    {
+      "x": -0.247,
+      "y": 0.364,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0003
+    },
+    {
+      "x": -0.308,
+      "y": -1.166,
+      "cluster": 3,
+      "segment": "Sure Thing / Neutral",
+      "uplift": 0.0005
+    },
+    {
+      "x": 0.097,
+      "y": 1.31,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": 0.001
+    },
+    {
+      "x": -0.863,
+      "y": -0.328,
+      "cluster": 1,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0007
+    },
+    {
+      "x": 0.871,
+      "y": 1.085,
+      "cluster": 3,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0009
+    },
+    {
+      "x": -0.051,
+      "y": 1.471,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0009
+    },
+    {
+      "x": -0.47,
+      "y": -0.58,
+      "cluster": 1,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0005
+    },
+    {
+      "x": -0.606,
+      "y": -0.32,
+      "cluster": 3,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0003
+    },
+    {
+      "x": -0.759,
+      "y": 0.277,
+      "cluster": 3,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0001
+    },
+    {
+      "x": -0.144,
+      "y": -0.419,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": 0.001
+    },
+    {
+      "x": 0.159,
+      "y": -0.311,
+      "cluster": 3,
+      "segment": "Sure Thing / Neutral",
+      "uplift": 0.0005
+    },
+    {
+      "x": -0.603,
+      "y": -0.519,
+      "cluster": 1,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0003
+    },
+    {
+      "x": 0.297,
+      "y": -0.057,
+      "cluster": 3,
+      "segment": "Sure Thing / Neutral",
+      "uplift": 0.0013
+    },
+    {
+      "x": 2.188,
+      "y": 1.002,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0002
+    },
+    {
+      "x": -0.29,
+      "y": -0.278,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": 0.0001
+    },
+    {
+      "x": -0.917,
+      "y": -0.554,
+      "cluster": 1,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0007
+    },
+    {
+      "x": 0.178,
+      "y": 0.251,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": 0.0013
+    },
+    {
+      "x": 2.308,
+      "y": 1.406,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": 0.0032
+    },
+    {
+      "x": -0.699,
+      "y": 0.755,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0007
+    },
+    {
+      "x": -0.339,
+      "y": -1.082,
+      "cluster": 3,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0001
+    },
+    {
+      "x": -0.014,
+      "y": -1.399,
+      "cluster": 3,
+      "segment": "Sure Thing / Neutral",
+      "uplift": 0.0011
+    },
+    {
+      "x": -1.724,
+      "y": 0.782,
+      "cluster": 1,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0007
+    },
+    {
+      "x": -0.273,
+      "y": 1.113,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": 0.001
+    },
+    {
+      "x": -0.607,
+      "y": -0.635,
+      "cluster": 1,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0008
+    },
+    {
+      "x": -0.333,
+      "y": 0.298,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0009
+    },
+    {
+      "x": 5.286,
+      "y": -0.32,
+      "cluster": 2,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0023
+    },
+    {
+      "x": 0.147,
+      "y": -0.401,
+      "cluster": 3,
+      "segment": "Sure Thing / Neutral",
+      "uplift": 0.0012
+    },
+    {
+      "x": -0.491,
+      "y": 0.247,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0005
+    },
+    {
+      "x": 0.002,
+      "y": -1.731,
+      "cluster": 3,
+      "segment": "Sure Thing / Neutral",
+      "uplift": 0.0012
+    },
+    {
+      "x": -0.855,
+      "y": -0.534,
+      "cluster": 1,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0007
+    },
+    {
+      "x": 0.957,
+      "y": -0.569,
+      "cluster": 3,
+      "segment": "Sure Thing / Neutral",
+      "uplift": 0.0027
+    },
+    {
+      "x": -0.402,
+      "y": -1.511,
+      "cluster": 3,
+      "segment": "Sure Thing / Neutral",
+      "uplift": 0.0006
+    },
+    {
+      "x": -0.601,
+      "y": 0.062,
+      "cluster": 1,
+      "segment": "Sure Thing / Neutral",
+      "uplift": 0.0004
+    },
+    {
+      "x": -0.041,
+      "y": -0.174,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0005
+    },
+    {
+      "x": -0.078,
+      "y": -0.998,
+      "cluster": 3,
+      "segment": "Sure Thing / Neutral",
+      "uplift": 0.0003
+    },
+    {
+      "x": -0.417,
+      "y": -1.065,
+      "cluster": 3,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0002
+    },
+    {
+      "x": -0.144,
+      "y": -0.862,
+      "cluster": 3,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0004
+    },
+    {
+      "x": 0.452,
+      "y": 0.327,
+      "cluster": 3,
+      "segment": "Sure Thing / Neutral",
+      "uplift": 0.0001
+    },
+    {
+      "x": -0.578,
+      "y": -0.626,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0007
+    },
+    {
+      "x": -0.557,
+      "y": -0.475,
+      "cluster": 1,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0003
+    },
+    {
+      "x": -0.704,
+      "y": -0.622,
+      "cluster": 1,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0007
+    },
+    {
+      "x": -0.108,
+      "y": -0.688,
+      "cluster": 3,
+      "segment": "Sure Thing / Neutral",
+      "uplift": 0.0007
+    },
+    {
+      "x": 0.247,
+      "y": -0.146,
+      "cluster": 3,
+      "segment": "Sure Thing / Neutral",
+      "uplift": 0.0011
+    },
+    {
+      "x": 0.76,
+      "y": 0.058,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0002
+    },
+    {
+      "x": -0.01,
+      "y": -0.636,
+      "cluster": 3,
+      "segment": "Sure Thing / Neutral",
+      "uplift": 0.0005
+    },
+    {
+      "x": 0.534,
+      "y": -0.059,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": 0.0022
+    },
+    {
+      "x": -0.072,
+      "y": 1.131,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0001
+    },
+    {
+      "x": 0.054,
+      "y": 0.687,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": 0.0005
+    },
+    {
+      "x": 2.046,
+      "y": -1.596,
+      "cluster": 3,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0018
+    },
+    {
+      "x": -0.473,
+      "y": 1.132,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0007
+    },
+    {
+      "x": -0.508,
+      "y": -1.777,
+      "cluster": 3,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0005
+    },
+    {
+      "x": -0.626,
+      "y": 1.713,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0003
+    },
+    {
+      "x": -0.692,
+      "y": 0.2,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0007
+    },
+    {
+      "x": 0.81,
+      "y": 0.294,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0021
+    },
+    {
+      "x": 0.15,
+      "y": -0.164,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": 0.0041
+    },
+    {
+      "x": -0.609,
+      "y": 0.526,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0006
+    },
+    {
+      "x": -1.13,
+      "y": -0.276,
+      "cluster": 1,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0007
+    },
+    {
+      "x": -0.521,
+      "y": -1.937,
+      "cluster": 3,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0
+    },
+    {
+      "x": -0.096,
+      "y": -1.509,
+      "cluster": 3,
+      "segment": "Sure Thing / Neutral",
+      "uplift": 0.0007
+    },
+    {
+      "x": -0.176,
+      "y": 1.713,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": 0.001
+    },
+    {
+      "x": 8.58,
+      "y": -0.79,
+      "cluster": 2,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0023
+    },
+    {
+      "x": -0.244,
+      "y": 0.546,
+      "cluster": 3,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0005
+    },
+    {
+      "x": -1.273,
+      "y": 0.569,
+      "cluster": 1,
+      "segment": "Sure Thing / Neutral",
+      "uplift": 0.0006
+    },
+    {
+      "x": 0.375,
+      "y": -0.519,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": 0.0009
+    },
+    {
+      "x": -0.061,
+      "y": 0.824,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": 0.0012
+    },
+    {
+      "x": -0.054,
+      "y": -0.106,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": 0.0011
+    },
+    {
+      "x": -0.414,
+      "y": 0.09,
+      "cluster": 1,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0008
+    },
+    {
+      "x": 0.978,
+      "y": 1.458,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0012
+    },
+    {
+      "x": -0.423,
+      "y": -0.539,
+      "cluster": 3,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0001
+    },
+    {
+      "x": 0.026,
+      "y": 0.149,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0002
+    },
+    {
+      "x": -0.264,
+      "y": -0.448,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0007
+    },
+    {
+      "x": -0.278,
+      "y": -0.274,
+      "cluster": 3,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0002
+    },
+    {
+      "x": 0.173,
+      "y": -0.369,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": 0.0012
+    },
+    {
+      "x": -1.492,
+      "y": -0.291,
+      "cluster": 1,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0007
+    },
+    {
+      "x": -0.444,
+      "y": 2.087,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0004
+    },
+    {
+      "x": -0.246,
+      "y": 0.67,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0003
+    },
+    {
+      "x": -0.127,
+      "y": -0.288,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0009
+    },
+    {
+      "x": -2.735,
+      "y": -0.967,
+      "cluster": 1,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0007
+    },
+    {
+      "x": -0.058,
+      "y": 1.634,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": 0.0006
+    },
+    {
+      "x": -0.716,
+      "y": -1.349,
+      "cluster": 3,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0007
+    },
+    {
+      "x": -1.227,
+      "y": -0.498,
+      "cluster": 1,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0007
+    },
+    {
+      "x": -0.554,
+      "y": -0.271,
+      "cluster": 3,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0007
+    },
+    {
+      "x": 0.089,
+      "y": 0.718,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0004
+    },
+    {
+      "x": -0.222,
+      "y": 0.937,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": 0.0005
+    },
+    {
+      "x": -0.105,
+      "y": 1.088,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": 0.0008
+    },
+    {
+      "x": -0.483,
+      "y": 1.065,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": 0.0003
+    },
+    {
+      "x": -1.394,
+      "y": 0.105,
+      "cluster": 1,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0007
+    },
+    {
+      "x": -0.921,
+      "y": -1.251,
+      "cluster": 1,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0007
+    },
+    {
+      "x": 0.003,
+      "y": 0.39,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": 0.0009
+    },
+    {
+      "x": -1.002,
+      "y": -0.874,
+      "cluster": 1,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0007
+    },
+    {
+      "x": -0.299,
+      "y": 0.446,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0006
+    },
+    {
+      "x": -0.973,
+      "y": 1.589,
+      "cluster": 1,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0007
+    },
+    {
+      "x": 0.148,
+      "y": -0.019,
+      "cluster": 0,
+      "segment": "Sure Thing / Neutral",
+      "uplift": 0.0003
+    },
+    {
+      "x": -1.722,
+      "y": -1.102,
+      "cluster": 1,
+      "segment": "Sure Thing / Neutral",
+      "uplift": -0.0007
+    }
+  ],
+  "top_customers": [
+    {
+      "customer_id": 931,
+      "uplift_x": 0.007,
+      "uplift_t": 0.004000000189989805,
+      "p_treated": 0.007000000216066837,
+      "p_control": 0.003000000026077032,
+      "segment": "Sure Thing / Neutral",
+      "purchase_frequency": 42,
+      "avg_basket_value": 3.2873,
+      "rfm_score": 0.283,
+      "promo_sensitivity_score": 0.472,
+      "treatment": 1,
+      "purchase": 0
+    },
+    {
+      "customer_id": 232,
+      "uplift_x": 0.007,
+      "uplift_t": 0.004000000189989805,
+      "p_treated": 0.007000000216066837,
+      "p_control": 0.003000000026077032,
+      "segment": "Sure Thing / Neutral",
+      "purchase_frequency": 631,
+      "avg_basket_value": 3.1394,
+      "rfm_score": 0.476,
+      "promo_sensitivity_score": 0.2884,
+      "treatment": 1,
+      "purchase": 0
+    },
+    {
+      "customer_id": 2318,
+      "uplift_x": 0.007,
+      "uplift_t": 0.004000000189989805,
+      "p_treated": 0.007000000216066837,
+      "p_control": 0.003000000026077032,
+      "segment": "Sure Thing / Neutral",
+      "purchase_frequency": 366,
+      "avg_basket_value": 3.2588,
+      "rfm_score": 0.229,
+      "promo_sensitivity_score": 0.0651,
+      "treatment": 1,
+      "purchase": 0
+    },
+    {
+      "customer_id": 472,
+      "uplift_x": 0.007,
+      "uplift_t": 0.004000000189989805,
+      "p_treated": 0.007000000216066837,
+      "p_control": 0.003000000026077032,
+      "segment": "Sure Thing / Neutral",
+      "purchase_frequency": 96,
+      "avg_basket_value": 3.6036,
+      "rfm_score": 0.2861,
+      "promo_sensitivity_score": 0.2303,
+      "treatment": 1,
+      "purchase": 0
+    },
+    {
+      "customer_id": 1396,
+      "uplift_x": 0.007,
+      "uplift_t": 0.004000000189989805,
+      "p_treated": 0.007000000216066837,
+      "p_control": 0.003000000026077032,
+      "segment": "Sure Thing / Neutral",
+      "purchase_frequency": 229,
+      "avg_basket_value": 2.7981,
+      "rfm_score": 0.1755,
+      "promo_sensitivity_score": 0.1581,
+      "treatment": 1,
+      "purchase": 0
+    },
+    {
+      "customer_id": 93,
+      "uplift_x": 0.007,
+      "uplift_t": 0.004000000189989805,
+      "p_treated": 0.007000000216066837,
+      "p_control": 0.003000000026077032,
+      "segment": "Sure Thing / Neutral",
+      "purchase_frequency": 106,
+      "avg_basket_value": 2.629,
+      "rfm_score": -0.094,
+      "promo_sensitivity_score": 0.1948,
+      "treatment": 1,
+      "purchase": 0
+    },
+    {
+      "customer_id": 149,
+      "uplift_x": 0.007,
+      "uplift_t": 0.004000000189989805,
+      "p_treated": 0.007000000216066837,
+      "p_control": 0.003000000026077032,
+      "segment": "Sure Thing / Neutral",
+      "purchase_frequency": 215,
+      "avg_basket_value": 3.8679,
+      "rfm_score": 0.2854,
+      "promo_sensitivity_score": 0.1231,
+      "treatment": 1,
+      "purchase": 0
+    },
+    {
+      "customer_id": 2051,
+      "uplift_x": 0.007,
+      "uplift_t": 0.004000000189989805,
+      "p_treated": 0.007000000216066837,
+      "p_control": 0.003000000026077032,
+      "segment": "Sure Thing / Neutral",
+      "purchase_frequency": 288,
+      "avg_basket_value": 3.6878,
+      "rfm_score": -0.3239,
+      "promo_sensitivity_score": 0.2124,
+      "treatment": 1,
+      "purchase": 0
+    },
+    {
+      "customer_id": 942,
+      "uplift_x": 0.007,
+      "uplift_t": 0.004000000189989805,
+      "p_treated": 0.007000000216066837,
+      "p_control": 0.003000000026077032,
+      "segment": "Sure Thing / Neutral",
+      "purchase_frequency": 215,
+      "avg_basket_value": 2.7144,
+      "rfm_score": 0.3704,
+      "promo_sensitivity_score": 0.1448,
+      "treatment": 1,
+      "purchase": 0
+    },
+    {
+      "customer_id": 2227,
+      "uplift_x": 0.0069,
+      "uplift_t": 0.004000000189989805,
+      "p_treated": 0.007000000216066837,
+      "p_control": 0.003000000026077032,
+      "segment": "Sure Thing / Neutral",
+      "purchase_frequency": 173,
+      "avg_basket_value": 2.155,
+      "rfm_score": 0.2518,
+      "promo_sensitivity_score": 0.1519,
+      "treatment": 0,
+      "purchase": 0
+    },
+    {
+      "customer_id": 492,
+      "uplift_x": 0.0069,
+      "uplift_t": 0.004000000189989805,
+      "p_treated": 0.007000000216066837,
+      "p_control": 0.003000000026077032,
+      "segment": "Sure Thing / Neutral",
+      "purchase_frequency": 117,
+      "avg_basket_value": 3.4466,
+      "rfm_score": 0.191,
+      "promo_sensitivity_score": 0.1577,
+      "treatment": 1,
+      "purchase": 0
+    },
+    {
+      "customer_id": 1205,
+      "uplift_x": 0.0069,
+      "uplift_t": 0.004000000189989805,
+      "p_treated": 0.007000000216066837,
+      "p_control": 0.003000000026077032,
+      "segment": "Sure Thing / Neutral",
+      "purchase_frequency": 186,
+      "avg_basket_value": 2.691,
+      "rfm_score": 0.3579,
+      "promo_sensitivity_score": 0.201,
+      "treatment": 0,
+      "purchase": 0
+    },
+    {
+      "customer_id": 1505,
+      "uplift_x": 0.0069,
+      "uplift_t": 0.004000000189989805,
+      "p_treated": 0.007000000216066837,
+      "p_control": 0.003000000026077032,
+      "segment": "Sure Thing / Neutral",
+      "purchase_frequency": 103,
+      "avg_basket_value": 2.5556,
+      "rfm_score": 0.2543,
+      "promo_sensitivity_score": 0.158,
+      "treatment": 1,
+      "purchase": 0
+    },
+    {
+      "customer_id": 682,
+      "uplift_x": 0.0068,
+      "uplift_t": 0.004000000189989805,
+      "p_treated": 0.007000000216066837,
+      "p_control": 0.003000000026077032,
+      "segment": "Sure Thing / Neutral",
+      "purchase_frequency": 217,
+      "avg_basket_value": 3.3984,
+      "rfm_score": 0.0079,
+      "promo_sensitivity_score": 0.2322,
+      "treatment": 1,
+      "purchase": 0
+    },
+    {
+      "customer_id": 2097,
+      "uplift_x": 0.0068,
+      "uplift_t": 0.004000000189989805,
+      "p_treated": 0.007000000216066837,
+      "p_control": 0.003000000026077032,
+      "segment": "Sure Thing / Neutral",
+      "purchase_frequency": 202,
+      "avg_basket_value": 6.2183,
+      "rfm_score": 0.2853,
+      "promo_sensitivity_score": 0.1881,
+      "treatment": 1,
+      "purchase": 0
+    },
+    {
+      "customer_id": 445,
+      "uplift_x": 0.0068,
+      "uplift_t": 0.004000000189989805,
+      "p_treated": 0.007000000216066837,
+      "p_control": 0.003000000026077032,
+      "segment": "Sure Thing / Neutral",
+      "purchase_frequency": 232,
+      "avg_basket_value": 3.2924,
+      "rfm_score": 0.2348,
+      "promo_sensitivity_score": 0.1358,
+      "treatment": 1,
+      "purchase": 0
+    },
+    {
+      "customer_id": 576,
+      "uplift_x": 0.0068,
+      "uplift_t": 0.004000000189989805,
+      "p_treated": 0.007000000216066837,
+      "p_control": 0.003000000026077032,
+      "segment": "Sure Thing / Neutral",
+      "purchase_frequency": 167,
+      "avg_basket_value": 3.2025,
+      "rfm_score": 0.3572,
+      "promo_sensitivity_score": 0.123,
+      "treatment": 1,
+      "purchase": 0
+    },
+    {
+      "customer_id": 1974,
+      "uplift_x": 0.0067,
+      "uplift_t": 0.004000000189989805,
+      "p_treated": 0.007000000216066837,
+      "p_control": 0.003000000026077032,
+      "segment": "Sure Thing / Neutral",
+      "purchase_frequency": 198,
+      "avg_basket_value": 3.4351,
+      "rfm_score": -0.1942,
+      "promo_sensitivity_score": 0.1931,
+      "treatment": 1,
+      "purchase": 0
+    },
+    {
+      "customer_id": 2178,
+      "uplift_x": 0.0067,
+      "uplift_t": 0.004000000189989805,
+      "p_treated": 0.007000000216066837,
+      "p_control": 0.003000000026077032,
+      "segment": "Sure Thing / Neutral",
+      "purchase_frequency": 152,
+      "avg_basket_value": 2.6256,
+      "rfm_score": 0.1168,
+      "promo_sensitivity_score": 0.1828,
+      "treatment": 1,
+      "purchase": 0
+    },
+    {
+      "customer_id": 1959,
+      "uplift_x": 0.0066,
+      "uplift_t": 0.004000000189989805,
+      "p_treated": 0.007000000216066837,
+      "p_control": 0.003000000026077032,
+      "segment": "Sure Thing / Neutral",
+      "purchase_frequency": 104,
+      "avg_basket_value": 3.5151,
+      "rfm_score": 0.3144,
+      "promo_sensitivity_score": 0.1812,
+      "treatment": 1,
+      "purchase": 0
+    },
+    {
+      "customer_id": 2443,
+      "uplift_x": 0.0066,
+      "uplift_t": 0.004000000189989805,
+      "p_treated": 0.007000000216066837,
+      "p_control": 0.003000000026077032,
+      "segment": "Sure Thing / Neutral",
+      "purchase_frequency": 153,
+      "avg_basket_value": 4.1367,
+      "rfm_score": -0.3909,
+      "promo_sensitivity_score": 0.2316,
+      "treatment": 1,
+      "purchase": 0
+    },
+    {
+      "customer_id": 1508,
+      "uplift_x": 0.0066,
+      "uplift_t": 0.004000000189989805,
+      "p_treated": 0.007000000216066837,
+      "p_control": 0.003000000026077032,
+      "segment": "Sure Thing / Neutral",
+      "purchase_frequency": 81,
+      "avg_basket_value": 4.0113,
+      "rfm_score": 0.3057,
+      "promo_sensitivity_score": 0.1313,
+      "treatment": 1,
+      "purchase": 0
+    },
+    {
+      "customer_id": 918,
+      "uplift_x": 0.0066,
+      "uplift_t": 0.004000000189989805,
+      "p_treated": 0.007000000216066837,
+      "p_control": 0.003000000026077032,
+      "segment": "Sure Thing / Neutral",
+      "purchase_frequency": 152,
+      "avg_basket_value": 2.1344,
+      "rfm_score": 0.0951,
+      "promo_sensitivity_score": 0.1277,
+      "treatment": 1,
+      "purchase": 0
+    },
+    {
+      "customer_id": 943,
+      "uplift_x": 0.0066,
+      "uplift_t": 0.004000000189989805,
+      "p_treated": 0.007000000216066837,
+      "p_control": 0.003000000026077032,
+      "segment": "Sure Thing / Neutral",
+      "purchase_frequency": 144,
+      "avg_basket_value": 2.4065,
+      "rfm_score": 0.3421,
+      "promo_sensitivity_score": 0.1112,
+      "treatment": 1,
+      "purchase": 0
+    },
+    {
+      "customer_id": 1675,
+      "uplift_x": 0.0065,
+      "uplift_t": 0.004000000189989805,
+      "p_treated": 0.007000000216066837,
+      "p_control": 0.003000000026077032,
+      "segment": "Sure Thing / Neutral",
+      "purchase_frequency": 102,
+      "avg_basket_value": 3.0312,
+      "rfm_score": 0.1822,
+      "promo_sensitivity_score": 0.185,
+      "treatment": 1,
+      "purchase": 0
+    },
+    {
+      "customer_id": 1012,
+      "uplift_x": 0.0065,
+      "uplift_t": 0.004000000189989805,
+      "p_treated": 0.007000000216066837,
+      "p_control": 0.003000000026077032,
+      "segment": "Sure Thing / Neutral",
+      "purchase_frequency": 121,
+      "avg_basket_value": 2.632,
+      "rfm_score": 0.3173,
+      "promo_sensitivity_score": 0.08,
+      "treatment": 1,
+      "purchase": 0
+    },
+    {
+      "customer_id": 2420,
+      "uplift_x": 0.0064,
+      "uplift_t": 0.004000000189989805,
+      "p_treated": 0.007000000216066837,
+      "p_control": 0.003000000026077032,
+      "segment": "Sure Thing / Neutral",
+      "purchase_frequency": 102,
+      "avg_basket_value": 2.9231,
+      "rfm_score": 0.2911,
+      "promo_sensitivity_score": 0.1887,
+      "treatment": 1,
+      "purchase": 0
+    },
+    {
+      "customer_id": 73,
+      "uplift_x": 0.0063,
+      "uplift_t": 0.004000000189989805,
+      "p_treated": 0.007000000216066837,
+      "p_control": 0.003000000026077032,
+      "segment": "Sure Thing / Neutral",
+      "purchase_frequency": 164,
+      "avg_basket_value": 3.8863,
+      "rfm_score": 0.3066,
+      "promo_sensitivity_score": 0.0984,
+      "treatment": 1,
+      "purchase": 0
+    },
+    {
+      "customer_id": 1834,
+      "uplift_x": 0.0062,
+      "uplift_t": 0.004000000189989805,
+      "p_treated": 0.007000000216066837,
+      "p_control": 0.003000000026077032,
+      "segment": "Sure Thing / Neutral",
+      "purchase_frequency": 135,
+      "avg_basket_value": 3.0132,
+      "rfm_score": 0.2788,
+      "promo_sensitivity_score": 0.1433,
+      "treatment": 1,
+      "purchase": 0
+    },
+    {
+      "customer_id": 2430,
+      "uplift_x": 0.0062,
+      "uplift_t": 0.004000000189989805,
+      "p_treated": 0.007000000216066837,
+      "p_control": 0.003000000026077032,
+      "segment": "Sure Thing / Neutral",
+      "purchase_frequency": 60,
+      "avg_basket_value": 2.6049,
+      "rfm_score": 0.2382,
+      "promo_sensitivity_score": 0.1277,
+      "treatment": 1,
+      "purchase": 0
+    },
+    {
+      "customer_id": 1820,
+      "uplift_x": 0.0061,
+      "uplift_t": 0.004000000189989805,
+      "p_treated": 0.007000000216066837,
+      "p_control": 0.003000000026077032,
+      "segment": "Sure Thing / Neutral",
+      "purchase_frequency": 77,
+      "avg_basket_value": 3.1102,
+      "rfm_score": 0.2686,
+      "promo_sensitivity_score": 0.1401,
+      "treatment": 1,
+      "purchase": 0
+    },
+    {
+      "customer_id": 1921,
+      "uplift_x": 0.006,
+      "uplift_t": 0.004000000189989805,
+      "p_treated": 0.007000000216066837,
+      "p_control": 0.003000000026077032,
+      "segment": "Sure Thing / Neutral",
+      "purchase_frequency": 104,
+      "avg_basket_value": 2.9086,
+      "rfm_score": 0.2282,
+      "promo_sensitivity_score": 0.1542,
+      "treatment": 1,
+      "purchase": 0
+    },
+    {
+      "customer_id": 370,
+      "uplift_x": 0.006,
+      "uplift_t": 0.004000000189989805,
+      "p_treated": 0.007000000216066837,
+      "p_control": 0.003000000026077032,
+      "segment": "Sure Thing / Neutral",
+      "purchase_frequency": 133,
+      "avg_basket_value": 3.0051,
+      "rfm_score": -0.0652,
+      "promo_sensitivity_score": 0.114,
+      "treatment": 1,
+      "purchase": 0
+    },
+    {
+      "customer_id": 1031,
+      "uplift_x": 0.006,
+      "uplift_t": 0.004000000189989805,
+      "p_treated": 0.007000000216066837,
+      "p_control": 0.003000000026077032,
+      "segment": "Sure Thing / Neutral",
+      "purchase_frequency": 146,
+      "avg_basket_value": 3.7686,
+      "rfm_score": -0.0501,
+      "promo_sensitivity_score": 0.1925,
+      "treatment": 1,
+      "purchase": 0
+    },
+    {
+      "customer_id": 546,
+      "uplift_x": 0.006,
+      "uplift_t": 0.004000000189989805,
+      "p_treated": 0.007000000216066837,
+      "p_control": 0.003000000026077032,
+      "segment": "Sure Thing / Neutral",
+      "purchase_frequency": 122,
+      "avg_basket_value": 3.8691,
+      "rfm_score": 0.1968,
+      "promo_sensitivity_score": 0.2225,
+      "treatment": 1,
+      "purchase": 0
+    },
+    {
+      "customer_id": 1420,
+      "uplift_x": 0.006,
+      "uplift_t": 0.004000000189989805,
+      "p_treated": 0.007000000216066837,
+      "p_control": 0.003000000026077032,
+      "segment": "Sure Thing / Neutral",
+      "purchase_frequency": 79,
+      "avg_basket_value": 3.2623,
+      "rfm_score": 0.2474,
+      "promo_sensitivity_score": 0.1426,
+      "treatment": 1,
+      "purchase": 0
+    },
+    {
+      "customer_id": 1091,
+      "uplift_x": 0.006,
+      "uplift_t": 0.004000000189989805,
+      "p_treated": 0.007000000216066837,
+      "p_control": 0.003000000026077032,
+      "segment": "Sure Thing / Neutral",
+      "purchase_frequency": 116,
+      "avg_basket_value": 4.654,
+      "rfm_score": 0.313,
+      "promo_sensitivity_score": 0.1363,
+      "treatment": 1,
+      "purchase": 0
+    },
+    {
+      "customer_id": 1828,
+      "uplift_x": 0.0059,
+      "uplift_t": 0.004000000189989805,
+      "p_treated": 0.007000000216066837,
+      "p_control": 0.003000000026077032,
+      "segment": "Sure Thing / Neutral",
+      "purchase_frequency": 86,
+      "avg_basket_value": 3.4981,
+      "rfm_score": -0.028,
+      "promo_sensitivity_score": 0.1749,
+      "treatment": 1,
+      "purchase": 0
+    },
+    {
+      "customer_id": 480,
+      "uplift_x": 0.0057,
+      "uplift_t": 0.004000000189989805,
+      "p_treated": 0.007000000216066837,
+      "p_control": 0.003000000026077032,
+      "segment": "Sure Thing / Neutral",
+      "purchase_frequency": 92,
+      "avg_basket_value": 3.1791,
+      "rfm_score": 0.3139,
+      "promo_sensitivity_score": 0.1187,
+      "treatment": 1,
+      "purchase": 0
+    },
+    {
+      "customer_id": 122,
+      "uplift_x": 0.0056,
+      "uplift_t": 0.004000000189989805,
+      "p_treated": 0.007000000216066837,
+      "p_control": 0.003000000026077032,
+      "segment": "Sure Thing / Neutral",
+      "purchase_frequency": 132,
+      "avg_basket_value": 3.1771,
+      "rfm_score": 0.3195,
+      "promo_sensitivity_score": 0.2787,
+      "treatment": 1,
+      "purchase": 0
+    },
+    {
+      "customer_id": 121,
+      "uplift_x": 0.0055,
+      "uplift_t": 0.004000000189989805,
+      "p_treated": 0.007000000216066837,
+      "p_control": 0.003000000026077032,
+      "segment": "Sure Thing / Neutral",
+      "purchase_frequency": 112,
+      "avg_basket_value": 2.5789,
+      "rfm_score": 0.3006,
+      "promo_sensitivity_score": 0.1862,
+      "treatment": 1,
+      "purchase": 0
+    },
+    {
+      "customer_id": 2329,
+      "uplift_x": 0.0054,
+      "uplift_t": 0.004000000189989805,
+      "p_treated": 0.007000000216066837,
+      "p_control": 0.003000000026077032,
+      "segment": "Sure Thing / Neutral",
+      "purchase_frequency": 100,
+      "avg_basket_value": 2.5903,
+      "rfm_score": 0.0037,
+      "promo_sensitivity_score": 0.0901,
+      "treatment": 1,
+      "purchase": 0
+    },
+    {
+      "customer_id": 1460,
+      "uplift_x": 0.0054,
+      "uplift_t": 0.004000000189989805,
+      "p_treated": 0.007000000216066837,
+      "p_control": 0.003000000026077032,
+      "segment": "Sure Thing / Neutral",
+      "purchase_frequency": 57,
+      "avg_basket_value": 3.2483,
+      "rfm_score": 0.2339,
+      "promo_sensitivity_score": 0.1737,
+      "treatment": 1,
+      "purchase": 0
+    },
+    {
+      "customer_id": 2356,
+      "uplift_x": 0.0054,
+      "uplift_t": 0.004000000189989805,
+      "p_treated": 0.007000000216066837,
+      "p_control": 0.003000000026077032,
+      "segment": "Sure Thing / Neutral",
+      "purchase_frequency": 98,
+      "avg_basket_value": 1.967,
+      "rfm_score": 0.1168,
+      "promo_sensitivity_score": 0.1053,
+      "treatment": 1,
+      "purchase": 0
+    },
+    {
+      "customer_id": 1980,
+      "uplift_x": 0.0054,
+      "uplift_t": 0.004000000189989805,
+      "p_treated": 0.007000000216066837,
+      "p_control": 0.003000000026077032,
+      "segment": "Sure Thing / Neutral",
+      "purchase_frequency": 54,
+      "avg_basket_value": 3.3737,
+      "rfm_score": 0.2675,
+      "promo_sensitivity_score": 0.1101,
+      "treatment": 1,
+      "purchase": 0
+    },
+    {
+      "customer_id": 1925,
+      "uplift_x": 0.0053,
+      "uplift_t": 0.004000000189989805,
+      "p_treated": 0.007000000216066837,
+      "p_control": 0.003000000026077032,
+      "segment": "Sure Thing / Neutral",
+      "purchase_frequency": 118,
+      "avg_basket_value": 3.132,
+      "rfm_score": 0.3048,
+      "promo_sensitivity_score": 0.1492,
+      "treatment": 1,
+      "purchase": 0
+    },
+    {
+      "customer_id": 2468,
+      "uplift_x": 0.0051,
+      "uplift_t": 0.004000000189989805,
+      "p_treated": 0.007000000216066837,
+      "p_control": 0.003000000026077032,
+      "segment": "Sure Thing / Neutral",
+      "purchase_frequency": 90,
+      "avg_basket_value": 2.4292,
+      "rfm_score": 0.269,
+      "promo_sensitivity_score": 0.1872,
+      "treatment": 1,
+      "purchase": 0
+    },
+    {
+      "customer_id": 2092,
+      "uplift_x": 0.0051,
+      "uplift_t": 0.004000000189989805,
+      "p_treated": 0.007000000216066837,
+      "p_control": 0.003000000026077032,
+      "segment": "Sure Thing / Neutral",
+      "purchase_frequency": 122,
+      "avg_basket_value": 3.2125,
+      "rfm_score": -0.0565,
+      "promo_sensitivity_score": 0.2522,
+      "treatment": 1,
+      "purchase": 0
+    },
+    {
+      "customer_id": 1157,
+      "uplift_x": 0.0051,
+      "uplift_t": 0.004000000189989805,
+      "p_treated": 0.007000000216066837,
+      "p_control": 0.003000000026077032,
+      "segment": "Sure Thing / Neutral",
+      "purchase_frequency": 104,
+      "avg_basket_value": 3.1305,
+      "rfm_score": 0.3205,
+      "promo_sensitivity_score": 0.1544,
+      "treatment": 1,
+      "purchase": 0
+    },
+    {
+      "customer_id": 183,
+      "uplift_x": 0.005,
+      "uplift_t": 0.004000000189989805,
+      "p_treated": 0.007000000216066837,
+      "p_control": 0.003000000026077032,
+      "segment": "Sure Thing / Neutral",
+      "purchase_frequency": 136,
+      "avg_basket_value": 2.7332,
+      "rfm_score": 0.3263,
+      "promo_sensitivity_score": 0.1092,
+      "treatment": 1,
+      "purchase": 0
+    },
+    {
+      "customer_id": 65,
+      "uplift_x": 0.0049,
+      "uplift_t": 0.004000000189989805,
+      "p_treated": 0.007000000216066837,
+      "p_control": 0.003000000026077032,
+      "segment": "Sure Thing / Neutral",
+      "purchase_frequency": 122,
+      "avg_basket_value": 3.8532,
+      "rfm_score": 0.3233,
+      "promo_sensitivity_score": 0.0664,
+      "treatment": 1,
+      "purchase": 0
+    },
+    {
+      "customer_id": 74,
+      "uplift_x": 0.0049,
+      "uplift_t": 0.004000000189989805,
+      "p_treated": 0.007000000216066837,
+      "p_control": 0.003000000026077032,
+      "segment": "Sure Thing / Neutral",
+      "purchase_frequency": 131,
+      "avg_basket_value": 1.9595,
+      "rfm_score": 0.2569,
+      "promo_sensitivity_score": 0.1445,
+      "treatment": 1,
+      "purchase": 0
+    },
+    {
+      "customer_id": 2457,
+      "uplift_x": 0.0048,
+      "uplift_t": 0.004000000189989805,
+      "p_treated": 0.007000000216066837,
+      "p_control": 0.003000000026077032,
+      "segment": "Sure Thing / Neutral",
+      "purchase_frequency": 77,
+      "avg_basket_value": 2.116,
+      "rfm_score": 0.3185,
+      "promo_sensitivity_score": 0.2061,
+      "treatment": 1,
+      "purchase": 0
+    },
+    {
+      "customer_id": 640,
+      "uplift_x": 0.0048,
+      "uplift_t": 0.004000000189989805,
+      "p_treated": 0.007000000216066837,
+      "p_control": 0.003000000026077032,
+      "segment": "Sure Thing / Neutral",
+      "purchase_frequency": 92,
+      "avg_basket_value": 2.4626,
+      "rfm_score": 0.33,
+      "promo_sensitivity_score": 0.1327,
+      "treatment": 1,
+      "purchase": 0
+    },
+    {
+      "customer_id": 778,
+      "uplift_x": 0.0047,
+      "uplift_t": 0.004000000189989805,
+      "p_treated": 0.007000000216066837,
+      "p_control": 0.003000000026077032,
+      "segment": "Sure Thing / Neutral",
+      "purchase_frequency": 123,
+      "avg_basket_value": 2.7907,
+      "rfm_score": 0.1095,
+      "promo_sensitivity_score": 0.1398,
+      "treatment": 1,
+      "purchase": 0
+    },
+    {
+      "customer_id": 86,
+      "uplift_x": 0.0047,
+      "uplift_t": 0.004000000189989805,
+      "p_treated": 0.007000000216066837,
+      "p_control": 0.003000000026077032,
+      "segment": "Sure Thing / Neutral",
+      "purchase_frequency": 46,
+      "avg_basket_value": 3.76,
+      "rfm_score": 0.3057,
+      "promo_sensitivity_score": 0.143,
+      "treatment": 1,
+      "purchase": 0
+    },
+    {
+      "customer_id": 1392,
+      "uplift_x": 0.0046,
+      "uplift_t": 0.004000000189989805,
+      "p_treated": 0.007000000216066837,
+      "p_control": 0.003000000026077032,
+      "segment": "Sure Thing / Neutral",
+      "purchase_frequency": 109,
+      "avg_basket_value": 3.0421,
+      "rfm_score": 0.2778,
+      "promo_sensitivity_score": 0.066,
+      "treatment": 1,
+      "purchase": 0
+    },
+    {
+      "customer_id": 2493,
+      "uplift_x": 0.0046,
+      "uplift_t": 0.004000000189989805,
+      "p_treated": 0.007000000216066837,
+      "p_control": 0.003000000026077032,
+      "segment": "Sure Thing / Neutral",
+      "purchase_frequency": 111,
+      "avg_basket_value": 3.0929,
+      "rfm_score": -0.1144,
+      "promo_sensitivity_score": 0.1804,
+      "treatment": 1,
+      "purchase": 0
+    },
+    {
+      "customer_id": 2398,
+      "uplift_x": 0.0045,
+      "uplift_t": 0.004000000189989805,
+      "p_treated": 0.007000000216066837,
+      "p_control": 0.003000000026077032,
+      "segment": "Sure Thing / Neutral",
+      "purchase_frequency": 76,
+      "avg_basket_value": 2.9928,
+      "rfm_score": 0.2138,
+      "promo_sensitivity_score": 0.0963,
+      "treatment": 1,
+      "purchase": 0
+    },
+    {
+      "customer_id": 1468,
+      "uplift_x": 0.0041,
+      "uplift_t": 0.004000000189989805,
+      "p_treated": 0.007000000216066837,
+      "p_control": 0.003000000026077032,
+      "segment": "Sure Thing / Neutral",
+      "purchase_frequency": 81,
+      "avg_basket_value": 3.3867,
+      "rfm_score": -0.0374,
+      "promo_sensitivity_score": 0.2157,
+      "treatment": 1,
+      "purchase": 0
+    },
+    {
+      "customer_id": 1331,
+      "uplift_x": 0.0041,
+      "uplift_t": 0.004000000189989805,
+      "p_treated": 0.007000000216066837,
+      "p_control": 0.003000000026077032,
+      "segment": "Sure Thing / Neutral",
+      "purchase_frequency": 105,
+      "avg_basket_value": 2.722,
+      "rfm_score": 0.3299,
+      "promo_sensitivity_score": 0.1818,
+      "treatment": 1,
+      "purchase": 0
+    },
+    {
+      "customer_id": 144,
+      "uplift_x": 0.0041,
+      "uplift_t": 0.004000000189989805,
+      "p_treated": 0.007000000216066837,
+      "p_control": 0.003000000026077032,
+      "segment": "Sure Thing / Neutral",
+      "purchase_frequency": 88,
+      "avg_basket_value": 3.4021,
+      "rfm_score": 0.235,
+      "promo_sensitivity_score": 0.043,
+      "treatment": 1,
+      "purchase": 0
+    },
+    {
+      "customer_id": 1464,
+      "uplift_x": 0.0041,
+      "uplift_t": 0.004000000189989805,
+      "p_treated": 0.007000000216066837,
+      "p_control": 0.003000000026077032,
+      "segment": "Sure Thing / Neutral",
+      "purchase_frequency": 76,
+      "avg_basket_value": 2.5883,
+      "rfm_score": 0.313,
+      "promo_sensitivity_score": 0.1369,
+      "treatment": 1,
+      "purchase": 0
+    },
+    {
+      "customer_id": 279,
+      "uplift_x": 0.004,
+      "uplift_t": 0.004000000189989805,
+      "p_treated": 0.007000000216066837,
+      "p_control": 0.003000000026077032,
+      "segment": "Sure Thing / Neutral",
+      "purchase_frequency": 53,
+      "avg_basket_value": 3.2324,
+      "rfm_score": 0.2425,
+      "promo_sensitivity_score": 0.2064,
+      "treatment": 1,
+      "purchase": 0
+    },
+    {
+      "customer_id": 1032,
+      "uplift_x": 0.004,
+      "uplift_t": 0.004000000189989805,
+      "p_treated": 0.007000000216066837,
+      "p_control": 0.003000000026077032,
+      "segment": "Sure Thing / Neutral",
+      "purchase_frequency": 92,
+      "avg_basket_value": 3.8835,
+      "rfm_score": 0.2644,
+      "promo_sensitivity_score": 0.1145,
+      "treatment": 1,
+      "purchase": 0
+    },
+    {
+      "customer_id": 933,
+      "uplift_x": 0.0039,
+      "uplift_t": 0.004000000189989805,
+      "p_treated": 0.007000000216066837,
+      "p_control": 0.003000000026077032,
+      "segment": "Sure Thing / Neutral",
+      "purchase_frequency": 79,
+      "avg_basket_value": 2.8546,
+      "rfm_score": 0.2566,
+      "promo_sensitivity_score": 0.1275,
+      "treatment": 0,
+      "purchase": 0
+    },
+    {
+      "customer_id": 1123,
+      "uplift_x": 0.0039,
+      "uplift_t": 0.004000000189989805,
+      "p_treated": 0.007000000216066837,
+      "p_control": 0.003000000026077032,
+      "segment": "Sure Thing / Neutral",
+      "purchase_frequency": 73,
+      "avg_basket_value": 3.9315,
+      "rfm_score": 0.3191,
+      "promo_sensitivity_score": 0.1408,
+      "treatment": 1,
+      "purchase": 0
+    },
+    {
+      "customer_id": 2013,
+      "uplift_x": 0.0039,
+      "uplift_t": 0.004000000189989805,
+      "p_treated": 0.007000000216066837,
+      "p_control": 0.003000000026077032,
+      "segment": "Sure Thing / Neutral",
+      "purchase_frequency": 94,
+      "avg_basket_value": 2.2696,
+      "rfm_score": 0.1153,
+      "promo_sensitivity_score": 0.1455,
+      "treatment": 1,
+      "purchase": 0
+    },
+    {
+      "customer_id": 1772,
+      "uplift_x": 0.0038,
+      "uplift_t": 0.004000000189989805,
+      "p_treated": 0.007000000216066837,
+      "p_control": 0.003000000026077032,
+      "segment": "Sure Thing / Neutral",
+      "purchase_frequency": 97,
+      "avg_basket_value": 2.3272,
+      "rfm_score": 0.1335,
+      "promo_sensitivity_score": 0.0994,
+      "treatment": 1,
+      "purchase": 0
+    },
+    {
+      "customer_id": 1681,
+      "uplift_x": 0.0035,
+      "uplift_t": 0.004000000189989805,
+      "p_treated": 0.007000000216066837,
+      "p_control": 0.003000000026077032,
+      "segment": "Sure Thing / Neutral",
+      "purchase_frequency": 90,
+      "avg_basket_value": 3.1543,
+      "rfm_score": 0.2164,
+      "promo_sensitivity_score": 0.1963,
+      "treatment": 1,
+      "purchase": 0
+    },
+    {
+      "customer_id": 220,
+      "uplift_x": 0.0034,
+      "uplift_t": 0.004000000189989805,
+      "p_treated": 0.007000000216066837,
+      "p_control": 0.003000000026077032,
+      "segment": "Sure Thing / Neutral",
+      "purchase_frequency": 91,
+      "avg_basket_value": 2.957,
+      "rfm_score": 0.3314,
+      "promo_sensitivity_score": 0.269,
+      "treatment": 1,
+      "purchase": 0
+    },
+    {
+      "customer_id": 1060,
+      "uplift_x": 0.0033,
+      "uplift_t": 0.004000000189989805,
+      "p_treated": 0.007000000216066837,
+      "p_control": 0.003000000026077032,
+      "segment": "Sure Thing / Neutral",
+      "purchase_frequency": 64,
+      "avg_basket_value": 3.0592,
+      "rfm_score": 0.3008,
+      "promo_sensitivity_score": 0.1861,
+      "treatment": 1,
+      "purchase": 0
+    },
+    {
+      "customer_id": 1973,
+      "uplift_x": 0.0032,
+      "uplift_t": 0.004000000189989805,
+      "p_treated": 0.007000000216066837,
+      "p_control": 0.003000000026077032,
+      "segment": "Sure Thing / Neutral",
+      "purchase_frequency": 130,
+      "avg_basket_value": 4.3957,
+      "rfm_score": 0.048,
+      "promo_sensitivity_score": 0.1138,
+      "treatment": 0,
+      "purchase": 0
+    },
+    {
+      "customer_id": 1048,
+      "uplift_x": 0.0027,
+      "uplift_t": 0.004000000189989805,
+      "p_treated": 0.007000000216066837,
+      "p_control": 0.003000000026077032,
+      "segment": "Sure Thing / Neutral",
+      "purchase_frequency": 103,
+      "avg_basket_value": 3.6988,
+      "rfm_score": 0.2393,
+      "promo_sensitivity_score": 0.2132,
+      "treatment": 1,
+      "purchase": 0
+    },
+    {
+      "customer_id": 1574,
+      "uplift_x": 0.0027,
+      "uplift_t": 0.004000000189989805,
+      "p_treated": 0.007000000216066837,
+      "p_control": 0.003000000026077032,
+      "segment": "Sure Thing / Neutral",
+      "purchase_frequency": 28,
+      "avg_basket_value": 3.067,
+      "rfm_score": 0.2198,
+      "promo_sensitivity_score": 0.2032,
+      "treatment": 0,
+      "purchase": 0
+    },
+    {
+      "customer_id": 2254,
+      "uplift_x": 0.0026,
+      "uplift_t": 0.004000000189989805,
+      "p_treated": 0.007000000216066837,
+      "p_control": 0.003000000026077032,
+      "segment": "Sure Thing / Neutral",
+      "purchase_frequency": 80,
+      "avg_basket_value": 3.1999,
+      "rfm_score": -0.0362,
+      "promo_sensitivity_score": 0.17,
+      "treatment": 1,
+      "purchase": 0
+    },
+    {
+      "customer_id": 1532,
+      "uplift_x": 0.0025,
+      "uplift_t": 0.004000000189989805,
+      "p_treated": 0.007000000216066837,
+      "p_control": 0.003000000026077032,
+      "segment": "Sure Thing / Neutral",
+      "purchase_frequency": 86,
+      "avg_basket_value": 3.832,
+      "rfm_score": 0.3054,
+      "promo_sensitivity_score": 0.0752,
+      "treatment": 1,
+      "purchase": 0
+    },
+    {
+      "customer_id": 2073,
+      "uplift_x": 0.0025,
+      "uplift_t": 0.004000000189989805,
+      "p_treated": 0.007000000216066837,
+      "p_control": 0.003000000026077032,
+      "segment": "Sure Thing / Neutral",
+      "purchase_frequency": 72,
+      "avg_basket_value": 2.6602,
+      "rfm_score": 0.0025,
+      "promo_sensitivity_score": 0.0935,
+      "treatment": 0,
+      "purchase": 0
+    },
+    {
+      "customer_id": 1523,
+      "uplift_x": 0.0024,
+      "uplift_t": 0.004000000189989805,
+      "p_treated": 0.007000000216066837,
+      "p_control": 0.003000000026077032,
+      "segment": "Sure Thing / Neutral",
+      "purchase_frequency": 67,
+      "avg_basket_value": 2.8039,
+      "rfm_score": 0.3224,
+      "promo_sensitivity_score": 0.1563,
+      "treatment": 0,
+      "purchase": 0
+    },
+    {
+      "customer_id": 1016,
+      "uplift_x": 0.0023,
+      "uplift_t": 0.004000000189989805,
+      "p_treated": 0.007000000216066837,
+      "p_control": 0.003000000026077032,
+      "segment": "Sure Thing / Neutral",
+      "purchase_frequency": 40,
+      "avg_basket_value": 3.9972,
+      "rfm_score": 0.2429,
+      "promo_sensitivity_score": 0.0866,
+      "treatment": 1,
+      "purchase": 0
+    },
+    {
+      "customer_id": 2,
+      "uplift_x": 0.0022,
+      "uplift_t": 0.004000000189989805,
+      "p_treated": 0.007000000216066837,
+      "p_control": 0.003000000026077032,
+      "segment": "Sure Thing / Neutral",
+      "purchase_frequency": 45,
+      "avg_basket_value": 2.7372,
+      "rfm_score": 0.2783,
+      "promo_sensitivity_score": 0.1423,
+      "treatment": 1,
+      "purchase": 0
+    },
+    {
+      "customer_id": 1502,
+      "uplift_x": 0.0022,
+      "uplift_t": 0.004000000189989805,
+      "p_treated": 0.007000000216066837,
+      "p_control": 0.003000000026077032,
+      "segment": "Sure Thing / Neutral",
+      "purchase_frequency": 47,
+      "avg_basket_value": 2.781,
+      "rfm_score": 0.3194,
+      "promo_sensitivity_score": 0.1375,
+      "treatment": 1,
+      "purchase": 0
+    },
+    {
+      "customer_id": 642,
+      "uplift_x": 0.0022,
+      "uplift_t": 0.004000000189989805,
+      "p_treated": 0.007000000216066837,
+      "p_control": 0.003000000026077032,
+      "segment": "Sure Thing / Neutral",
+      "purchase_frequency": 64,
+      "avg_basket_value": 3.1368,
+      "rfm_score": 0.0182,
+      "promo_sensitivity_score": 0.1436,
+      "treatment": 1,
+      "purchase": 0
+    },
+    {
+      "customer_id": 950,
+      "uplift_x": 0.0021,
+      "uplift_t": 0.004000000189989805,
+      "p_treated": 0.007000000216066837,
+      "p_control": 0.003000000026077032,
+      "segment": "Sure Thing / Neutral",
+      "purchase_frequency": 58,
+      "avg_basket_value": 2.7027,
+      "rfm_score": 0.0886,
+      "promo_sensitivity_score": 0.1542,
+      "treatment": 0,
+      "purchase": 0
+    },
+    {
+      "customer_id": 763,
+      "uplift_x": 0.002,
+      "uplift_t": 0.004000000189989805,
+      "p_treated": 0.007000000216066837,
+      "p_control": 0.003000000026077032,
+      "segment": "Sure Thing / Neutral",
+      "purchase_frequency": 40,
+      "avg_basket_value": 2.7256,
+      "rfm_score": 0.1133,
+      "promo_sensitivity_score": 0.1281,
+      "treatment": 1,
+      "purchase": 0
+    },
+    {
+      "customer_id": 782,
+      "uplift_x": 0.0019,
+      "uplift_t": 0.004000000189989805,
+      "p_treated": 0.007000000216066837,
+      "p_control": 0.003000000026077032,
+      "segment": "Sure Thing / Neutral",
+      "purchase_frequency": 70,
+      "avg_basket_value": 2.8834,
+      "rfm_score": 0.2708,
+      "promo_sensitivity_score": 0.1274,
+      "treatment": 0,
+      "purchase": 0
+    },
+    {
+      "customer_id": 1894,
+      "uplift_x": 0.0018,
+      "uplift_t": 0.004000000189989805,
+      "p_treated": 0.007000000216066837,
+      "p_control": 0.003000000026077032,
+      "segment": "Sure Thing / Neutral",
+      "purchase_frequency": 42,
+      "avg_basket_value": 3.1433,
+      "rfm_score": 0.2482,
+      "promo_sensitivity_score": 0.242,
+      "treatment": 1,
+      "purchase": 0
+    },
+    {
+      "customer_id": 1570,
+      "uplift_x": 0.0018,
+      "uplift_t": 0.004000000189989805,
+      "p_treated": 0.007000000216066837,
+      "p_control": 0.003000000026077032,
+      "segment": "Sure Thing / Neutral",
+      "purchase_frequency": 51,
+      "avg_basket_value": 3.3286,
+      "rfm_score": 0.2728,
+      "promo_sensitivity_score": 0.2245,
+      "treatment": 0,
+      "purchase": 0
+    },
+    {
+      "customer_id": 1723,
+      "uplift_x": 0.0018,
+      "uplift_t": 0.004000000189989805,
+      "p_treated": 0.007000000216066837,
+      "p_control": 0.003000000026077032,
+      "segment": "Sure Thing / Neutral",
+      "purchase_frequency": 86,
+      "avg_basket_value": 7.3026,
+      "rfm_score": 0.3773,
+      "promo_sensitivity_score": 0.1683,
+      "treatment": 1,
+      "purchase": 0
+    },
+    {
+      "customer_id": 264,
+      "uplift_x": 0.0017,
+      "uplift_t": 0.004000000189989805,
+      "p_treated": 0.007000000216066837,
+      "p_control": 0.003000000026077032,
+      "segment": "Sure Thing / Neutral",
+      "purchase_frequency": 61,
+      "avg_basket_value": 2.7098,
+      "rfm_score": 0.323,
+      "promo_sensitivity_score": 0.1838,
+      "treatment": 1,
+      "purchase": 0
+    },
+    {
+      "customer_id": 649,
+      "uplift_x": 0.0017,
+      "uplift_t": 0.004000000189989805,
+      "p_treated": 0.007000000216066837,
+      "p_control": 0.003000000026077032,
+      "segment": "Sure Thing / Neutral",
+      "purchase_frequency": 55,
+      "avg_basket_value": 2.6692,
+      "rfm_score": -0.0926,
+      "promo_sensitivity_score": 0.1317,
+      "treatment": 0,
+      "purchase": 0
+    },
+    {
+      "customer_id": 2106,
+      "uplift_x": 0.0016,
+      "uplift_t": 0.004000000189989805,
+      "p_treated": 0.007000000216066837,
+      "p_control": 0.003000000026077032,
+      "segment": "Sure Thing / Neutral",
+      "purchase_frequency": 52,
+      "avg_basket_value": 4.4136,
+      "rfm_score": -0.2892,
+      "promo_sensitivity_score": 0.1517,
+      "treatment": 0,
+      "purchase": 0
+    },
+    {
+      "customer_id": 416,
+      "uplift_x": 0.0015,
+      "uplift_t": 0.004000000189989805,
+      "p_treated": 0.007000000216066837,
+      "p_control": 0.003000000026077032,
+      "segment": "Sure Thing / Neutral",
+      "purchase_frequency": 29,
+      "avg_basket_value": 2.5285,
+      "rfm_score": -0.0387,
+      "promo_sensitivity_score": 0.1224,
+      "treatment": 0,
+      "purchase": 0
+    },
+    {
+      "customer_id": 1746,
+      "uplift_x": 0.0015,
+      "uplift_t": 0.004000000189989805,
+      "p_treated": 0.007000000216066837,
+      "p_control": 0.003000000026077032,
+      "segment": "Sure Thing / Neutral",
+      "purchase_frequency": 49,
+      "avg_basket_value": 3.6901,
+      "rfm_score": 0.2425,
+      "promo_sensitivity_score": 0.1303,
+      "treatment": 1,
+      "purchase": 0
+    },
+    {
+      "customer_id": 737,
+      "uplift_x": 0.0014,
+      "uplift_t": 0.004000000189989805,
+      "p_treated": 0.007000000216066837,
+      "p_control": 0.003000000026077032,
+      "segment": "Sure Thing / Neutral",
+      "purchase_frequency": 52,
+      "avg_basket_value": 3.0703,
+      "rfm_score": 0.2272,
+      "promo_sensitivity_score": 0.163,
+      "treatment": 1,
+      "purchase": 0
+    },
+    {
+      "customer_id": 1122,
+      "uplift_x": 0.0014,
+      "uplift_t": 0.004000000189989805,
+      "p_treated": 0.007000000216066837,
+      "p_control": 0.003000000026077032,
+      "segment": "Sure Thing / Neutral",
+      "purchase_frequency": 77,
+      "avg_basket_value": 2.0755,
+      "rfm_score": -0.2852,
+      "promo_sensitivity_score": 0.1461,
+      "treatment": 1,
+      "purchase": 0
+    },
+    {
+      "customer_id": 379,
+      "uplift_x": 0.0014,
+      "uplift_t": 0.000699999975040555,
+      "p_treated": 0.9993000030517578,
+      "p_control": 0.9984999895095825,
+      "segment": "Sure Thing / Neutral",
+      "purchase_frequency": 2,
+      "avg_basket_value": 2.3183,
+      "rfm_score": 0.3908,
+      "promo_sensitivity_score": 0.1626,
+      "treatment": 0,
+      "purchase": 1
+    },
+    {
+      "customer_id": 2444,
+      "uplift_x": 0.0014,
+      "uplift_t": 0.000699999975040555,
+      "p_treated": 0.9993000030517578,
+      "p_control": 0.9984999895095825,
+      "segment": "Sure Thing / Neutral",
+      "purchase_frequency": 6,
+      "avg_basket_value": 3.497,
+      "rfm_score": 0.4107,
+      "promo_sensitivity_score": 0.2265,
+      "treatment": 0,
+      "purchase": 1
+    },
+    {
+      "customer_id": 186,
+      "uplift_x": 0.0014,
+      "uplift_t": 0.000699999975040555,
+      "p_treated": 0.9993000030517578,
+      "p_control": 0.9984999895095825,
+      "segment": "Sure Thing / Neutral",
+      "purchase_frequency": 3,
+      "avg_basket_value": 4.5785,
+      "rfm_score": 0.4107,
+      "promo_sensitivity_score": 0.11,
+      "treatment": 0,
+      "purchase": 1
+    },
+    {
+      "customer_id": 1339,
+      "uplift_x": 0.0013,
+      "uplift_t": 0.000699999975040555,
+      "p_treated": 0.9993000030517578,
+      "p_control": 0.9984999895095825,
+      "segment": "Sure Thing / Neutral",
+      "purchase_frequency": 6,
+      "avg_basket_value": 11.1474,
+      "rfm_score": 0.4617,
+      "promo_sensitivity_score": 0.1732,
+      "treatment": 0,
+      "purchase": 1
+    }
+  ],
+  "weekly_trend": [
+    51.93,
+    54.96,
+    57.1,
+    59.76,
+    61.69,
+    63.65,
+    66.03,
+    68.44,
+    70.39,
+    71.2,
+    73.12,
+    75.46
+  ]
+}
