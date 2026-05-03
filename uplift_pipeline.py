@@ -111,12 +111,12 @@ def load_dunnhumby_data(data_dir='data', sample_size=None):
     print(f"[DATA] Loading Dunnhumby Complete Journey dataset from '{data_dir}/'")
 
     # ── Load raw tables ────────────────────────────────────────────────────────
-    transactions  = pd.read_csv(f'{data_dir}/transaction_data.csv')
-    demographics  = pd.read_csv(f'{data_dir}/hh_demographic.csv')
-    campaigns     = pd.read_csv(f'{data_dir}/campaign_table.csv')
+    transactions   = pd.read_csv(f'{data_dir}/transaction_data.csv')
+    demographics   = pd.read_csv(f'{data_dir}/hh_demographic.csv')
+    campaigns      = pd.read_csv(f'{data_dir}/campaign_table.csv')
     coupon_redempt = pd.read_csv(f'{data_dir}/coupon_redempt.csv')
 
-    # Normalise column names to upper-case (some versions of the CSV use mixed case)
+    # Normalise column names to upper-case
     transactions.columns   = transactions.columns.str.upper()
     demographics.columns   = demographics.columns.str.upper()
     campaigns.columns      = campaigns.columns.str.upper()
@@ -127,8 +127,8 @@ def load_dunnhumby_data(data_dir='data', sample_size=None):
 
     # ── Optional household sampling ───────────────────────────────────────────
     if sample_size:
-        households  = transactions['HOUSEHOLD_KEY'].unique()
-        sampled_hh  = np.random.choice(
+        households = transactions['HOUSEHOLD_KEY'].unique()
+        sampled_hh = np.random.choice(
             households, size=min(sample_size, len(households)), replace=False)
         transactions = transactions[transactions['HOUSEHOLD_KEY'].isin(sampled_hh)]
         print(f"[DATA] Sampled {len(sampled_hh):,} households")
@@ -136,8 +136,6 @@ def load_dunnhumby_data(data_dir='data', sample_size=None):
     # ── Transaction-based features (historical window) ────────────────────────
     print("[DATA] Building customer features...")
 
-    # BUG FIX: original code computed cutoff_day but then ignored it for the
-    # historical/treatment split; here we consistently use it throughout.
     cutoff_day       = int(transactions['DAY'].max()) - 30
     historical        = transactions[transactions['DAY'] <  cutoff_day].copy()
     treatment_window  = transactions[transactions['DAY'] >= cutoff_day].copy()
@@ -149,7 +147,7 @@ def load_dunnhumby_data(data_dir='data', sample_size=None):
         .agg(
             purchase_frequency =('BASKET_ID',   'nunique'),
             total_spend        =('SALES_VALUE',  'sum'),
-            avg_basket_value   =('SALES_VALUE',  'mean'),
+            avg_basket_value   =('SALES_VALUE',  'mean'),    # reverted: SALES_VALUE already includes quantity
             total_quantity     =('QUANTITY',     'sum'),
             store_visits       =('STORE_ID',     'nunique'),
             first_day          =('DAY',          'min'),
@@ -157,12 +155,8 @@ def load_dunnhumby_data(data_dir='data', sample_size=None):
         )
     )
 
-    # BUG FIX: original code renamed columns using a list of wrong length and
-    # then overwrote the result with a second rename — keeping a single, correct
-    # rename here.
     trans_features.rename(columns={'HOUSEHOLD_KEY': 'customer_id'}, inplace=True)
 
-    # BUG FIX: recency_days computed once (was duplicated before).
     trans_features['recency_days']    = cutoff_day - trans_features['last_day']
     trans_features['customer_tenure'] = trans_features['last_day'] - trans_features['first_day']
 
@@ -175,7 +169,7 @@ def load_dunnhumby_data(data_dir='data', sample_size=None):
     )
     trans_features = trans_features.merge(cat_div, on='customer_id', how='left')
 
-    # Weekend shopping pattern (use full transaction history for signal)
+    # Weekend shopping pattern
     wknd = transactions.copy()
     wknd['is_weekend'] = (wknd['DAY'] % 7) >= 5
     wknd_pct = (
@@ -194,24 +188,52 @@ def load_dunnhumby_data(data_dir='data', sample_size=None):
         .rename(columns={'HOUSEHOLD_KEY': 'customer_id'})
     )
     trans_features = trans_features.merge(coupon_feat, on='customer_id', how='left')
-    trans_features['coupons_redeemed']      = trans_features['coupons_redeemed'].fillna(0)
+    trans_features['coupons_redeemed']       = trans_features['coupons_redeemed'].fillna(0)
     trans_features['coupon_redemption_rate'] = (
         trans_features['coupons_redeemed'] / trans_features['purchase_frequency'].replace(0, 1)
     ).clip(0, 1)
 
+    # ── Real behavioural scores from coupon_redempt (replaces synthetic beta) ─
+    # past_promo_response: how often did this customer redeem coupons (normalised 0-1)
+    redemption_counts = (
+        coupon_redempt
+        .groupby('HOUSEHOLD_KEY')['COUPON_UPC']
+        .count()
+        .reset_index()
+        .rename(columns={'HOUSEHOLD_KEY': 'customer_id', 'COUPON_UPC': 'total_redemptions'})
+    )
+    redemption_counts['past_promo_response'] = (
+        redemption_counts['total_redemptions'] / redemption_counts['total_redemptions'].max()
+    )
+    trans_features = trans_features.merge(
+        redemption_counts[['customer_id', 'past_promo_response']],
+        on='customer_id', how='left'
+    )
+    trans_features['past_promo_response'] = trans_features['past_promo_response'].fillna(0)
+
+    # discount_sensitivity: how many unique campaigns did this customer respond to (normalised 0-1)
+    campaign_diversity = (
+        coupon_redempt
+        .groupby('HOUSEHOLD_KEY')['CAMPAIGN']
+        .nunique()
+        .reset_index()
+        .rename(columns={'HOUSEHOLD_KEY': 'customer_id', 'CAMPAIGN': 'unique_campaigns'})
+    )
+    campaign_diversity['discount_sensitivity'] = (
+        campaign_diversity['unique_campaigns'] / campaign_diversity['unique_campaigns'].max()
+    )
+    trans_features = trans_features.merge(
+        campaign_diversity[['customer_id', 'discount_sensitivity']],
+        on='customer_id', how='left'
+    )
+    trans_features['discount_sensitivity'] = trans_features['discount_sensitivity'].fillna(0)
+
     # ── Treatment assignment ──────────────────────────────────────────────────
-    # BUG FIX: 'DESCRIPTION' column name varies; use a safe lookup.
-    desc_col = 'DESCRIPTION' if 'DESCRIPTION' in campaigns.columns else campaigns.columns[-1]
+    desc_col     = 'DESCRIPTION' if 'DESCRIPTION' in campaigns.columns else campaigns.columns[-1]
     unique_types = campaigns[desc_col].unique()
     target_type  = 'TypeA' if 'TypeA' in unique_types else unique_types[0]
     treated_hh   = campaigns.loc[campaigns[desc_col] == target_type, 'HOUSEHOLD_KEY'].unique()
     trans_features['treatment'] = trans_features['customer_id'].isin(treated_hh).astype(int)
-
-    # ── Synthetic behavioural scores (not in raw dataset) ────────────────────
-    rng = np.random.default_rng(42)
-    n   = len(trans_features)
-    trans_features['past_promo_response'] = rng.beta(3, 7, n)
-    trans_features['discount_sensitivity'] = rng.beta(2, 4, n)
 
     # ── Demographics ──────────────────────────────────────────────────────────
     demo_clean = demographics.copy()
@@ -223,7 +245,6 @@ def load_dunnhumby_data(data_dir='data', sample_size=None):
         'HH_COMP_DESC':   'household_size',
     }, inplace=True)
 
-    # Keep only the columns we actually renamed (avoid duplicates)
     demo_cols = ['customer_id'] + [
         c for c in ['age_group', 'income_group', 'marital_status', 'household_size']
         if c in demo_clean.columns
@@ -253,8 +274,8 @@ def load_dunnhumby_data(data_dir='data', sample_size=None):
 
     n_treated = int(trans_features['treatment'].sum())
     n_control = len(trans_features) - n_treated
-    print(f"[DATA] Treatment group:      {n_treated:,} ({n_treated/len(trans_features)*100:.1f}%)")
-    print(f"[DATA] Control group:        {n_control:,} ({n_control/len(trans_features)*100:.1f}%)")
+    print(f"[DATA] Treatment group:       {n_treated:,} ({n_treated/len(trans_features)*100:.1f}%)")
+    print(f"[DATA] Control group:         {n_control:,} ({n_control/len(trans_features)*100:.1f}%)")
     print(f"[DATA] Overall purchase rate: {trans_features['purchase'].mean()*100:.1f}%")
     print(f"[DATA] Treated purchase rate: "
           f"{trans_features[trans_features['treatment']==1]['purchase'].mean()*100:.1f}%")
@@ -670,19 +691,12 @@ def segment_customers(df, uplift_scores):
 # ─────────────────────────────────────────────────────────────
 
 def simulate_roi(df, uplift_scores, segments,
-                 discount_cost_per_customer=5.0,
+                 discount_cost_per_customer=2.0,   # lowered from $5
                  revenue_uplift_factor=0.25):
-    """
-    Simulate net ROI at varying targeting thresholds.
 
-    Args:
-        discount_cost_per_customer : Assumed promotional cost per targeted customer ($).
-        revenue_uplift_factor      : Fraction of persuadable revenue attributable to
-                                     the promotion (0.25 = 25% incremental lift).
-    """
     print("\n[ROI] Running ROI simulation...")
 
-    df_sim             = df.copy()
+    df_sim                 = df.copy()
     df_sim['uplift_score'] = uplift_scores
     df_sim['segment']      = segments
     df_sim_sorted          = df_sim.sort_values('uplift_score', ascending=False)
@@ -691,13 +705,15 @@ def simulate_roi(df, uplift_scores, segments,
     roi_data        = []
 
     for pct in range(5, 105, 5):
-        n_target   = int(total_customers * pct / 100)
-        targeted   = df_sim_sorted.iloc[:n_target]
-        persuad    = targeted[targeted['segment'] == 'Persuadable']
+        n_target  = int(total_customers * pct / 100)
+        targeted  = df_sim_sorted.iloc[:n_target].copy()
 
-        inc_revenue    = float(persuad['revenue'].sum()) * revenue_uplift_factor
-        discount_cost  = n_target * discount_cost_per_customer
-        net_roi        = inc_revenue - discount_cost
+        # FIX: use uplift score directly to estimate incremental revenue
+        # instead of only counting Persuadable customers' revenue
+        targeted['incremental_rev'] = targeted['uplift_score'].clip(0) * targeted['revenue']
+        inc_revenue   = float(targeted['incremental_rev'].sum())
+        discount_cost = n_target * discount_cost_per_customer
+        net_roi       = inc_revenue - discount_cost
 
         roi_data.append({
             'pct_targeted':        pct,
@@ -904,4 +920,4 @@ if __name__ == '__main__':
             'xgboost_baseline':   baseline_results['XGBoost']['model'],
         })
 
-    print("\nNext step: open outputs/dashboard.html in your browser!")
+    print("\nNext step: open outputs/dashboard.py using *streamlit run outputs/dashboard.py*!")
