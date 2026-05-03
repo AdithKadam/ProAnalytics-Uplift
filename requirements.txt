@@ -13,6 +13,7 @@ papermill>=2.6.0
 
 # ML / AI
 xgboost>=2.1.0
+shap>=0.45.0
 
 # Model persistence
 joblib>=1.4.0
