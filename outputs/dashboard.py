@@ -3,6 +3,7 @@ import streamlit as st
 import plotly.graph_objects as go
 import plotly.express as px
 import pandas as pd
+from pathlib import Path
 
 # ── Page config ────────────────────────────────────────────────────────────────
 st.set_page_config(
@@ -164,9 +165,20 @@ SEG_COLORS = {
 }
 
 # ── Load data ──────────────────────────────────────────────────────────────────
+# Resolve path relative to this file so it works from any working directory
+_DATA_FILE = Path(__file__).parent / "dashboard_data.json"
+
 @st.cache_data
 def load_data():
-    with open("outputs/dashboard_data.json") as f:
+    if not _DATA_FILE.exists():
+        st.error(
+            "**dashboard_data.json not found.**\n\n"
+            "Please run the pipeline first to generate the data:\n"
+            "```\npython uplift_pipeline.py\n```\n"
+            "Then refresh this page."
+        )
+        st.stop()
+    with open(_DATA_FILE) as f:
         return json.load(f)
 
 DATA = load_data()
