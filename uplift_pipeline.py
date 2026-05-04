@@ -913,6 +913,33 @@ def export_dashboard_data(df, uplift_t, uplift_x, p_treat, p_control,
         json.dump(dashboard_data, f, indent=2)
 
     print(f"[EXPORT] Data saved to {out_path}")
+
+    # ── Inject fresh data into dashboard.html so it always shows live results ─
+    html_path = 'outputs/dashboard.html'
+    if os.path.exists(html_path):
+        with open(html_path, 'r', encoding='utf-8') as f:
+            html = f.read()
+
+        new_data_block = (
+            "// ════════════════════════════════════\n"
+            "// EMBEDDED DATA (from pipeline output)\n"
+            "// ════════════════════════════════════\n\n"
+            f"const DATA = {json.dumps(dashboard_data, indent=2)};"
+        )
+
+        import re
+        # Replace everything from the DATA comment block down to closing }; of DATA
+        html = re.sub(
+            r'// ════.*?// EMBEDDED DATA.*?\nconst DATA = \{.*?\};',
+            new_data_block,
+            html,
+            flags=re.DOTALL
+        )
+
+        with open(html_path, 'w', encoding='utf-8') as f:
+            f.write(html)
+
+        print(f"[EXPORT] Dashboard HTML updated with live data → {html_path}")
     print(f"\n{'='*60}")
     print("PIPELINE COMPLETE!")
     print(f"{'='*60}")
