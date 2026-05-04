@@ -1,18 +1,22 @@
 # Core Data Science
-numpy==1.26.4
-pandas==1.5.3
-scikit-learn==1.3.2
+numpy>=2.1.0
+pandas>=2.2.0
+scikit-learn>=1.5.0
 
 # Visualization
-matplotlib==3.7.3
-seaborn==0.12.2
+matplotlib>=3.9.0
+seaborn>=0.13.0
 
 # Jupyter
-ipykernel==6.26.0
-papermill==2.6.0
+ipykernel>=6.29.0
+papermill>=2.6.0
 
 # ML / AI
-xgboost==2.0.2
+xgboost>=2.1.0
+shap>=0.45.0
+
+# Model persistence
+joblib>=1.4.0
 
 # Kaggle
 kagglehub>=0.2.0

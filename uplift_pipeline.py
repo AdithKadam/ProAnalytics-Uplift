@@ -73,14 +73,23 @@ import warnings
 import os
 warnings.filterwarnings('ignore')
 
-from sklearn.model_selection import train_test_split
+import argparse
+from sklearn.model_selection import train_test_split, cross_val_score, StratifiedKFold
 from sklearn.preprocessing import StandardScaler
 from sklearn.linear_model import LogisticRegression
 from sklearn.ensemble import RandomForestClassifier, GradientBoostingClassifier
-from sklearn.metrics import roc_auc_score
+from sklearn.metrics import roc_auc_score, precision_score, recall_score, f1_score
 from sklearn.cluster import KMeans
 from sklearn.decomposition import PCA
 import xgboost as xgb
+
+# Optional SHAP explainability
+try:
+    import shap
+    SHAP_AVAILABLE = True
+except ImportError:
+    SHAP_AVAILABLE = False
+    print("[WARN] shap not installed — SHAP explainability will be skipped. Run: pip install shap")
 
 # Optional model persistence
 try:
@@ -389,9 +398,12 @@ def fit_baseline_models(df, feature_cols):
     X_train, X_test, y_train, y_test = train_test_split(
         X, y, test_size=0.2, random_state=42, stratify=y)
 
-    scaler        = StandardScaler()
-    X_train_sc    = scaler.fit_transform(X_train)
-    X_test_sc     = scaler.transform(X_test)
+    scaler     = StandardScaler()
+    X_train_sc = scaler.fit_transform(X_train)
+    X_test_sc  = scaler.transform(X_test)
+    X_sc_full  = scaler.transform(X)   # for cross-val on LR
+
+    cv = StratifiedKFold(n_splits=5, shuffle=True, random_state=42)
 
     models = {
         'Logistic Regression': LogisticRegression(max_iter=1000),
@@ -402,17 +414,36 @@ def fit_baseline_models(df, feature_cols):
     }
 
     results = {}
-    for name, model in models.items():
-        if name == 'Logistic Regression':
-            model.fit(X_train_sc, y_train)
-            preds = model.predict_proba(X_test_sc)[:, 1]
-        else:
-            model.fit(X_train, y_train)
-            preds = model.predict_proba(X_test)[:, 1]
+    print(f"\n{'Model':<22} {'AUC':>6}  {'CV-AUC':>9}  {'Precision':>10}  {'Recall':>7}  {'F1':>6}")
+    print("-" * 68)
 
-        auc = roc_auc_score(y_test, preds)
-        results[name] = {'auc': round(auc, 4), 'model': model}
-        print(f"[BASELINE] {name}: AUC = {auc:.4f}")
+    for name, model in models.items():
+        is_lr = name == 'Logistic Regression'
+        X_tr  = X_train_sc if is_lr else X_train
+        X_te  = X_test_sc  if is_lr else X_test
+        X_cv  = X_sc_full  if is_lr else X
+
+        model.fit(X_tr, y_train)
+        probs  = model.predict_proba(X_te)[:, 1]
+        labels = (probs >= 0.5).astype(int)
+
+        auc  = roc_auc_score(y_test, probs)
+        cv_scores = cross_val_score(model, X_cv, y, cv=cv, scoring='roc_auc', n_jobs=-1)
+        prec = precision_score(y_test, labels, zero_division=0)
+        rec  = recall_score(y_test, labels, zero_division=0)
+        f1   = f1_score(y_test, labels, zero_division=0)
+
+        results[name] = {
+            'auc':       round(auc, 4),
+            'cv_auc':    round(float(cv_scores.mean()), 4),
+            'cv_std':    round(float(cv_scores.std()), 4),
+            'precision': round(prec, 4),
+            'recall':    round(rec, 4),
+            'f1':        round(f1, 4),
+            'model':     model,
+        }
+        print(f"{name:<22} {auc:>6.4f}  {cv_scores.mean():>6.4f}±{cv_scores.std():.3f}"
+              f"  {prec:>10.4f}  {rec:>7.4f}  {f1:>6.4f}")
 
     # Feature importance from XGBoost
     xgb_model   = results['XGBoost']['model']
@@ -606,6 +637,55 @@ def compute_uplift_curve(T, Y, uplift_scores, n_bins=20):
     print(f"[EVAL] Qini coefficient (normalized): {qini_coeff:.4f}")
 
     return uplift_curve, qini_curve, qini_coeff
+
+
+# ─────────────────────────────────────────────────────────────
+# STEP 7b: SHAP EXPLAINABILITY
+# ─────────────────────────────────────────────────────────────
+
+def explain_with_shap(model, df, feature_cols, max_samples=500):
+    """
+    Compute SHAP values for the XGBoost model to explain which features
+    drive purchase predictions. Returns top features by mean |SHAP| value.
+
+    Args:
+        model       : Trained XGBClassifier
+        df          : Feature dataframe
+        feature_cols: List of feature column names
+        max_samples : Cap samples for speed (SHAP can be slow on large data)
+
+    Returns:
+        List of dicts with feature name and mean absolute SHAP value,
+        or empty list if SHAP is not installed.
+    """
+    if not SHAP_AVAILABLE:
+        print("[SHAP] Skipping — shap package not installed.")
+        return []
+
+    print("\n[SHAP] Computing SHAP values for XGBoost model...")
+
+    X = df[feature_cols].fillna(0).values
+    if len(X) > max_samples:
+        rng = np.random.default_rng(42)
+        idx = rng.choice(len(X), size=max_samples, replace=False)
+        X   = X[idx]
+
+    explainer   = shap.TreeExplainer(model)
+    shap_values = explainer.shap_values(X)
+
+    mean_shap = np.abs(shap_values).mean(axis=0)
+    shap_importance = sorted(
+        [{'feature': feature_cols[i].replace('_', ' ').title(),
+          'shap_importance': round(float(mean_shap[i]), 5)}
+         for i in range(len(feature_cols))],
+        key=lambda x: x['shap_importance'], reverse=True
+    )
+
+    print("[SHAP] Top 5 features by SHAP importance:")
+    for item in shap_importance[:5]:
+        print(f"  {item['feature']}: {item['shap_importance']:.5f}")
+
+    return shap_importance
 
 
 # ─────────────────────────────────────────────────────────────
@@ -833,6 +913,33 @@ def export_dashboard_data(df, uplift_t, uplift_x, p_treat, p_control,
         json.dump(dashboard_data, f, indent=2)
 
     print(f"[EXPORT] Data saved to {out_path}")
+
+    # ── Inject fresh data into dashboard.html so it always shows live results ─
+    html_path = 'outputs/dashboard.html'
+    if os.path.exists(html_path):
+        with open(html_path, 'r', encoding='utf-8') as f:
+            html = f.read()
+
+        new_data_block = (
+            "// ════════════════════════════════════\n"
+            "// EMBEDDED DATA (from pipeline output)\n"
+            "// ════════════════════════════════════\n\n"
+            f"const DATA = {json.dumps(dashboard_data, indent=2)};"
+        )
+
+        import re
+        # Replace everything from the DATA comment block down to closing }; of DATA
+        html = re.sub(
+            r'// ════.*?// EMBEDDED DATA.*?\nconst DATA = \{.*?\};',
+            new_data_block,
+            html,
+            flags=re.DOTALL
+        )
+
+        with open(html_path, 'w', encoding='utf-8') as f:
+            f.write(html)
+
+        print(f"[EXPORT] Dashboard HTML updated with live data → {html_path}")
     print(f"\n{'='*60}")
     print("PIPELINE COMPLETE!")
     print(f"{'='*60}")
@@ -852,13 +959,31 @@ def export_dashboard_data(df, uplift_t, uplift_x, p_treat, p_control,
 # ─────────────────────────────────────────────────────────────
 
 if __name__ == '__main__':
+    # ── CLI Arguments ─────────────────────────────────────────────────────────
+    parser = argparse.ArgumentParser(
+        description='Promotion Uplift Modeling — Causal ML Pipeline (ProAnalytics)'
+    )
+    parser.add_argument('--data-dir',    default='data',
+                        help='Folder containing Dunnhumby CSV files (default: data)')
+    parser.add_argument('--sample-size', type=int, default=None,
+                        help='Number of households to sample (default: all households)')
+    parser.add_argument('--discount-cost', type=float, default=5.0,
+                        help='Promotional cost per targeted customer in $ (default: 5.0)')
+    parser.add_argument('--no-shap', action='store_true',
+                        help='Skip SHAP explainability step (faster)')
+    args = parser.parse_args()
+
     print("=" * 60)
     print("  PROMOTION UPLIFT MODELING — CAUSAL ML PIPELINE")
     print("  Team ProAnalytics")
     print("=" * 60)
+    print(f"  Data folder:    {args.data_dir}")
+    print(f"  Sample size:    {args.sample_size or 'all households'}")
+    print(f"  Discount cost:  ${args.discount_cost:.2f} per customer")
+    print("=" * 60)
 
     # 1. Load data
-    df = load_dunnhumby_data(data_dir='data', sample_size=5000)
+    df = load_dunnhumby_data(data_dir=args.data_dir, sample_size=args.sample_size)
 
     # 2. Feature engineering
     df = feature_engineering(df)
@@ -867,7 +992,7 @@ if __name__ == '__main__':
     # 3. Propensity scoring
     ps_model, ps_scaler, ps_scores = fit_propensity_model(df, feature_cols)
 
-    # 4. Baseline models
+    # 4. Baseline models (with cross-validation + extra metrics)
     baseline_results, feature_imp, _ = fit_baseline_models(df, feature_cols)
 
     # 5. T-Learner
@@ -880,11 +1005,19 @@ if __name__ == '__main__':
     uplift_curve, qini_curve, qini_coeff = compute_uplift_curve(
         df['treatment'].values, df['purchase'].values, uplift_x)
 
+    # 7b. SHAP explainability
+    shap_importance = []
+    if not args.no_shap:
+        shap_importance = explain_with_shap(
+            baseline_results['XGBoost']['model'], df, feature_cols)
+
     # 8. Customer segmentation
     segments, segment_counts, cluster_labels, pca_sample = segment_customers(df, uplift_x)
 
     # 9. ROI simulation
-    roi_data, best_roi = simulate_roi(df, uplift_x, segments)
+    roi_data, best_roi = simulate_roi(
+        df, uplift_x, segments,
+        discount_cost_per_customer=args.discount_cost)
 
     # 10. Export JSON for dashboard
     dashboard_data = export_dashboard_data(
@@ -893,6 +1026,14 @@ if __name__ == '__main__':
         feature_imp, baseline_results, uplift_curve, qini_curve,
         qini_coeff, roi_data, best_roi, ps_scores,
     )
+
+    # Add SHAP results to exported JSON
+    if shap_importance:
+        dashboard_data['shap_importance'] = shap_importance
+        out_path = 'outputs/dashboard_data.json'
+        with open(out_path, 'w') as f:
+            json.dump(dashboard_data, f, indent=2)
+        print("[EXPORT] SHAP importance added to dashboard_data.json")
 
     # 11. Save trained models (optional)
     if MODEL_SAVE_AVAILABLE:
@@ -905,3 +1046,4 @@ if __name__ == '__main__':
         })
 
     print("\nNext step: open outputs/dashboard.html in your browser!")
+    print("Tip: Run with --help to see all available options.")
