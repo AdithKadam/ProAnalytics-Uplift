@@ -300,7 +300,7 @@ with tabs[0]:
 
     st.divider()
     st.markdown('<p style="font-family:\'Syne\',sans-serif;font-weight:700;font-size:15px;color:#e8e6f0;margin-bottom:12px;">Feature Importance</p>', unsafe_allow_html=True)
-    fi = pd.DataFrame(DATA["shap_importance"]).sort_values("shap_importance")
+    fi = pd.DataFrame(DATA["shap_importance"]).query("shap_importance > 0").sort_values("shap_importance")
     fig5 = go.Figure(go.Bar(
         x=fi["shap_importance"], y=fi["feature"], orientation="h",
         marker=dict(color=fi["shap_importance"],
