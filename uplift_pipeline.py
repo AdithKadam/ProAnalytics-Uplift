@@ -940,8 +940,8 @@ if __name__ == '__main__':
                         help='Folder containing Dunnhumby CSV files (default: data)')
     parser.add_argument('--sample-size', type=int, default=None,
                         help='Number of households to sample (default: all households)')
-    parser.add_argument('--discount-cost', type=float, default=5.0,
-                        help='Promotional cost per targeted customer in $ (default: 5.0)')
+    parser.add_argument('--discount-cost', type=float, default=2.0,
+                        help='Promotional cost per targeted customer in $ (default: 2.0)')
     parser.add_argument('--no-shap', action='store_true',
                         help='Skip SHAP explainability step (faster)')
     args = parser.parse_args()
