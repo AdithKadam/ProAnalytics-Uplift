@@ -300,13 +300,13 @@ with tabs[0]:
 
     st.divider()
     st.markdown('<p style="font-family:\'Syne\',sans-serif;font-weight:700;font-size:15px;color:#e8e6f0;margin-bottom:12px;">Feature Importance</p>', unsafe_allow_html=True)
-    fi = pd.DataFrame(DATA["feature_importance"]).sort_values("importance")
+    fi = pd.DataFrame(DATA["shap_importance"]).sort_values("shap_importance")
     fig5 = go.Figure(go.Bar(
-        x=fi["importance"], y=fi["feature"], orientation="h",
-        marker=dict(color=fi["importance"],
+        x=fi["shap_importance"], y=fi["feature"], orientation="h",
+        marker=dict(color=fi["shap_importance"],
                     colorscale=[[0, "rgba(108,92,231,0.3)"], [1, C["purple_l"]]],
                     line=dict(width=0)),
-        hovertemplate="<b>%{y}</b><br>Importance: %{x:.4f}<extra></extra>"
+        hovertemplate="<b>%{y}</b><br>Shap Importance: %{x:.4f}<extra></extra>"
     ))
     apply_layout(fig5, height=360,
                  xaxis=dict(**PLOT_LAYOUT["xaxis"], title="Importance Score"),
