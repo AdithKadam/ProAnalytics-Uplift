@@ -1,5 +1,5 @@
 # Core Data Science
-numpy>=2.1.0
+numpy>=2.0.2
 pandas>=2.2.0
 scikit-learn>=1.5.0
 
@@ -20,3 +20,6 @@ joblib>=1.4.0
 
 # Kaggle
 kagglehub>=0.2.0
+
+plotly
+streamlit
