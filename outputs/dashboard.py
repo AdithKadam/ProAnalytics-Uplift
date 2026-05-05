@@ -259,7 +259,7 @@ with tabs[0]:
             textinfo="percent", textfont=dict(family="DM Mono", size=11, color="#0a0a0f"),
             hovertemplate="<b>%{label}</b><br>%{value:,} customers  ·  %{percent}<extra></extra>"
         ))
-        fig2.add_annotation(text=f"{sum(segs.values()):,}<br><span style='font-size:10px'>CUSTOMERS</span>",
+        fig2.add_annotation(text=f"{sum(segs.values()):,}<br>CUSTOMERS",
                             x=0.5, y=0.5, showarrow=False,
                             font=dict(family="Syne", color="#e8e6f0", size=16))
         apply_layout(fig2, "Customer Segment Breakdown", height=300, showlegend=True,
@@ -346,8 +346,9 @@ with tabs[1]:
     st.divider()
     col1, col2 = st.columns(2)
     with col1:
-        seg_means = {"Persuadable": 0.32, "Moderate Responder": 0.09,
-                     "Sure Thing / Neutral": 0.01, "Do-Not-Disturb": -0.18}
+        pca_df_seg = pd.DataFrame(DATA["pca_clusters"])
+        seg_means = pca_df_seg.groupby("segment")["uplift"].mean().to_dict()
+        seg_means = {s: seg_means.get(s, 0.0) for s in SEG_COLORS}
         fig = go.Figure(go.Bar(
             x=list(seg_means.keys()), y=list(seg_means.values()),
             marker=dict(color=[SEG_COLORS[s] for s in seg_means], opacity=0.85, line=dict(width=0)),
@@ -601,11 +602,12 @@ with tabs[4]:
     st.markdown('<p style="font-family:\'DM Sans\',sans-serif;font-size:13px;color:rgba(232,230,240,0.4);margin-bottom:16px;">K-Means behavioural clusters projected onto 2D via PCA</p>', unsafe_allow_html=True)
 
     pca_df = pd.DataFrame(DATA["pca_clusters"])
+    pca_df["cluster"] = pca_df["cluster"].astype(str)
 
     col1, col2 = st.columns(2)
     with col1:
         fig = px.scatter(pca_df, x="x", y="y", color="cluster",
-                         color_discrete_sequence=[C["purple"], C["teal"], C["amber"], C["red"]],
+                         color_discrete_map={"0": C["purple"], "1": C["teal"], "2": C["amber"], "3": C["red"]},
                          labels={"x": "PC1", "y": "PC2", "cluster": "Cluster"},
                          hover_data={"segment": True, "uplift": ":.4f", "x": False, "y": False})
         fig.update_traces(marker=dict(size=4.5, opacity=0.65, line=dict(width=0)))
