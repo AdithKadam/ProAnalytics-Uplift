@@ -321,10 +321,10 @@ def feature_engineering(df):
     fe['income_encoded'] = fe['income_group'].map(income_map).fillna(5).astype(float)
     fe['married']        = (fe['marital_status'].str.lower().str.contains('married', na=False)).astype(int)
 
-    # BUG FIX: household_size may already be numeric after factorize; handle
-    # both object (string) and numeric dtype safely.
-    if fe['household_size'].dtype == object:
-        fe['household_size'] = pd.factorize(fe['household_size'])[0].astype(float) + 1
+    # BUG FIX: household_size may be object, Arrow-backed string, or numeric.
+    # Use is_numeric_dtype to handle all non-numeric cases (including ArrowDtype strings).
+    if not pd.api.types.is_numeric_dtype(fe['household_size']):
+        fe['household_size'] = pd.factorize(fe['household_size'].astype(str))[0].astype(float) + 1
     else:
         fe['household_size'] = fe['household_size'].fillna(1).astype(float)
 
