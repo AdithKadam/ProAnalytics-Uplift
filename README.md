@@ -1,230 +1,315 @@
 # Promotion Uplift Modeling Using Causal Machine Learning
 
-**Team ProAnalytics** · Dunnhumby Complete Journey Dataset
+**Team ProAnalytics**
+
+> A production-ready causal ML pipeline that estimates the true incremental impact of retail promotions — identifying which customers buy *because* of a promotion versus those who would have purchased anyway.
 
 ---
 
 ## Overview
 
-This project estimates the **true causal impact** of retail promotions using uplift modeling — identifying which customers buy *because* of a promotion versus those who would have bought anyway. By targeting only persuadable customers, marketers can maximize ROI while avoiding wasted discount spend.
+Traditional response models predict *who* will buy, but they cannot answer the causal question: *did the promotion cause the purchase?* This project implements **uplift modeling** using state-of-the-art causal machine learning techniques to estimate heterogeneous treatment effects at the individual customer level.
 
-The pipeline combines propensity score modeling, meta-learners (T-Learner and X-Learner), and behavioral clustering to produce actionable customer segments and an interactive ROI simulator.
+### Key Capabilities
 
-### Key Results
-
-| Metric | Value |
-|--------|-------|
-| Customers Analyzed | 2,500 households |
-| Persuadable Customers | 183 (7.3%) |
-| Treatment vs Control Lift | +24.23 pp |
-| Qini Coefficient | 0.49 |
-| Max Net ROI | $5,596 at 50% targeting |
+| Capability | Description |
+|-----------|-------------|
+| **Causal Estimation** | T-Learner & X-Learner meta-algorithms for Individual Treatment Effect (ITE) estimation |
+| **Propensity Scoring** | Logistic regression to correct for selection bias in observational data |
+| **Customer Segmentation** | K-Means + PCA clustering with 4 actionable uplift segments |
+| **ROI Optimization** | Interactive simulator to find optimal targeting thresholds |
+| **Explainability** | SHAP values for model interpretability |
+| **Production Dashboard** | Streamlit-based interactive analytics dashboard |
 
 ---
 
 ## Architecture
 
 ```
-Dunnhumby CSVs
-      │
-      ▼
-  Data Loading          ← transaction_data, demographics, campaigns, coupon_redempt
-      │
-      ▼
-Feature Engineering     ← RFM scores, promo sensitivity, engagement, value scores
-      │
-      ▼
-Propensity Scoring      ← Logistic Regression → P(T=1|X)
-      │
-      ▼
-Baseline Models         ← LR · Random Forest · XGBoost · Gradient Boosting
-      │
-      ▼
-Causal Models           ← T-Learner (XGBoost) · X-Learner (XGBoost + propensity)
-      │
-      ▼
-Evaluation              ← Uplift Curve · Qini Curve · SHAP importance
-      │
-      ▼
-Segmentation            ← Persuadable · Moderate · Sure Thing · Do-Not-Disturb
-      │
-      ▼
-ROI Simulation          ← Net ROI across targeting thresholds (5%–100%)
-      │
-      ▼
-Dashboard JSON          ← outputs/dashboard_data.json
-      │
-      ▼
-Streamlit Dashboard     ← outputs/dashboard.py
-```
-
----
-
-## Quick Start
-
-### 1. Install Dependencies
-
-```bash
-pip install -r requirements.txt
-```
-
-### 2. Download the Dataset
-
-```bash
-python download_data.py
-```
-
-This downloads the [Dunnhumby Complete Journey](https://www.kaggle.com/datasets/frtgnn/dunnhumby-the-complete-journey) dataset to `data/` and runs the EDA notebook automatically.
-
-> **Manual download:** Place all CSV files into `data/` if you prefer to download directly from Kaggle.
-
-### 3. Run the Pipeline
-
-```bash
-python uplift_pipeline.py
-```
-
-With options:
-
-```bash
-python uplift_pipeline.py \
-  --data-dir data \
-  --sample-size 2500 \
-  --discount-cost 2.0 \
-  --no-shap          # skip SHAP for faster runs
-```
-
-### 4. Launch the Dashboard
-
-```bash
-streamlit run outputs/dashboard.py
-```
-
-Open `http://localhost:8501` in your browser.
-
----
-
-## File Structure
-
-```
 ProAnalytics_Uplift/
-├── data/                          ← Dunnhumby CSVs (not included, ~100MB)
+├── data/                          ← Dunnhumby CSV files (not in repo)
 │   ├── transaction_data.csv
 │   ├── hh_demographic.csv
 │   ├── campaign_table.csv
-│   ├── campaign_desc.csv
-│   ├── coupon.csv
-│   ├── coupon_redempt.csv
-│   └── causal_data.csv
-│
-├── models/                        ← Saved trained models (auto-created)
+│   └── coupon_redempt.csv
+├── models/                        ← Serialized trained models (.pkl)
 │   ├── t_learner_treated_*.pkl
 │   ├── t_learner_control_*.pkl
 │   ├── propensity_model_*.pkl
 │   └── model_manifest.json
-│
-├── notebooks/
-│   ├── eda_dunnhumby.ipynb        ← Exploratory data analysis (source)
-│   └── eda_dunnhumby_output.ipynb ← EDA results with charts
-│
-├── outputs/
-│   ├── dashboard.py               ← Streamlit dashboard app
-│   └── dashboard_data.json        ← Pipeline output consumed by dashboard
-│
-├── uplift_pipeline.py             ← Main modeling pipeline (10-step)
-├── data_loader.py                 ← Real data loader (alternative entry point)
-├── model_utils.py                 ← Model persistence utilities
-├── download_data.py               ← Kaggle dataset downloader + EDA runner
-├── requirements.txt
-└── README.md
+├── outputs/                       ← Generated artifacts
+│   ├── dashboard_data.json        ← Pipeline results for dashboard
+│   └── dashboard.py             ← Streamlit application
+├── notebooks/                     ← Analysis & EDA
+│   └── eda_dunnhumby.ipynb
+├── download_data.py              ← Kaggle dataset downloader
+├── uplift_pipeline.py            ← Main end-to-end pipeline
+├── model_utils.py                ← Model persistence utilities
+├── requirements.txt              ← Python dependencies
+├── QUICKSTART.md                 ← Quick start guide
+└── README.md                     ← This file
 ```
+
+---
+
+## Models Implemented
+
+### Causal Models (Primary)
+
+| Model | Algorithm | Purpose |
+|-------|-----------|---------|
+| **X-Learner** | XGBoost (primary) | Estimates ITE using imputed treatment effects with propensity-weighted combination |
+| **T-Learner** | XGBoost | Two separate outcome models (treated vs control) |
+| **Propensity Score** | Logistic Regression | Estimates P(Treatment \| X) for bias correction |
+
+### Baseline Predictive Models (Benchmark)
+
+| Model | AUC (from real data run) |
+|-------|--------------------------|
+| Logistic Regression | 0.8784 |
+| Random Forest | 0.8701 |
+| Gradient Boosting | 0.8736 |
+| XGBoost | 0.8361 |
 
 ---
 
 ## Dataset
 
-The **Dunnhumby Complete Journey** dataset contains two years of household-level grocery shopping data for 2,500 households. It is not included in this repository due to file size.
+**Dunnhumby Complete Journey** — Real retail transaction data from 2,500 households over 2 years.
 
-| Table | Description |
-|-------|-------------|
-| `transaction_data.csv` | 2.5M+ purchase records with basket IDs, spend, discounts |
-| `hh_demographic.csv` | Age, income, household composition, homeowner status |
-| `campaign_table.csv` | Which households were exposed to which campaigns |
-| `campaign_desc.csv` | Campaign type metadata (TypeA, TypeB, TypeC) |
-| `coupon.csv` | Coupon catalogue |
-| `coupon_redempt.csv` | Coupon redemptions per household |
-| `causal_data.csv` | Display and mailer flags at product level |
+| Feature | Details |
+|---------|---------|
+| Transactions | 2.5M+ real purchases |
+| Households | ~2,500 |
+| Time Period | 2 years |
+| Treatment | Actual TypeA campaigns (not simulated) |
+| Ground Truth | Unknown (estimated via causal models) |
+
+**Key Tables:**
+- `transaction_data.csv` — Purchase transactions with product, store, quantity, value
+- `hh_demographic.csv` — Household demographics (age, income, size, homeowner)
+- `campaign_table.csv` — Campaign assignments by household
+- `coupon_redempt.csv` — Coupon redemption behavior
 
 ---
 
-## Modeling Approach
+## Setup & Installation
 
-### Step 1 — Feature Engineering
+### Prerequisites
 
-18 features are derived from raw transaction history:
+- Python 3.8+
+- 4GB+ RAM recommended
+- Kaggle account (for dataset download)
 
-- **Behavioral:** `purchase_frequency`, `avg_basket_value`, `recency_days`, `store_visits`, `num_categories`, `weekend_shopper`
-- **Promotion affinity:** `coupon_redemption_rate`, `past_promo_response`, `discount_sensitivity`, `promo_sensitivity_score`
-- **Composite scores:** `rfm_score`, `engagement_score`, `value_score`, `recency_score`
-- **Demographics:** `age_encoded`, `income_encoded`, `married`, `household_size`
+### 1. Clone Repository
 
-### Step 2 — Propensity Score Modeling
-
-A logistic regression model estimates `P(T=1 | X)` — the probability a customer was targeted — used downstream in the X-Learner to correct for selection bias.
-
-### Step 3 — Baseline Classifiers
-
-Four classifiers predict `P(purchase)` as a non-causal benchmark:
-
-| Model | AUC |
-|-------|-----|
-| Logistic Regression | 0.878 |
-| Gradient Boosting | 0.874 |
-| Random Forest | 0.870 |
-| XGBoost | 0.836 |
-
-### Step 4 — T-Learner
-
-Two separate XGBoost models are fit on the treated and control groups:
-
-```
-uplift(x) = P(Y=1 | T=1, X=x)  −  P(Y=1 | T=0, X=x)
+```bash
+git clone https://github.com/hrushh22/ProAnalytics-Uplift.git
+cd ProAnalytics-Uplift
 ```
 
-### Step 5 — X-Learner (Primary Model)
+### 2. Install Dependencies
 
-The X-Learner (Künzel et al., 2019) improves on the T-Learner for imbalanced treatment/control splits:
+```bash
+pip install -r requirements.txt
+```
 
-1. Fit outcome models `m1` (treated) and `m0` (control)
-2. Compute imputed treatment effects: `d1 = Y − m0(X)` for treated; `d0 = m1(X) − Y` for control
-3. Fit meta-learners `τ1`, `τ0` on each group
-4. Combine with propensity weighting: `τ(x) = g(x)·τ0(x) + (1−g(x))·τ1(x)`
+### 3. Download Dataset
 
-### Step 6 — Customer Segmentation
+```bash
+pip install kagglehub
+python download_data.py
+```
 
-Each customer is assigned to one of four uplift segments:
+This downloads the Dunnhumby Complete Journey dataset from Kaggle and places CSV files in `data/`.
 
-| Segment | Uplift Threshold | Strategy |
-|---------|-----------------|----------|
-| **Persuadable** | > 0.15 | Primary targets — promotion causally drives purchase |
-| **Moderate Responder** | 0.05 – 0.15 | Include in broader campaigns |
-| **Sure Thing / Neutral** | −0.05 – 0.05 | Would buy anyway — skip to save budget |
-| **Do-Not-Disturb** | < −0.05 | Promotion actively reduces purchase probability |
+> **Note:** The dataset is >100MB and not included in this repository. You can also manually download from [Kaggle](https://www.kaggle.com/datasets/frtgnn/dunnhumby-the-complete-journey).
 
-K-Means clustering (k=4) on behavioral features provides an additional behavioral lens, projected to 2D via PCA for visualization.
+### 4. Run Pipeline
+
+```bash
+python uplift_pipeline.py
+```
+
+**CLI Options:**
+```bash
+python uplift_pipeline.py --help
+# Options:
+#   --data-dir PATH        Data folder (default: data)
+#   --sample-size N        Sample N households (default: all)
+#   --discount-cost FLOAT  Cost per customer in $ (default: 2.0)
+#   --no-shap              Skip SHAP explainability (faster)
+```
+
+### 5. Launch Dashboard
+
+```bash
+cd outputs
+streamlit run dashboard.py
+```
+
+---
+
+## Pipeline Steps
+
+```
+┌─────────────────────────────────────────────────────────────────┐
+│  STEP 1: DATA LOADING                                           │
+│  Load Dunnhumby tables, sample households, build features      │
+├─────────────────────────────────────────────────────────────────┤
+│  STEP 2: FEATURE ENGINEERING                                    │
+│  Encode demographics, create composite scores (RFM, engagement)  │
+├─────────────────────────────────────────────────────────────────┤
+│  STEP 3: PROPENSITY SCORING                                     │
+│  Logistic regression: P(Treatment=1 | X)                        │
+├─────────────────────────────────────────────────────────────────┤
+│  STEP 4: BASELINE MODELS                                        │
+│  Train LR, RF, XGBoost, GBM for benchmark comparison            │
+├─────────────────────────────────────────────────────────────────┤
+│  STEP 5: T-LEARNER                                              │
+│  Separate models for treated/control; uplift = P1 - P0          │
+├─────────────────────────────────────────────────────────────────┤
+│  STEP 6: X-LEARNER (Primary)                                    │
+│  Imputed treatment effects with propensity weighting            │
+├─────────────────────────────────────────────────────────────────┤
+│  STEP 7: EVALUATION                                             │
+│  Uplift curves, Qini curves, Qini coefficient                   │
+├─────────────────────────────────────────────────────────────────┤
+│  STEP 8: SEGMENTATION                                           │
+│  K-Means clustering + PCA visualization                         │
+├─────────────────────────────────────────────────────────────────┤
+│  STEP 9: ROI SIMULATION                                         │
+│  Net ROI at varying targeting thresholds                        │
+├─────────────────────────────────────────────────────────────────┤
+│  STEP 10: EXPORT & SAVE                                         │
+│  JSON for dashboard + serialized models                         │
+└─────────────────────────────────────────────────────────────────┘
+```
+
+---
+
+## Results (Real Data Run)
+
+| Metric | Value |
+|--------|-------|
+| **Customers Analyzed** | 2,500 |
+| **Persuadable Customers** | 183 (7.3%) |
+| **Campaign Lift** | +24.23 percentage points |
+| **Treatment Purchase Rate** | 91.41% |
+| **Control Purchase Rate** | 67.17% |
+| **Average Uplift Score** | 0.0133 |
+| **Qini Coefficient** | 0.4889 |
+| **Optimal Targeting** | Top 50% of customers |
+| **Maximum Net ROI** | $5,596 |
+| **Total Revenue** | $415,504 |
+
+### Customer Segments
+
+| Segment | Count | % | Description |
+|---------|-------|---|-------------|
+| **Persuadable** | 183 | 7.3% | High positive uplift — promotion causally drives purchase |
+| **Moderate Responder** | 365 | 14.6% | Some uplift — include in broader campaigns |
+| **Sure Thing / Neutral** | 1,491 | 59.6% | Would buy anyway — avoid wasting discounts |
+| **Do-Not-Disturb** | 461 | 18.4% | Negative uplift — promotion reduces purchase probability |
+
+---
+
+## Key Features
+
+### Engineered Features
+
+| Feature | Description |
+|---------|-------------|
+| `rfm_score` | Recency-Frequency-Monetary composite (top predictor) |
+| `promo_sensitivity_score` | Weighted blend of coupon redemption, past response, discount sensitivity |
+| `engagement_score` | Normalized purchase frequency, store visits, category diversity |
+| `value_score` | Basket value + income-normalized spending potential |
+| `recency_score` | Days since last purchase (inverse normalized) |
+| `past_promo_response` | Historical coupon redemption rate |
+| `discount_sensitivity` | Campaign diversity in redemption history |
+
+### SHAP Feature Importance (Top 5)
+
+1. **RFM Score** (1.297) — Customer lifecycle value
+2. **Recency Days** (0.774) — Time since last purchase
+3. **Purchase Frequency** (0.745) — Historical transaction count
+4. **Weekend Shopper** (0.493) — Temporal shopping pattern
+5. **Value Score** (0.473) — Spending potential composite
 
 ---
 
 ## Dashboard
 
-The Streamlit dashboard at `outputs/dashboard.py` provides five views:
+The Streamlit dashboard provides 5 interactive tabs:
 
-| Tab | Description |
-|-----|-------------|
-| **Overview** | KPI cards, uplift distribution, Qini curve, feature importance |
-| **Segments** | Segment breakdown with average uplift and T vs C comparisons |
-| **Model Performance** | Baseline AUC scores, uplift curve, feature ranking |
-| **ROI Simulator** | Interactive slider to explore net ROI at different targeting thresholds |
-| **Cluster Analysis** | PCA scatter colored by K-Means cluster and uplift segment |
+| Tab | Content |
+|-----|---------|
+| **◈ Overview** | KPIs, uplift distribution, segment pie chart, uplift/Qini curves, feature importance |
+| **⬡ Segments** | 4-segment cards, average uplift by segment, treatment vs control comparison |
+| **◎ Model Performance** | Baseline AUC scores, uplift curve, feature ranking |
+| **◆ ROI Simulator** | Interactive slider (5-100%), net ROI curve, revenue vs cost breakdown |
+| **● Cluster Analysis** | PCA scatter plots (K-Means clusters vs uplift segments) |
 
 ---
+
+## Technical Details
+
+### Causal Inference Methodology
+
+**X-Learner** (Künzel et al., 2019):
+
+```
+Stage 1: Fit μ₁(x) = E[Y | T=1, X=x]  and  μ₀(x) = E[Y | T=0, X=x]
+Stage 2: Compute imputed effects
+         D¹ = Y¹ - μ₀(X¹)  (treated group)
+         D⁰ = μ₁(X⁰) - Y⁰  (control group)
+Stage 3: Fit τ₁(x) = E[D¹ | X=x]  and  τ₀(x) = E[D⁰ | X=x]
+Stage 4: Combine: τ(x) = g(x)·τ₀(x) + (1-g(x))·τ₁(x)
+         where g(x) = propensity score P(T=1 | X=x)
+```
+
+### Bug Fixes & Improvements
+
+This pipeline includes extensive bug fixes over the original implementation:
+
+| Issue | Fix |
+|-------|-----|
+| Duplicate column rename causing KeyError | Consolidated single rename block |
+| `recency_days` computed twice | Removed duplicate computation |
+| Treatment column filtered before existence check | Added safe fallback to first campaign type |
+| Inline propensity model overwrote Step 3 | Removed duplicate fit, delegated to Step 3 |
+| `household_size` float/integer mismatch | Added explicit `.astype(float)` cast |
+| Division by zero in normalization | Guarded with `replace(0, 1)` |
+| `np.corrcoef` crash on all-NaN `true_uplift` | Added NaN guard with informative message |
+| X-Learner `tau0` sign inversion | Corrected to `Y_control - m1.predict` (proper ATE) |
+| Qini curve division by zero | Added safe conditional logic |
+| Random sampling index overflow | Fixed with local RNG seed |
+| `top_customers` missing `customer_id` | Added fallback column detection |
+
+---
+
+## Requirements
+
+```
+numpy
+pandas
+scikit-learn
+matplotlib
+seaborn
+ipykernel
+papermill
+xgboost
+shap
+joblib
+kagglehub
+plotly
+streamlit
+```
+
+See `requirements.txt` for full dependency list.
+
+## License
+
+MIT License — see repository for details.
+
+*Built with XGBoost, scikit-learn, SHAP, and Streamlit.*
