@@ -71,7 +71,6 @@ pip install -r requirements.txt
 ### 2. Download the Dataset
 
 ```bash
-pip install kagglehub
 python download_data.py
 ```
 
@@ -155,16 +154,6 @@ The **Dunnhumby Complete Journey** dataset contains two years of household-level
 | `coupon.csv` | Coupon catalogue |
 | `coupon_redempt.csv` | Coupon redemptions per household |
 | `causal_data.csv` | Display and mailer flags at product level |
-
-### Simulated vs Real Data
-
-| Feature | Simulated | Real Dunnhumby |
-|---------|-----------|----------------|
-| Customers | 5,000 | 2,500 households |
-| Transactions | Generated | 2.5M+ real purchases |
-| Treatment | Random assignment | Actual TypeA campaigns |
-| True Uplift | Known (ground truth) | Unknown (estimated) |
-| Demographics | Synthetic | Real customer data |
 
 ---
 
@@ -253,20 +242,6 @@ optional arguments:
   --sample-size    Number of households to sample (default: all)
   --discount-cost  Promotional cost per customer in $ (default: 2.0)
   --no-shap        Skip SHAP explainability (faster runs)
-```
-
-### Using Real Data vs Simulated Data
-
-To switch from simulated to real data in the pipeline, change the loader in `uplift_pipeline.py`:
-
-```python
-# Replace:
-df = simulate_dunnhumby_data(n_customers=5000)
-
-# With:
-from data_loader import load_dunnhumby_data
-df = load_dunnhumby_data(sample_size=5000)   # or None for all households
-```
 
 ---
 
